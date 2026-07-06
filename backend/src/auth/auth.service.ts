@@ -1,17 +1,21 @@
 import {
   Injectable,
   BadRequestException,
+  UnauthorizedException,
 } from '@nestjs/common';
-
+import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
 import { UsersService } from '../users/users.service';
+import { Role } from '../common/enums/role.enum';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
   ) {}
 
   async register(registerDto: RegisterDto) {
@@ -34,17 +38,55 @@ export class AuthService {
       fullName: registerDto.fullName,
       email: registerDto.email,
       password: hashedPassword,
-      role: registerDto.role,
+      role: Role.EMPLOYEE,
     });
 
-   const { password, ...userWithoutPassword } = user;
+    const { password, ...userWithoutPassword } = user;
 
-return {
-  message: 'User Registered Successfully',
-  user: userWithoutPassword,
-};
+    return {
+      message: 'User Registered Successfully',
+      user: userWithoutPassword,
+    };
   }
-   async login(loginDto: LoginDto) {
 
+  async login(loginDto: LoginDto) {
+    const user = await this.usersService.findByEmail(
+      loginDto.email,
+    );
+
+    if (!user) {
+      throw new UnauthorizedException(
+        'Invalid email or password',
+      );
+    }
+
+    const isPasswordMatched = await bcrypt.compare(
+      loginDto.password,
+      user.password,
+    );
+
+    if (!isPasswordMatched) {
+      throw new UnauthorizedException(
+        'Invalid email or password',
+      );
+    }
+
+    const payload = {
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+    };
+
+    const accessToken = await this.jwtService.signAsync(
+      payload,
+    );
+
+    const { password, ...userWithoutPassword } = user;
+
+    return {
+      message: 'Login Successful',
+      accessToken,
+      user: userWithoutPassword,
+    };
   }
 }
