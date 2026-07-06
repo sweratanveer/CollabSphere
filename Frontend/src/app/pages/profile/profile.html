@@ -1,0 +1,55 @@
+<app-navbar></app-navbar>
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>User Profile</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="text-center mb-4">
+
+                <img
+                    src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                    width="120">
+
+            </div>
+
+            <table class="table table-bordered">
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <td>{{user?.id}}</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Email</th>
+
+                    <td>{{user?.email}}</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Role</th>
+
+                    <td>{{user?.role}}</td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
