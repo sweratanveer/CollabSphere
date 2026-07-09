@@ -10,6 +10,8 @@ import { UsersService } from '../users/users.service';
 import { Role } from '../common/enums/role.enum';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { Company } from '../company/entities/company.entity';
+
 
 @Injectable()
 export class AuthService {
@@ -19,26 +21,41 @@ export class AuthService {
   ) {}
 
   async register(registerDto: RegisterDto) {
+    // Check if email already exists
     const existingUser = await this.usersService.findByEmail(
       registerDto.email,
     );
 
     if (existingUser) {
-      throw new BadRequestException(
-        'Email already exists',
-      );
+      throw new BadRequestException('Email already exists');
     }
 
+    // Find company (optional)
+    let company: Company | null = null;
+
+    if (registerDto.companyId) {
+      company = await this.usersService.findCompanyById(
+        registerDto.companyId,
+      );
+
+      if (!company) {
+        throw new BadRequestException('Company not found');
+      }
+    }
+
+    // Hash password
     const hashedPassword = await bcrypt.hash(
       registerDto.password,
       10,
     );
 
+    // Create user
     const user = await this.usersService.create({
       fullName: registerDto.fullName,
       email: registerDto.email,
       password: hashedPassword,
-      role: Role.EMPLOYEE,
+      role: registerDto.role ?? Role.EMPLOYEE,
+      company,
     });
 
     const { password, ...userWithoutPassword } = user;
@@ -75,11 +92,10 @@ export class AuthService {
       sub: user.id,
       email: user.email,
       role: user.role,
+      companyId: user.company?.id ?? null,
     };
 
-    const accessToken = await this.jwtService.signAsync(
-      payload,
-    );
+    const accessToken = await this.jwtService.signAsync(payload);
 
     const { password, ...userWithoutPassword } = user;
 

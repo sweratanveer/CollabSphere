@@ -3,17 +3,39 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { User } from './entities/user.entity';
+import { Company } from '../company/entities/company.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+
+    @InjectRepository(Company)
+    private readonly companyRepository: Repository<Company>,
   ) {}
 
   async findByEmail(email: string): Promise<User | null> {
     return this.userRepository.findOne({
       where: { email },
+      relations: {
+        company: true,
+      },
+    });
+  }
+
+  async findOne(id: string): Promise<User | null> {
+    return this.userRepository.findOne({
+      where: { id },
+      relations: {
+        company: true,
+      },
+    });
+  }
+
+  async findCompanyById(id: string): Promise<Company | null> {
+    return this.companyRepository.findOne({
+      where: { id },
     });
   }
 

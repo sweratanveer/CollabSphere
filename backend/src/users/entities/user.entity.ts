@@ -4,9 +4,12 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 
 import { Role } from '../../common/enums/role.enum';
+import { Company } from '../../company/entities/company.entity';
 
 @Entity('users')
 export class User {
@@ -35,6 +38,15 @@ export class User {
     default: true,
   })
   isActive!: boolean;
+
+  @ManyToOne(() => Company, (company) => company.users, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
+  @JoinColumn({
+    name: 'companyId',
+  })
+  company?: Company | null;
 
   @CreateDateColumn()
   createdAt!: Date;
