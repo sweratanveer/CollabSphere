@@ -14,7 +14,7 @@ import { Auth } from '../../services/auth';
     RouterLink,
   ],
   templateUrl: './login.html',
-  styleUrl: './login.scss',
+  styleUrls: ['./login.scss'],
 })
 export class Login {
 

@@ -7,7 +7,7 @@ import { Auth } from '../../services/auth';
   standalone: true,
   imports: [Navbar],
   templateUrl: './profile.html',
-  styleUrl: './profile.scss',
+  styleUrls: ['./profile.scss'],
 })
 export class Profile implements OnInit {
 

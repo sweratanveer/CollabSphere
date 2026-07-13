@@ -3,8 +3,9 @@ import { Navbar } from '../../layout/navbar/navbar';
 
 @Component({
   selector: 'app-teams',
+  standalone: true,
   imports: [Navbar],
   templateUrl: './teams.html',
-  styleUrl: './teams.scss',
+  styleUrls: ['./teams.scss'],
 })
 export class Teams {}

@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [Navbar],
   templateUrl: './settings.html',
-  styleUrl: './settings.scss',
+  styleUrls: ['./settings.scss'],
 })
 export class Settings {
 

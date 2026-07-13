@@ -23,7 +23,6 @@ import { Role } from '../common/enums/role.enum';
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
-  @Roles(Role.SUPER_ADMIN, Role.COMPANY_ADMIN)
   @Post()
   create(@Body() createCompanyDto: CreateCompanyDto) {
     return this.companyService.create(createCompanyDto);

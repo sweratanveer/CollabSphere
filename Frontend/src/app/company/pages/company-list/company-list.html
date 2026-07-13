@@ -2,11 +2,23 @@
 
   <div class="company-card">
 
-  <h2>Companies</h2>
+    <h2>Companies</h2>
 
-  <button routerLink="/company/create">Create Company</button>
+    <button routerLink="/company/create">Create Company</button>
 
-  <table>
+    <div class="alert alert-info mt-3" *ngIf="loading">
+      Loading companies...
+    </div>
+
+    <div class="alert alert-danger mt-3" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <div class="alert alert-warning mt-3" *ngIf="!loading && !errorMessage && companies.length === 0">
+      No companies found yet.
+    </div>
+
+    <table *ngIf="!loading && companies.length > 0">
 
     <thead>
 
@@ -50,7 +62,7 @@
 
     </tbody>
 
-  </table>
+    </table>
 
   </div>
 

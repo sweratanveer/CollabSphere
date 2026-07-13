@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { CompanyService } from '../../services/company';
 import { Company } from '../../models/company.model';
@@ -17,9 +17,10 @@ import { Company } from '../../models/company.model';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    RouterLink,
   ],
   templateUrl: './company-create.html',
-  styleUrl: './company-create.scss',
+  styleUrls: ['./company-create.scss'],
 })
 export class CompanyCreateComponent {
 
@@ -113,7 +114,11 @@ export class CompanyCreateComponent {
 
     this.isLoading = true;
 
-    const company: Company = this.companyForm.value;
+    const company: Company = {
+      ...this.companyForm.value,
+      website: this.companyForm.value.website?.trim() || undefined,
+      logo: this.companyForm.value.logo?.trim() || undefined,
+    };
 
     this.companyService.createCompany(company).subscribe({
 

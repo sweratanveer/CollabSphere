@@ -6,6 +6,7 @@ import {
   IsString,
   IsUrl,
 } from 'class-validator';
+import { Transform } from 'class-transformer';
 
 export class CreateCompanyDto {
   @IsString()
@@ -24,6 +25,7 @@ export class CreateCompanyDto {
   phone!: string;
 
   @IsOptional()
+  @Transform(({ value }) => value?.trim() || undefined)
   @IsUrl()
   website?: string;
 
@@ -40,6 +42,7 @@ export class CreateCompanyDto {
   country!: string;
 
   @IsOptional()
+  @Transform(({ value }) => value?.trim() || undefined)
   @IsString()
   logo?: string;
 

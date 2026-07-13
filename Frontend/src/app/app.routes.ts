@@ -68,25 +68,21 @@ export const routes: Routes = [
   {
     path: 'company',
     component: CompanyListComponent,
-    canActivate: [authGuard, roleGuard],
-    data: { requiredRole: 'EMPLOYEE' },
+    canActivate: [authGuard],
   },
   {
     path: 'company/create',
     component: CompanyCreateComponent,
-    canActivate: [authGuard, roleGuard],
-    data: { requiredRole: 'EMPLOYEE' },
+    canActivate: [authGuard],
   },
   {
     path: 'company/details/:id',
     component: CompanyDetailsComponent,
-    canActivate: [authGuard, roleGuard],
-    data: { requiredRole: 'EMPLOYEE' },
+    canActivate: [authGuard],
   },
   {
     path: 'company/edit/:id',
     component: CompanyEditComponent,
-    canActivate: [authGuard, roleGuard],
-    data: { requiredRole: 'EMPLOYEE' },
+    canActivate: [authGuard],
   },
 ];

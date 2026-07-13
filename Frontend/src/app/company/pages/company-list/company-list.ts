@@ -10,7 +10,7 @@ import { Company } from '../../models/company.model';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './company-list.html',
-  styleUrl: './company-list.scss',
+  styleUrls: ['./company-list.scss'],
 })
 export class CompanyListComponent implements OnInit {
 
@@ -18,18 +18,26 @@ export class CompanyListComponent implements OnInit {
   private router = inject(Router);
 
   companies: Company[] = [];
+  loading = false;
+  errorMessage = '';
 
   ngOnInit(): void {
     this.loadCompanies();
   }
 
   loadCompanies(): void {
+    this.loading = true;
+    this.errorMessage = '';
     this.companyService.getCompanies().subscribe({
       next: (response) => {
         this.companies = response;
+        this.loading = false;
       },
       error: (error) => {
         console.error(error);
+        this.errorMessage =
+          error?.error?.message ?? 'Unable to load company list';
+        this.loading = false;
       },
     });
   }

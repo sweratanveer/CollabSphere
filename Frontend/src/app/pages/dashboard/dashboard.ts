@@ -7,7 +7,7 @@ import { Auth } from '../../services/auth';
   standalone: true,
   imports: [Navbar],
   templateUrl: './dashboard.html',
-  styleUrl: './dashboard.scss',
+  styleUrls: ['./dashboard.scss'],
 })
 export class Dashboard implements OnInit {
 

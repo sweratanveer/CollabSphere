@@ -8,7 +8,7 @@ import { Auth } from '../../services/auth';
   standalone: true,
   imports: [RouterLink],
   templateUrl: './navbar.html',
-  styleUrl: './navbar.scss',
+  styleUrls: ['./navbar.scss'],
 })
 export class Navbar {
 

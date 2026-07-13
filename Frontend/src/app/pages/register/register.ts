@@ -14,7 +14,7 @@ import { Auth } from '../../services/auth';
     RouterLink,
   ],
   templateUrl: './register.html',
-  styleUrl: './register.scss',
+  styleUrls: ['./register.scss'],
 })
 export class Register {
 
