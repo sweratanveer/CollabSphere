@@ -27,8 +27,13 @@ import { UpdateCompanyDto } from './dto/update-company.dto';
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
+<<<<<<< HEAD
 @Roles(Role.SUPER_ADMIN)
 @Post()
+=======
+  @Roles(Role.SUPER_ADMIN, Role.COMPANY_ADMIN)
+  @Post()
+>>>>>>> 6dd6b59 (Add some more functions)
   create(@Body() createCompanyDto: CreateCompanyDto) {
     return this.companyService.create(createCompanyDto);
   }
@@ -69,6 +74,7 @@ export class CompanyController {
     return this.companyService.remove(id);
   }
 }
+<<<<<<< HEAD
 =======
   findOne(@Param('id') id: string): Promise<Company | null> {
     return this.companyService.findOne(id);
@@ -93,3 +99,5 @@ export class CompanyController {
   }
 }
 >>>>>>> feature/register
+=======
+>>>>>>> 6dd6b59 (Add some more functions)

@@ -11,7 +11,7 @@ export class CompanyService {
 
   private http = inject(HttpClient);
 
-  private api = 'http://localhost:3000/company';
+  private api = 'http://localhost:3000/companies';
 
   getCompanies(): Observable<Company[]> {
     return this.http.get<Company[]>(this.api);
