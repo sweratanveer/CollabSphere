@@ -25,22 +25,42 @@ export class CompanyListComponent implements OnInit {
     this.loadCompanies();
   }
 
+
   loadCompanies(): void {
+
     this.loading = true;
     this.errorMessage = '';
+
     this.companyService.getCompanies().subscribe({
-      next: (response) => {
-        this.companies = response;
+
+      next: (response: Company[]) => {
+
+        console.log('All Companies From API:', response);
+
+        // Show maximum first 5 companies
+        this.companies = response.slice(0, 5);
+
+        console.log('Companies Showing In UI:', this.companies);
+
         this.loading = false;
       },
+
+
       error: (error) => {
-        console.error(error);
+
+        console.error('Company Load Error:', error);
+
         this.errorMessage =
           error?.error?.message ?? 'Unable to load company list';
+
         this.loading = false;
-      },
+
+      }
+
     });
+
   }
+
 
   deleteCompany(id: string): void {
 
@@ -49,19 +69,24 @@ export class CompanyListComponent implements OnInit {
     }
 
     this.companyService.deleteCompany(id).subscribe({
+
       next: () => {
         this.loadCompanies();
       },
+
       error: (error) => {
         console.error(error);
-      },
+      }
+
     });
 
   }
 
+
   viewCompany(id: string): void {
     this.router.navigate(['/company/details', id]);
   }
+
 
   editCompany(id: string): void {
     this.router.navigate(['/company/edit', id]);

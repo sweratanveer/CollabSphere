@@ -15,7 +15,8 @@
   border-radius: 36px;
   box-shadow: 0 40px 120px rgba(0, 0, 0, 0.42);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(22px);
+ -webkit-backdrop-filter: blur(10px);
+backdrop-filter: blur(10px);
 }
 
 .company-tabs {
