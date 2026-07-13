@@ -1,8 +1,11 @@
+<<<<<<< HEAD
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Role } from '../common/enums/role.enum';
+=======
+>>>>>>> 24eb98fff81c1fc1bc66249041e50f5bd14e077b
 import {
   Body,
   Controller,
@@ -14,6 +17,7 @@ import {
 } from '@nestjs/common';
 
 import { CompanyService } from './company.service';
+<<<<<<< HEAD
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
 
@@ -31,10 +35,21 @@ export class CompanyController {
 
   @Get()
   findAll() {
+=======
+import { Company } from './entities/company.entity';
+
+@Controller('company')
+export class CompanyController {
+  constructor(private readonly companyService: CompanyService) {}
+
+  @Get()
+  findAll(): Promise<Company[]> {
+>>>>>>> 24eb98fff81c1fc1bc66249041e50f5bd14e077b
     return this.companyService.findAll();
   }
 
   @Get(':id')
+<<<<<<< HEAD
   findOne(@Param('id') id: string) {
     return this.companyService.findOne(id);
   }
@@ -54,3 +69,27 @@ export class CompanyController {
     return this.companyService.remove(id);
   }
 }
+=======
+  findOne(@Param('id') id: string): Promise<Company | null> {
+    return this.companyService.findOne(id);
+  }
+
+  @Post()
+  create(@Body() body: Partial<Company>): Promise<Company> {
+    return this.companyService.create(body);
+  }
+
+  @Patch(':id')
+  update(
+    @Param('id') id: string,
+    @Body() body: Partial<Company>,
+  ): Promise<Company | null> {
+    return this.companyService.update(id, body);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string): Promise<void> {
+    return this.companyService.remove(id);
+  }
+}
+>>>>>>> 24eb98fff81c1fc1bc66249041e50f5bd14e077b
