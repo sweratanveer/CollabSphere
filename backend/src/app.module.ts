@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 import { AuthModule } from './auth/auth.module';
+import { CompanyModule } from './company/company.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -38,6 +39,8 @@ import { UsersModule } from './users/users.module';
     }),
 
     AuthModule,
+
+    CompanyModule,
 
     UsersModule,
   ],
