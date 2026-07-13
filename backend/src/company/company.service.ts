@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -13,25 +17,23 @@ export class CompanyService {
     private readonly companyRepository: Repository<Company>,
   ) {}
 
-async create(createCompanyDto: CreateCompanyDto): Promise<Company> {
-  const exists = await this.companyRepository.findOne({
-    where: [
-      { companyName: createCompanyDto.companyName },
-      { companyCode: createCompanyDto.companyCode },
-      { email: createCompanyDto.email },
-    ],
-  });
+  async create(createCompanyDto: CreateCompanyDto): Promise<Company> {
+    const exists = await this.companyRepository.findOne({
+      where: [
+        { companyName: createCompanyDto.companyName },
+        { companyCode: createCompanyDto.companyCode },
+        { email: createCompanyDto.email },
+      ],
+    });
 
-  if (exists) {
-    throw new BadRequestException(
-      'Company already exists.',
-    );
+    if (exists) {
+      throw new BadRequestException('Company already exists.');
+    }
+
+    const company = this.companyRepository.create(createCompanyDto);
+
+    return await this.companyRepository.save(company);
   }
-
-  const company = this.companyRepository.create(createCompanyDto);
-
-  return await this.companyRepository.save(company);
-}
 
   async findAll(): Promise<Company[]> {
     return await this.companyRepository.find({
@@ -53,17 +55,16 @@ async create(createCompanyDto: CreateCompanyDto): Promise<Company> {
     return company;
   }
 
-async update(
-  id: string,
-  updateCompanyDto: UpdateCompanyDto,
-): Promise<Company> {
+  async update(
+    id: string,
+    updateCompanyDto: UpdateCompanyDto,
+  ): Promise<Company> {
+    const company = await this.findOne(id);
 
-  const company = await this.findOne(id);
+    Object.assign(company, updateCompanyDto);
 
-  Object.assign(company, updateCompanyDto);
-
-  return await this.companyRepository.save(company);
-}
+    return await this.companyRepository.save(company);
+  }
 
   async remove(id: string): Promise<void> {
     const company = await this.findOne(id);

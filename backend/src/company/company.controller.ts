@@ -1,8 +1,3 @@
-import { UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
-import { Roles } from '../common/decorators/roles.decorator';
-import { RolesGuard } from '../common/guards/roles.guard';
-import { Role } from '../common/enums/role.enum';
 import {
   Body,
   Controller,
@@ -11,20 +6,25 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 
 import { CompanyService } from './company.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
 
-@UseGuards(JwtAuthGuard, RolesGuard)
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
+import { Roles } from '../common/decorators/roles.decorator';
+import { Role } from '../common/enums/role.enum';
 
+@UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('companies')
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
-@Roles(Role.SUPER_ADMIN)
-@Post()
+  @Roles(Role.SUPER_ADMIN)
+  @Post()
   create(@Body() createCompanyDto: CreateCompanyDto) {
     return this.companyService.create(createCompanyDto);
   }
@@ -40,7 +40,7 @@ export class CompanyController {
   }
 
   @Roles(Role.SUPER_ADMIN, Role.COMPANY_ADMIN)
-@Patch(':id')
+  @Patch(':id')
   update(
     @Param('id') id: string,
     @Body() updateCompanyDto: UpdateCompanyDto,
@@ -48,8 +48,8 @@ export class CompanyController {
     return this.companyService.update(id, updateCompanyDto);
   }
 
- @Roles(Role.SUPER_ADMIN)
-@Delete(':id')
+  @Roles(Role.SUPER_ADMIN)
+  @Delete(':id')
   remove(@Param('id') id: string) {
     return this.companyService.remove(id);
   }
