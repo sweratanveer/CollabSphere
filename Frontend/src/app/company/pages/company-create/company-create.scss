@@ -1,0 +1,84 @@
+.company-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at top left, #182c3a 0%, #08111b 38%, #040810 100%);
+  padding: 40px 24px;
+}
+
+.company-card {
+  width: 100%;
+  max-width: 900px;
+  background: rgba(18, 28, 40, 0.96);
+  padding: 56px 48px;
+  border-radius: 36px;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(22px);
+}
+
+.company-tabs {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.company-tabs a {
+  flex: 1;
+  color: rgba(248, 250, 252, 0.64);
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  padding: 12px 0;
+  border-radius: 999px;
+}
+
+.company-tabs a.active {
+  color: #f8fafc;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.company-card .form-control,
+.company-card .form-select {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid rgba(248, 250, 252, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  padding: 18px 16px;
+  margin-bottom: 20px;
+  color: #f8fafc;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.company-card .form-control::placeholder,
+.company-card .form-select {
+  color: rgba(248, 250, 252, 0.38);
+}
+
+.company-card label,
+.company-card .field-label {
+  display: block;
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.action-button {
+  height: 54px;
+  width: 100%;
+  background: linear-gradient(135deg, #4fc9a4 0%, #2d8b7c 100%);
+  border: none;
+  color: #071014;
+  font-weight: 700;
+  border-radius: 999px;
+  margin-top: 18px;
+}
+
+@media (max-width: 768px) {
+  .company-card {
+    padding: 32px 20px;
+  }
+}
