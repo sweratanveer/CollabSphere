@@ -1,16 +1,21 @@
 {
   "compilerOptions": {
+    
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "target": "ES2022",
-
-    "outDir": "./dist",
-    "sourceMap": true,
+    "resolvePackageJsonExports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
     "declaration": true,
     "removeComments": true,
-
-    "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2022",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "incremental": true,
+
 
     "strict": true,
     "strictNullChecks": true,

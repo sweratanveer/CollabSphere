@@ -1,14 +1,8 @@
-import {
-  Injectable,
-  NotFoundException,
-  BadRequestException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { Company } from './entities/company.entity';
-import { CreateCompanyDto } from './dto/create-company.dto';
-import { UpdateCompanyDto } from './dto/update-company.dto';
 
 @Injectable()
 export class CompanyService {
@@ -17,14 +11,6 @@ export class CompanyService {
     private readonly companyRepository: Repository<Company>,
   ) {}
 
-  async create(createCompanyDto: CreateCompanyDto): Promise<Company> {
-    const exists = await this.companyRepository.findOne({
-      where: [
-        { companyName: createCompanyDto.companyName },
-        { companyCode: createCompanyDto.companyCode },
-        { email: createCompanyDto.email },
-      ],
-    });
 
     if (exists) {
       throw new BadRequestException('Company already exists.');
@@ -70,5 +56,36 @@ export class CompanyService {
     const company = await this.findOne(id);
 
     await this.companyRepository.remove(company);
+  }
+}
+=======
+  findAll(): Promise<Company[]> {
+    return this.companyRepository.find({
+      order: { createdAt: 'DESC' },
+    });
+  }
+
+  findOne(id: string): Promise<Company | null> {
+    return this.companyRepository.findOne({
+      where: { id },
+    });
+  }
+
+  create(companyData: Partial<Company>): Promise<Company> {
+    const company = this.companyRepository.create(companyData);
+    return this.companyRepository.save(company);
+  }
+
+  async update(
+    id: string,
+    companyData: Partial<Company>,
+  ): Promise<Company | null> {
+    await this.companyRepository.update(id, companyData);
+
+    return this.findOne(id);
+  }
+
+  async remove(id: string): Promise<void> {
+    await this.companyRepository.delete(id);
   }
 }
