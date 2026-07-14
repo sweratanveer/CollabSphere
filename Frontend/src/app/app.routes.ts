@@ -10,6 +10,10 @@ import { Projects } from './pages/projects/projects';
 import { Teams } from './pages/teams/teams';
 import { Tasks } from './pages/tasks/tasks';
 import { Settings } from './pages/settings/settings';
+import { CompanyListComponent } from './company/pages/company-list/company-list';
+import { CompanyCreateComponent } from './company/pages/company-create/company-create';
+import { CompanyDetailsComponent } from './company/pages/company-details/company-details';
+import { CompanyEditComponent } from './company/pages/company-edit/company-edit';
 
 export const routes: Routes = [
   {
@@ -58,6 +62,30 @@ export const routes: Routes = [
   {
     path: 'settings',
     component: Settings,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
+  },
+  {
+    path: 'company',
+    component: CompanyListComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
+  },
+  {
+    path: 'company/create',
+    component: CompanyCreateComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
+  },
+  {
+    path: 'company/details/:id',
+    component: CompanyDetailsComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
+  },
+  {
+    path: 'company/edit/:id',
+    component: CompanyEditComponent,
     canActivate: [authGuard, roleGuard],
     data: { requiredRole: 'EMPLOYEE' },
   },
