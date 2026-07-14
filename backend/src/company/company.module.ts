@@ -6,25 +6,18 @@ import { CompanyService } from './company.service';
 import { Company } from './entities/company.entity';
 
 @Module({
-<<<<<<< HEAD
   imports: [
     TypeOrmModule.forFeature([Company]),
   ],
-
-  controllers: [CompanyController],
-
-  providers: [CompanyService],
-
+  controllers: [
+    CompanyController,
+  ],
+  providers: [
+    CompanyService,
+  ],
   exports: [
     TypeOrmModule,
     CompanyService,
   ],
 })
 export class CompanyModule {}
-=======
-  imports: [TypeOrmModule.forFeature([Company])],
-  controllers: [CompanyController],
-  providers: [CompanyService],
-})
-export class CompanyModule {}
->>>>>>> feature/register
