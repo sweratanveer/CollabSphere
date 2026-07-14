@@ -1,0 +1,92 @@
+<div class="workspace-form-page">
+  <div class="workspace-form">
+    <h2>Edit Workspace</h2>
+
+    <!-- Error Message -->
+
+    @if (error()) {
+      <div class="alert alert-danger">
+        {{ error() }}
+      </div>
+    }
+
+    <!-- Loading -->
+
+    @if (loading()) {
+      <div class="loading">Loading workspace...</div>
+    }
+
+    <!-- Edit Form -->
+
+    @if (!loading()) {
+      <form (ngSubmit)="save()">
+        <label class="field-label" for="editWorkspaceName"> Workspace Name </label>
+
+        <input
+          id="editWorkspaceName"
+          type="text"
+          [(ngModel)]="workspaceName"
+          name="workspaceName"
+          class="form-control"
+          placeholder="Enter workspace name"
+        />
+
+        <label class="field-label" for="editSlug"> Slug </label>
+
+        <input
+          id="editSlug"
+          type="text"
+          [(ngModel)]="slug"
+          name="slug"
+          class="form-control"
+          placeholder="workspace-slug"
+        />
+
+        <label class="field-label" for="editTimezone"> Timezone </label>
+
+        <input
+          id="editTimezone"
+          type="text"
+          [(ngModel)]="timezone"
+          name="timezone"
+          class="form-control"
+          placeholder="Asia/Karachi"
+        />
+
+        <label class="field-label" for="editSubscriptionPlan"> Subscription Plan </label>
+
+        <select
+          id="editSubscriptionPlan"
+          [(ngModel)]="subscriptionPlan"
+          name="subscriptionPlan"
+          class="form-control"
+        >
+          <option value="FREE">Free</option>
+
+          <option value="PROFESSIONAL">Professional</option>
+
+          <option value="ENTERPRISE">Enterprise</option>
+        </select>
+
+        <label class="field-label" for="editMaxUsers"> Max Users </label>
+
+        <input
+          id="editMaxUsers"
+          type="number"
+          [(ngModel)]="maxUsers"
+          name="maxUsers"
+          class="form-control"
+          min="1"
+        />
+
+        <div class="form-actions">
+          <button type="submit" class="action-button" [disabled]="saving()">
+            {{ saving() ? 'Saving...' : 'Save Changes' }}
+          </button>
+
+          <a routerLink="/workspace" class="cancel-link"> Cancel </a>
+        </div>
+      </form>
+    }
+  </div>
+</div>

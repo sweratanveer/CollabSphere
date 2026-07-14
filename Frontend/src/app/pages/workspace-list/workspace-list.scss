@@ -1,0 +1,192 @@
+.workspace-page {
+  min-height: 100vh;
+  padding: 40px 24px;
+  background: radial-gradient(circle at top left, #182c3a 0%, #08111b 38%, #040810 100%);
+  color: #f8fafc;
+}
+
+/* Main Card */
+.workspace-header,
+.workspace-table,
+.loading,
+.alert-danger,
+.workspace-page > p {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Header */
+
+.workspace-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  background: rgba(18, 28, 40, 0.96);
+  padding: 28px 32px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+.workspace-header h2 {
+  color: #f8fafc;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* New Workspace Button */
+
+.action-button {
+  background: linear-gradient(135deg, #4fc9a4 0%, #2d8b7c 100%);
+  color: #071014;
+  font-weight: 700;
+  padding: 14px 28px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.action-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(79, 201, 164, 0.25);
+}
+
+/* Table Card */
+
+.workspace-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+
+  background: rgba(18, 28, 40, 0.96);
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+/* Table */
+
+.workspace-table th,
+.workspace-table td {
+  padding: 18px 20px;
+  text-align: left;
+}
+
+.workspace-table th {
+  color: rgba(248, 250, 252, 0.55);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.workspace-table td {
+  color: #f8fafc;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.workspace-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Status */
+
+.status-badge {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.status-badge.active {
+  background: rgba(79, 201, 164, 0.15);
+  color: #4fc9a4;
+}
+
+.status-badge.inactive {
+  background: rgba(255, 79, 79, 0.15);
+  color: #ffd7d7;
+}
+
+/* Action Buttons */
+
+.actions-cell a,
+.actions-cell button {
+  margin-right: 8px;
+
+  padding: 8px 14px;
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.06);
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  color: #f8fafc;
+
+  cursor: pointer;
+
+  text-decoration: none;
+
+  font-size: 0.85rem;
+
+  transition: 0.3s;
+}
+
+.actions-cell a:hover,
+.actions-cell button:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.actions-cell button.danger {
+  color: #ffd7d7;
+
+  border-color: rgba(255, 79, 79, 0.35);
+}
+
+/* Error */
+
+.alert-danger {
+  padding: 16px;
+
+  border-radius: 16px;
+
+  background: rgba(255, 79, 79, 0.15);
+
+  color: #ffd7d7;
+
+  border: 1px solid rgba(255, 79, 79, 0.25);
+
+  margin-bottom: 20px;
+}
+
+/* Loading */
+
+.loading {
+  padding: 20px;
+
+  color: rgba(248, 250, 252, 0.65);
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+  .workspace-header {
+    flex-direction: column;
+
+    gap: 20px;
+  }
+
+  .workspace-table {
+    display: block;
+
+    overflow-x: auto;
+  }
+}
