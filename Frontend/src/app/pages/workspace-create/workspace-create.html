@@ -1,0 +1,75 @@
+<div class="workspace-form-page">
+  <div class="workspace-form">
+    <h2>Create Workspace</h2>
+
+    @if (error()) {
+      <div class="alert alert-danger">
+        {{ error() }}
+      </div>
+    }
+
+    <label class="field-label" for="workspaceName"> Workspace Name </label>
+
+    <input
+      id="workspaceName"
+      type="text"
+      [(ngModel)]="workspaceName"
+      class="form-control"
+      placeholder="Enter workspace name"
+    />
+
+    <label class="field-label" for="companyId"> Company </label>
+
+    <select id="companyId" [(ngModel)]="companyId" class="form-control">
+      <option value="" disabled>Select Company</option>
+
+      @for (company of companies(); track company.id) {
+        <option [value]="company.id">
+          {{ company.companyName }}
+        </option>
+      }
+    </select>
+
+    <label class="field-label" for="slug"> Workspace Slug </label>
+
+    <input
+      id="slug"
+      type="text"
+      [(ngModel)]="slug"
+      class="form-control"
+      placeholder="workspace-slug"
+    />
+
+    <label class="field-label" for="timezone"> Timezone </label>
+
+    <input
+      id="timezone"
+      type="text"
+      [(ngModel)]="timezone"
+      class="form-control"
+      placeholder="Asia/Karachi"
+    />
+
+    <label class="field-label" for="subscriptionPlan"> Subscription Plan </label>
+
+    <select id="subscriptionPlan" [(ngModel)]="subscriptionPlan" class="form-control">
+      <option value="FREE">Free</option>
+
+      <option value="PROFESSIONAL">Professional</option>
+
+      <option value="ENTERPRISE">Enterprise</option>
+    </select>
+
+    <label class="field-label" for="maxUsers"> Maximum Users </label>
+
+    <input id="maxUsers" type="number" [(ngModel)]="maxUsers" class="form-control" min="1" />
+
+    <div class="form-actions">
+      <button class="action-button" (click)="create()" [disabled]="loading()">
+        {{ loading() ? 'Creating...' : 'Create Workspace' }}
+      </button>
+
+      <a routerLink="/workspace" class="cancel-link"> Cancel </a>
+    </div>
+  </div>
+</div>

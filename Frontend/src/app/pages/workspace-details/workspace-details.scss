@@ -1,0 +1,183 @@
+.workspace-details-page {
+  min-height: 100vh;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background: radial-gradient(circle at top left, #182c3a 0%, #08111b 38%, #040810 100%);
+
+  padding: 40px 24px;
+
+  color: #f8fafc;
+}
+
+/* Card */
+
+.details-card {
+  width: 100%;
+
+  max-width: 900px;
+
+  background: rgba(18, 28, 40, 0.96);
+
+  padding: 56px 48px;
+
+  border-radius: 36px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.42);
+
+  backdrop-filter: blur(22px);
+
+  -webkit-backdrop-filter: blur(22px);
+}
+
+/* Rows */
+
+.details-row {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 18px 0;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.details-row:last-child {
+  border-bottom: none;
+}
+
+.details-row .label {
+  color: rgba(248, 250, 252, 0.55);
+
+  font-weight: 600;
+}
+
+.details-row span:last-child {
+  color: #f8fafc;
+
+  font-weight: 500;
+}
+
+/* Buttons */
+
+.details-actions {
+  display: flex;
+
+  gap: 16px;
+
+  margin-top: 35px;
+}
+
+.action-button {
+  flex: 1;
+
+  height: 54px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background: linear-gradient(135deg, #4fc9a4 0%, #2d8b7c 100%);
+
+  color: #071014;
+
+  font-weight: 700;
+
+  border-radius: 999px;
+
+  text-decoration: none;
+
+  transition: 0.3s;
+}
+
+.action-button:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 15px 35px rgba(79, 201, 164, 0.25);
+}
+
+/* Back Button */
+
+.cancel-link {
+  flex: 1;
+
+  height: 54px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  color: #f8fafc;
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+  transition: 0.3s;
+}
+
+.cancel-link:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Error */
+
+.alert-danger {
+  border-radius: 14px;
+
+  padding: 14px 16px;
+
+  margin-bottom: 20px;
+
+  background: rgba(255, 79, 79, 0.15);
+
+  color: #ffd7d7;
+
+  border: 1px solid rgba(255, 79, 79, 0.25);
+}
+
+/* Loading */
+
+.loading {
+  color: rgba(248, 250, 252, 0.65);
+
+  text-align: center;
+
+  font-size: 1.1rem;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .details-card {
+    padding: 32px 20px;
+  }
+
+  .details-row {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 8px;
+  }
+
+  .details-actions {
+    flex-direction: column;
+  }
+}

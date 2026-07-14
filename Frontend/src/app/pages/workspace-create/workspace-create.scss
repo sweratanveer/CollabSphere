@@ -1,0 +1,113 @@
+.workspace-form-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background: radial-gradient(circle at top, #1e3440 0%, #0b141a 40%, #071018 100%);
+}
+
+.workspace-form {
+  width: 100%;
+  max-width: 760px;
+  background: rgba(17, 26, 36, 0.94);
+  padding: 60px;
+  border-radius: 34px;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+.workspace-form h2 {
+  color: #fff;
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.field-label {
+  display: block;
+  color: rgba(248, 250, 252, 0.65);
+  margin-bottom: 8px;
+  margin-top: 18px;
+  font-size: 0.95rem;
+}
+
+.form-control {
+  width: 100%;
+  background: transparent;
+  color: #fff;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 14px 8px;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.form-control:focus {
+  outline: none;
+  border-bottom: 1px solid #73c8a9;
+}
+
+select.form-control {
+  cursor: pointer;
+}
+
+select.form-control option {
+  background: #16232d;
+  color: #ffffff;
+}
+
+.form-actions {
+  display: flex;
+  gap: 18px;
+  margin-top: 40px;
+}
+
+.action-button {
+  flex: 1;
+  height: 54px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #73c8a9, #4c8d7c);
+  color: #071014;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.action-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(63, 79, 96, 0.35);
+}
+
+.cancel-link {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 999px;
+  text-decoration: none;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  transition: 0.3s;
+}
+
+.cancel-link:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.alert-danger {
+  margin-bottom: 25px;
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(255, 79, 79, 0.15);
+  color: #ffd7d7;
+  border: 1px solid rgba(255, 79, 79, 0.25);
+}
