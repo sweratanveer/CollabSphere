@@ -56,17 +56,6 @@ export class Company {
   })
   isActive!: boolean;
 
-  @Column({
-    nullable: true,
-  })
-  industry?: string;
-
-  @Column({
-    type: 'text',
-    nullable: true,
-  })
-  description?: string;
-
   @OneToMany(() => User, (user) => user.company)
   users!: User[];
 
