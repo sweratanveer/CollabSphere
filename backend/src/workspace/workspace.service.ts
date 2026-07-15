@@ -1,4 +1,5 @@
 // This file contains the business logic for creating, reading, updating, and deleting workspaces.
+
 import {
   Injectable,
   NotFoundException,
@@ -77,7 +78,7 @@ export class WorkspaceService {
 
   async findAll(): Promise<Workspace[]> {
     return await this.workspaceRepository.find({
-     relations: { company: true },
+      relations: { company: true },
       order: {
         createdAt: 'DESC',
       },
@@ -100,7 +101,7 @@ export class WorkspaceService {
   async findByCompany(companyId: string): Promise<Workspace> {
     const workspace = await this.workspaceRepository.findOne({
       where: { company: { id: companyId } },
-     relations: { company: true },
+      relations: { company: true },
     });
 
     if (!workspace) {
