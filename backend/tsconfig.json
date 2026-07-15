@@ -1,25 +1,33 @@
 {
   "compilerOptions": {
-    
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "resolvePackageJsonExports": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
+    "target": "ES2022",
+
+    "outDir": "./dist",
+    "sourceMap": true,
     "declaration": true,
     "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "target": "ES2022",
-    "sourceMap": true,
-    "outDir": "./dist",
+
     "incremental": true,
-    "skipLibCheck": true,
+
+    "strict": true,
     "strictNullChecks": true,
-    "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+    "resolvePackageJsonExports": true,
+    "isolatedModules": true,
+
+    "baseUrl": "./"
   }
 }
