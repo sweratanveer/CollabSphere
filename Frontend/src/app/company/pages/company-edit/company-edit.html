@@ -19,25 +19,52 @@
 
         <div class="form-group">
 
-          <label class="form-label">
+          <label
+            class="form-label"
+            for="companyName">
             Company Name
           </label>
 
           <input
+            id="companyName"
             type="text"
             class="form-control"
             placeholder="Enter company name"
-            formControlName="name">
+            formControlName="companyName">
 
         </div>
 
         <div class="form-group">
 
-          <label class="form-label">
+          <label
+            class="form-label"
+            for="companyCode">
+            Company Code
+          </label>
+
+          <input
+            id="companyCode"
+            type="text"
+            class="form-control"
+            placeholder="Enter company code"
+            formControlName="companyCode">
+
+        </div>
+
+      </div>
+
+      <div class="form-row">
+
+        <div class="form-group">
+
+          <label
+            class="form-label"
+            for="email">
             Email
           </label>
 
           <input
+            id="email"
             type="email"
             class="form-control"
             placeholder="Enter company email"
@@ -45,17 +72,16 @@
 
         </div>
 
-      </div>
-
-      <div class="form-row">
-
         <div class="form-group">
 
-          <label class="form-label">
+          <label
+            class="form-label"
+            for="phone">
             Phone
           </label>
 
           <input
+            id="phone"
             type="text"
             class="form-control"
             placeholder="Phone number"
@@ -63,17 +89,41 @@
 
         </div>
 
+      </div>
+
+      <div class="form-row">
+
         <div class="form-group">
 
-          <label class="form-label">
+          <label
+            class="form-label"
+            for="website">
             Website
           </label>
 
           <input
+            id="website"
             type="text"
             class="form-control"
             placeholder="Website"
             formControlName="website">
+
+        </div>
+
+        <div class="form-group">
+
+          <label
+            class="form-label"
+            for="industry">
+            Industry
+          </label>
+
+          <input
+            id="industry"
+            type="text"
+            class="form-control"
+            placeholder="Industry"
+            formControlName="industry">
 
         </div>
 
@@ -83,25 +133,31 @@
 
         <div class="form-group">
 
-          <label class="form-label">
-            Industry
+          <label
+            class="form-label"
+            for="address">
+            Address
           </label>
 
           <input
+            id="address"
             type="text"
             class="form-control"
-            placeholder="Industry"
-            formControlName="industry">
+            placeholder="Address"
+            formControlName="address">
 
         </div>
 
         <div class="form-group">
 
-          <label class="form-label">
+          <label
+            class="form-label"
+            for="city">
             City
           </label>
 
           <input
+            id="city"
             type="text"
             class="form-control"
             placeholder="City"
@@ -115,11 +171,14 @@
 
         <div class="form-group">
 
-          <label class="form-label">
+          <label
+            class="form-label"
+            for="country">
             Country
           </label>
 
           <input
+            id="country"
             type="text"
             class="form-control"
             placeholder="Country"
@@ -129,15 +188,18 @@
 
         <div class="form-group">
 
-          <label class="form-label">
-            Address
+          <label
+            class="form-label"
+            for="logo">
+            Logo URL
           </label>
 
           <input
+            id="logo"
             type="text"
             class="form-control"
-            placeholder="Address"
-            formControlName="address">
+            placeholder="Paste logo URL"
+            formControlName="logo">
 
         </div>
 
@@ -145,11 +207,14 @@
 
       <div class="form-group">
 
-        <label class="form-label">
+        <label
+          class="form-label"
+          for="description">
           Description
         </label>
 
         <textarea
+          id="description"
           rows="5"
           class="form-control"
           placeholder="Company description"
@@ -158,12 +223,40 @@
 
       </div>
 
+      <div class="form-group">
+
+        <label
+          class="form-label"
+          for="companyStatus">
+          Status
+        </label>
+
+        <select
+          id="companyStatus"
+          class="form-select"
+          formControlName="isActive"
+          title="Company Status"
+          aria-label="Company Status">
+
+          <option [ngValue]="true">
+            Active
+          </option>
+
+          <option [ngValue]="false">
+            Inactive
+          </option>
+
+        </select>
+
+      </div>
+
       <div class="button-group">
 
         <button
           type="button"
           class="cancel-btn"
-          (click)="cancel()">
+          (click)="cancel()"
+          [disabled]="submitting()">
 
           Cancel
 
@@ -172,9 +265,9 @@
         <button
           type="submit"
           class="save-btn"
-          [disabled]="submitting">
+          [disabled]="submitting()">
 
-          {{ submitting ? 'Updating...' : 'Update Company' }}
+          {{ submitting() ? 'Updating...' : 'Update Company' }}
 
         </button>
 

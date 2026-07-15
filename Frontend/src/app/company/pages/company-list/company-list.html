@@ -2,55 +2,92 @@
 
   <div class="company-card">
 
-  <h2>Companies</h2>
+    <div class="page-header">
 
-  <button routerLink="/company/create">Create Company</button>
+      <h2>Companies</h2>
 
-  <table>
+      <button
+        type="button"
+        routerLink="/company/create">
+        Create Company
+      </button>
 
-    <thead>
+    </div>
 
-      <tr>
-        <th>Name</th>
-        <th>Code</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>City</th>
-        <th>Country</th>
-        <th>Action</th>
-      </tr>
+    @if (loading()) {
 
-    </thead>
+      <div class="loading-state">
+        <p>Loading companies...</p>
+      </div>
 
-    <tbody>
+    } @else if (companies().length > 0) {
 
-      <tr *ngFor="let company of companies">
+      <table>
 
-        <td>{{ company.companyName }}</td>
-        <td>{{ company.companyCode }}</td>
-        <td>{{ company.email }}</td>
-        <td>{{ company.phone }}</td>
-        <td>{{ company.city }}</td>
-        <td>{{ company.country }}</td>
+        <thead>
 
-        <td>
+          <tr>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>City</th>
+            <th>Country</th>
+            <th>Actions</th>
+          </tr>
 
-          <button (click)="viewCompany(company.id!)">View</button>
+        </thead>
 
-          <button (click)="editCompany(company.id!)">Edit</button>
+        <tbody>
 
-          <button
-            (click)="deleteCompany(company.id!)">
-            Delete
-          </button>
+          @for (company of companies(); track company.id) {
 
-        </td>
+            <tr>
 
-      </tr>
+              <td>{{ company.companyName }}</td>
+              <td>{{ company.companyCode }}</td>
+              <td>{{ company.email }}</td>
+              <td>{{ company.phone }}</td>
+              <td>{{ company.city }}</td>
+              <td>{{ company.country }}</td>
 
-    </tbody>
+              <td class="action-buttons">
 
-  </table>
+                <button
+                  type="button"
+                  (click)="viewCompany(company.id!)">
+                  View
+                </button>
+
+                <button
+                  type="button"
+                  (click)="editCompany(company.id!)">
+                  Edit
+                </button>
+
+                <button
+                  type="button"
+                  (click)="deleteCompany(company.id!)">
+                  Delete
+                </button>
+
+              </td>
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    } @else {
+
+      <div class="empty-state">
+        <p>No companies found.</p>
+      </div>
+
+    }
 
   </div>
 

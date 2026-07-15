@@ -2,7 +2,6 @@ export interface Company {
   id?: string;
   companyName: string;
   companyCode: string;
-  name?: string;
   industry?: string;
   description?: string;
   email: string;
