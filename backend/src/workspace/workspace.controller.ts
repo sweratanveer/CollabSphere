@@ -1,4 +1,5 @@
 // This file exposes the REST API endpoints for workspace management, protected by JWT auth and role-based access control.
+
 import {
   Body,
   Controller,
@@ -22,7 +23,7 @@ import { Role } from '../common/enums/role.enum';
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('workspaces')
 export class WorkspaceController {
-  constructor(private readonly workspaceService: WorkspaceService) { }
+  constructor(private readonly workspaceService: WorkspaceService) {}
 
   @Roles(Role.SUPER_ADMIN, Role.COMPANY_ADMIN)
   @Post()

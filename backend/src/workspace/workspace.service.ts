@@ -1,4 +1,5 @@
 // This file contains the business logic for creating, reading, updating, and deleting workspaces.
+
 import {
   Injectable,
   NotFoundException,
@@ -116,7 +117,10 @@ export class WorkspaceService {
   ): Promise<Workspace> {
     const workspace = await this.findOne(id);
 
-    if (updateWorkspaceDto.slug && updateWorkspaceDto.slug !== workspace.slug) {
+    if (
+      updateWorkspaceDto.slug &&
+      updateWorkspaceDto.slug !== workspace.slug
+    ) {
       const slugTaken = await this.workspaceRepository.findOne({
         where: { slug: updateWorkspaceDto.slug },
       });
