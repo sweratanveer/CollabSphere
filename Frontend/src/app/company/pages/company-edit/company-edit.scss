@@ -1,0 +1,72 @@
+.company-edit-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at top left, #182c3a 0%, #08111b 38%, #040810 100%);
+  padding: 40px 24px;
+}
+
+.company-edit-card {
+  width: 100%;
+  max-width: 900px;
+  background: rgba(18, 28, 40, 0.96);
+  padding: 56px 48px;
+  border-radius: 36px;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(22px);
+  color: #f8fafc;
+}
+
+.company-form .form-control,
+.company-form textarea {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid rgba(248, 250, 252, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  padding: 18px 16px;
+  margin-bottom: 20px;
+  color: #f8fafc;
+}
+
+.form-label {
+  color: #fff;
+  font-weight: 600;
+}
+
+.button-group {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.cancel-btn,
+.save-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 12px 20px;
+  font-weight: 700;
+}
+
+.cancel-btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f8fafc;
+}
+
+.save-btn {
+  background: linear-gradient(135deg, #4fc9a4 0%, #2d8b7c 100%);
+  color: #071014;
+}
+
+@media (max-width: 768px) {
+  .company-edit-card {
+    padding: 32px 20px;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,248 @@
+<div class="company-page">
+
+  <div class="company-card">
+
+    <div class="company-tabs">
+      <a class="active">Create Company</a>
+      <a routerLink="/company">Company List</a>
+    </div>
+
+    <form
+      [formGroup]="companyForm"
+      (ngSubmit)="createCompany()"
+      class="company-form">
+
+      <!-- Company Name -->
+
+      <label class="field-label">
+        Company Name
+      </label>
+
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Enter company name"
+        formControlName="companyName">
+
+      <small
+        class="text-danger"
+        *ngIf="submitted && f['companyName'].errors">
+
+        Company Name is required.
+
+      </small>
+
+      <!-- Company Code -->
+
+      <label class="field-label">
+        Company Code
+      </label>
+
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Enter company code"
+        formControlName="companyCode">
+
+      <small
+        class="text-danger"
+        *ngIf="submitted && f['companyCode'].errors">
+
+        Company Code is required.
+
+      </small>
+
+      <!-- Email -->
+
+      <label class="field-label">
+        Company Email
+      </label>
+
+      <input
+        type="email"
+        class="form-control"
+        placeholder="Enter email"
+        formControlName="email">
+
+      <small
+        class="text-danger"
+        *ngIf="submitted && f['email'].errors">
+
+        Valid Email is required.
+
+      </small>
+
+      <!-- Phone -->
+
+      <label class="field-label">
+        Phone
+      </label>
+
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Enter phone number"
+        formControlName="phone">
+
+      <small
+        class="text-danger"
+        *ngIf="submitted && f['phone'].errors">
+
+        Phone Number is required.
+
+      </small>
+
+      <!-- Website -->
+
+      <label class="field-label">
+        Website
+      </label>
+
+      <input
+        type="text"
+        class="form-control"
+        placeholder="https://example.com"
+        formControlName="website">
+
+      <!-- Address -->
+
+      <label class="field-label">
+        Address
+      </label>
+
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Enter Address"
+        formControlName="address">
+
+      <small
+        class="text-danger"
+        *ngIf="submitted && f['address'].errors">
+
+        Address is required.
+
+      </small>
+
+      <!-- City -->
+
+      <label class="field-label">
+        City
+      </label>
+
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Enter city"
+        formControlName="city">
+
+      <small
+        class="text-danger"
+        *ngIf="submitted && f['city'].errors">
+
+        City is required.
+
+      </small>
+
+      <!-- Country -->
+
+      <label class="field-label">
+        Country
+      </label>
+
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Enter country"
+        formControlName="country">
+
+      <small
+        class="text-danger"
+        *ngIf="submitted && f['country'].errors">
+
+        Country is required.
+
+      </small>
+
+      <!-- Logo -->
+
+      <label class="field-label">
+        Logo URL
+      </label>
+
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Paste logo URL"
+        formControlName="logo">
+
+      <!-- Status -->
+
+      <label class="field-label">
+        Status
+      </label>
+
+      <select
+        class="form-select"
+        formControlName="isActive"
+        title="Status"
+        aria-label="Status">
+
+        <option [ngValue]="true">
+          Active
+        </option>
+
+        <option [ngValue]="false">
+          Inactive
+        </option>
+
+      </select>
+
+      <!-- Success -->
+
+      <div
+        class="alert alert-success mt-3"
+        *ngIf="successMessage">
+
+        {{ successMessage }}
+
+      </div>
+
+      <!-- Error -->
+
+      <div
+        class="alert alert-danger mt-3"
+        *ngIf="errorMessage">
+
+        {{ errorMessage }}
+
+      </div>
+
+      <!-- Buttons -->
+
+      <div class="button-row">
+
+        <button
+          type="submit"
+          class="action-button">
+
+          {{ isLoading ? 'Creating...' : 'Create Company' }}
+
+        </button>
+
+        <button
+          type="button"
+          class="action-button"
+          (click)="resetForm()">
+
+          Reset
+
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

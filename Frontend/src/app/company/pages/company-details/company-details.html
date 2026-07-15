@@ -1,0 +1,119 @@
+<div class="company-details-page">
+
+  <div class="company-details-card">
+
+    <div *ngIf="loading" class="loading-section">
+      <h2>Loading Company...</h2>
+    </div>
+
+    <div *ngIf="!loading && company">
+
+      <div class="header">
+
+        <div>
+
+          <h1 class="page-title">
+            {{ company.name }}
+          </h1>
+
+          <p class="page-subtitle">
+            Company Information
+          </p>
+
+        </div>
+
+        <div class="header-buttons">
+
+          <button
+            class="edit-btn"
+            (click)="editCompany()">
+
+            Edit Company
+
+          </button>
+
+          <button
+            class="back-btn"
+            (click)="back()">
+
+            Back
+
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="details-grid">
+
+        <div class="detail-card">
+
+          <h3>Basic Information</h3>
+
+          <div class="detail-row">
+            <span>Name</span>
+            <strong>{{ company.name }}</strong>
+          </div>
+
+          <div class="detail-row">
+            <span>Email</span>
+            <strong>{{ company.email }}</strong>
+          </div>
+
+          <div class="detail-row">
+            <span>Phone</span>
+            <strong>{{ company.phone }}</strong>
+          </div>
+
+          <div class="detail-row">
+            <span>Website</span>
+            <strong>{{ company.website }}</strong>
+          </div>
+
+        </div>
+
+        <div class="detail-card">
+
+          <h3>Company Details</h3>
+
+          <div class="detail-row">
+            <span>Industry</span>
+            <strong>{{ company.industry }}</strong>
+          </div>
+
+          <div class="detail-row">
+            <span>Address</span>
+            <strong>{{ company.address }}</strong>
+          </div>
+
+          <div class="detail-row">
+            <span>City</span>
+            <strong>{{ company.city }}</strong>
+          </div>
+
+          <div class="detail-row">
+            <span>Country</span>
+            <strong>{{ company.country }}</strong>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="description-card">
+
+        <h3>Description</h3>
+
+        <p>
+
+          {{ company.description }}
+
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
