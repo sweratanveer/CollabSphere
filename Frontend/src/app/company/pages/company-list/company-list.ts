@@ -1,5 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
 import { CompanyService } from '../../services/company';
@@ -8,16 +7,15 @@ import { Company } from '../../models/company.model';
 @Component({
   selector: 'app-company-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [RouterLink],
   templateUrl: './company-list.html',
   styleUrl: './company-list.scss',
 })
 export class CompanyListComponent implements OnInit {
-
   private companyService = inject(CompanyService);
   private router = inject(Router);
 
-  companies: Company[] = [];
+  companies = signal<Company[]>([]);
 
   ngOnInit(): void {
     this.loadCompanies();
@@ -25,30 +23,20 @@ export class CompanyListComponent implements OnInit {
 
   loadCompanies(): void {
     this.companyService.getCompanies().subscribe({
-      next: (response) => {
-        this.companies = response;
-      },
-      error: (error) => {
-        console.error(error);
-      },
+      next: (response) => this.companies.set(response),
+      error: (error) => console.error(error),
     });
   }
 
   deleteCompany(id: string): void {
-
     if (!confirm('Delete this company?')) {
       return;
     }
 
     this.companyService.deleteCompany(id).subscribe({
-      next: () => {
-        this.loadCompanies();
-      },
-      error: (error) => {
-        console.error(error);
-      },
+      next: () => this.loadCompanies(),
+      error: (error) => console.error(error),
     });
-
   }
 
   viewCompany(id: string): void {
@@ -58,5 +46,4 @@ export class CompanyListComponent implements OnInit {
   editCompany(id: string): void {
     this.router.navigate(['/company/edit', id]);
   }
-
 }

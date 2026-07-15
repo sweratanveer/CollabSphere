@@ -108,7 +108,7 @@ export const routes: Routes = [
   path: 'workspace/details/:id',
   component: WorkspaceDetailsComponent,
   canActivate: [authGuard, roleGuard],
-  data: { requiredRole: 'COMPANY_ADMIN' },
+  data: { requiredRole: 'Employee' },
 },
   {
     path: 'workspace/edit/:id',

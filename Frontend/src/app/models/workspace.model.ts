@@ -40,3 +40,8 @@ export interface UpdateWorkspaceRequest {
   maxUsers?: number;
   isActive?: boolean;
 }
+
+export interface CompanyOption {
+  id: string;
+  companyName: string;
+}

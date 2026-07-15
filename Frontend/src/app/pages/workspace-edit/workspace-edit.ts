@@ -1,86 +1,57 @@
-import { Component, OnInit, signal } from '@angular/core';
-
-import { CommonModule } from '@angular/common';
-
+// This file provides the form to edit an existing workspace's details, using signals for local form state.
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
+import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
-import { HttpErrorResponse } from '@angular/common/http';
-
 import { WorkspaceService } from '../../services/workspace';
-
-import { Workspace, UpdateWorkspaceRequest, SubscriptionPlan } from '../../models/workspace.model';
+import { UpdateWorkspaceRequest, SubscriptionPlan, Workspace } from '../../models/workspace.model';
 
 @Component({
   selector: 'app-workspace-edit',
-
   standalone: true,
-
-  imports: [CommonModule, FormsModule, RouterLink],
-
+  imports: [FormsModule, RouterLink],
   templateUrl: './workspace-edit.html',
-
   styleUrl: './workspace-edit.scss',
 })
 export class WorkspaceEditComponent implements OnInit {
-  workspaceId = '';
+  private workspaceService = inject(WorkspaceService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
-  workspaceName = '';
+  workspaceId = signal('');
+  workspaceName = signal('');
+  slug = signal('');
+  timezone = signal('');
+  subscriptionPlan = signal<SubscriptionPlan>('FREE');
+  maxUsers = signal(5);
 
-  slug = '';
-
-  timezone = '';
-
-  subscriptionPlan: SubscriptionPlan = 'FREE';
-
-  maxUsers = 5;
-
-  loading = signal<boolean>(false);
-
-  saving = signal<boolean>(false);
-
-  error = signal<string>('');
-
-  constructor(
-    private workspaceService: WorkspaceService,
-
-    private route: ActivatedRoute,
-
-    private router: Router,
-  ) {}
+  loading = signal(false);
+  saving = signal(false);
+  error = signal('');
 
   ngOnInit(): void {
-    this.workspaceId = this.route.snapshot.paramMap.get('id') ?? '';
+    const id = this.route.snapshot.paramMap.get('id') ?? '';
+    this.workspaceId.set(id);
 
-    if (!this.workspaceId) {
+    if (!id) {
       this.error.set('Invalid workspace');
-
       return;
     }
 
     this.loading.set(true);
 
-    this.workspaceService.findOne(this.workspaceId).subscribe({
+    this.workspaceService.findOne(id).subscribe({
       next: (workspace: Workspace) => {
-        this.workspaceName = workspace.workspaceName;
-
-        this.slug = workspace.slug;
-
-        this.timezone = workspace.timezone;
-
-        this.subscriptionPlan = workspace.subscriptionPlan;
-
-        this.maxUsers = workspace.maxUsers;
-
+        this.workspaceName.set(workspace.workspaceName);
+        this.slug.set(workspace.slug);
+        this.timezone.set(workspace.timezone);
+        this.subscriptionPlan.set(workspace.subscriptionPlan);
+        this.maxUsers.set(workspace.maxUsers);
         this.loading.set(false);
       },
-
-      error: (err) => {
-        console.log(err);
-
+      error: () => {
         this.error.set('Failed to load workspace');
-
         this.loading.set(false);
       },
     });
@@ -88,39 +59,25 @@ export class WorkspaceEditComponent implements OnInit {
 
   save(): void {
     this.saving.set(true);
-
     this.error.set('');
 
     const payload: UpdateWorkspaceRequest = {
-      workspaceName: this.workspaceName,
-
-      slug: this.slug,
-
-      timezone: this.timezone,
-
-      subscriptionPlan: this.subscriptionPlan,
-
-      maxUsers: this.maxUsers,
+      workspaceName: this.workspaceName(),
+      slug: this.slug(),
+      timezone: this.timezone(),
+      subscriptionPlan: this.subscriptionPlan(),
+      maxUsers: this.maxUsers(),
     };
 
-    this.workspaceService
-
-      .update(this.workspaceId, payload)
-
-      .subscribe({
-        next: () => {
-          this.saving.set(false);
-
-          this.router.navigate(['/workspace']);
-        },
-
-        error: (err: HttpErrorResponse) => {
-          console.log(err);
-
-          this.error.set(err.error?.message || 'Update failed');
-
-          this.saving.set(false);
-        },
-      });
+    this.workspaceService.update(this.workspaceId(), payload).subscribe({
+      next: () => {
+        this.saving.set(false);
+        this.router.navigate(['/workspace']);
+      },
+      error: (err: HttpErrorResponse) => {
+        this.saving.set(false);
+        this.error.set(err?.error?.message || 'Failed to update workspace');
+      },
+    });
   }
 }

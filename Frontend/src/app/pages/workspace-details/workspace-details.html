@@ -1,67 +1,45 @@
 <div class="workspace-details-page">
+  <h2>Workspace Details</h2>
+
   @if (error()) {
-    <div class="alert alert-danger">
-      {{ error() }}
-    </div>
+    <div class="alert alert-danger">{{ error() }}</div>
   }
 
   @if (loading()) {
-    <div class="loading">Loading workspace...</div>
+    <div class="loading">Loading...</div>
   }
 
-  @if (workspace(); as workspace) {
+  @if (workspace(); as w) {
     <div class="details-card">
-      <h2>Workspace Details</h2>
-
       <div class="details-row">
-        <span> Name </span>
-
-        <strong>
-          {{ workspace.workspaceName }}
-        </strong>
+        <span class="label">Name</span><span>{{ w.workspaceName }}</span>
+      </div>
+      <div class="details-row">
+        <span class="label">Slug</span><span>{{ w.slug }}</span>
+      </div>
+      <div class="details-row">
+        <span class="label">Company</span><span>{{ w.company?.companyName }}</span>
+      </div>
+      <div class="details-row">
+        <span class="label">Timezone</span><span>{{ w.timezone }}</span>
+      </div>
+      <div class="details-row">
+        <span class="label">Subscription Plan</span><span>{{ w.subscriptionPlan }}</span>
+      </div>
+      <div class="details-row">
+        <span class="label">Max Users</span><span>{{ w.maxUsers }}</span>
+      </div>
+      <div class="details-row">
+        <span class="label">Status</span><span>{{ w.isActive ? 'Active' : 'Inactive' }}</span>
+      </div>
+      <div class="details-row">
+        <span class="label">Created</span><span>{{ w.createdAt | date: 'medium' }}</span>
       </div>
 
-      <div class="details-row">
-        <span> Slug </span>
-
-        <strong>
-          {{ workspace.slug }}
-        </strong>
+      <div class="details-actions">
+        <a [routerLink]="['/workspace/edit', w.id]" class="action-button">Edit</a>
+        <a routerLink="/workspace" class="cancel-link">Back to list</a>
       </div>
-
-      <div class="details-row">
-        <span> Company </span>
-
-        <strong>
-          {{ workspace.company?.companyName }}
-        </strong>
-      </div>
-
-      <div class="details-row">
-        <span> Plan </span>
-
-        <strong>
-          {{ workspace.subscriptionPlan }}
-        </strong>
-      </div>
-
-      <div class="details-row">
-        <span> Max Users </span>
-
-        <strong>
-          {{ workspace.maxUsers }}
-        </strong>
-      </div>
-
-      <div class="details-row">
-        <span> Status </span>
-
-        <strong>
-          {{ workspace.isActive ? 'Active' : 'Inactive' }}
-        </strong>
-      </div>
-
-      <a class="action-button" [routerLink]="['/workspace/edit', workspace.id]"> Edit Workspace </a>
     </div>
   }
 </div>

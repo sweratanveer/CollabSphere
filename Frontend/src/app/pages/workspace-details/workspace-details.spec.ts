@@ -19,11 +19,7 @@ describe('WorkspaceDetailsComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            snapshot: {
-              paramMap: {
-                get: () => 'test-id',
-              },
-            },
+            snapshot: { paramMap: { get: () => 'test-id' } },
           },
         },
       ],
