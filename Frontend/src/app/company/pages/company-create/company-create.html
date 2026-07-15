@@ -24,11 +24,13 @@
         placeholder="Enter company name"
         formControlName="companyName">
 
-      @if (submitted() && f['companyName'].errors) {
-        <small class="text-danger">
-          Company Name is required.
-        </small>
-      }
+      <small
+        class="text-danger"
+        *ngIf="submitted && f['companyName'].errors">
+
+        Company Name is required.
+
+      </small>
 
       <!-- Company Code -->
 
@@ -42,11 +44,13 @@
         placeholder="Enter company code"
         formControlName="companyCode">
 
-      @if (submitted() && f['companyCode'].errors) {
-        <small class="text-danger">
-          Company Code is required.
-        </small>
-      }
+      <small
+        class="text-danger"
+        *ngIf="submitted && f['companyCode'].errors">
+
+        Company Code is required.
+
+      </small>
 
       <!-- Email -->
 
@@ -60,11 +64,13 @@
         placeholder="Enter email"
         formControlName="email">
 
-      @if (submitted() && f['email'].errors) {
-        <small class="text-danger">
-          Valid Email is required.
-        </small>
-      }
+      <small
+        class="text-danger"
+        *ngIf="submitted && f['email'].errors">
+
+        Valid Email is required.
+
+      </small>
 
       <!-- Phone -->
 
@@ -78,11 +84,13 @@
         placeholder="Enter phone number"
         formControlName="phone">
 
-      @if (submitted() && f['phone'].errors) {
-        <small class="text-danger">
-          Phone Number is required.
-        </small>
-      }
+      <small
+        class="text-danger"
+        *ngIf="submitted && f['phone'].errors">
+
+        Phone Number is required.
+
+      </small>
 
       <!-- Website -->
 
@@ -108,11 +116,13 @@
         placeholder="Enter Address"
         formControlName="address">
 
-      @if (submitted() && f['address'].errors) {
-        <small class="text-danger">
-          Address is required.
-        </small>
-      }
+      <small
+        class="text-danger"
+        *ngIf="submitted && f['address'].errors">
+
+        Address is required.
+
+      </small>
 
       <!-- City -->
 
@@ -126,11 +136,13 @@
         placeholder="Enter city"
         formControlName="city">
 
-      @if (submitted() && f['city'].errors) {
-        <small class="text-danger">
-          City is required.
-        </small>
-      }
+      <small
+        class="text-danger"
+        *ngIf="submitted && f['city'].errors">
+
+        City is required.
+
+      </small>
 
       <!-- Country -->
 
@@ -144,11 +156,13 @@
         placeholder="Enter country"
         formControlName="country">
 
-      @if (submitted() && f['country'].errors) {
-        <small class="text-danger">
-          Country is required.
-        </small>
-      }
+      <small
+        class="text-danger"
+        *ngIf="submitted && f['country'].errors">
+
+        Country is required.
+
+      </small>
 
       <!-- Logo -->
 
@@ -186,19 +200,23 @@
 
       <!-- Success -->
 
-      @if (successMessage()) {
-        <div class="alert alert-success mt-3">
-          {{ successMessage() }}
-        </div>
-      }
+      <div
+        class="alert alert-success mt-3"
+        *ngIf="successMessage">
+
+        {{ successMessage }}
+
+      </div>
 
       <!-- Error -->
 
-      @if (errorMessage()) {
-        <div class="alert alert-danger mt-3">
-          {{ errorMessage() }}
-        </div>
-      }
+      <div
+        class="alert alert-danger mt-3"
+        *ngIf="errorMessage">
+
+        {{ errorMessage }}
+
+      </div>
 
       <!-- Buttons -->
 
@@ -206,18 +224,16 @@
 
         <button
           type="submit"
-          class="action-button"
-          [disabled]="isLoading()">
+          class="action-button">
 
-          {{ isLoading() ? 'Creating...' : 'Create Company' }}
+          {{ isLoading ? 'Creating...' : 'Create Company' }}
 
         </button>
 
         <button
           type="button"
           class="action-button"
-          (click)="resetForm()"
-          [disabled]="isLoading()">
+          (click)="resetForm()">
 
           Reset
 

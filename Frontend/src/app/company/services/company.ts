@@ -9,9 +9,9 @@ import { Company } from '../models/company.model';
 })
 export class CompanyService {
 
-  private readonly http = inject(HttpClient);
+  private http = inject(HttpClient);
 
-  private readonly api = 'http://localhost:3000/companies';
+  private api = 'http://localhost:3000/company';
 
   getCompanies(): Observable<Company[]> {
     return this.http.get<Company[]>(this.api);
@@ -35,8 +35,8 @@ export class CompanyService {
     );
   }
 
-  deleteCompany(id: string): Observable<void> {
-    return this.http.delete<void>(
+  deleteCompany(id: string): Observable<any> {
+    return this.http.delete(
       `${this.api}/${id}`,
     );
   }

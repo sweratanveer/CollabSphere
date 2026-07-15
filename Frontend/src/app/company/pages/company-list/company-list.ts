@@ -1,13 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DestroyRef,
-  inject,
-  signal,
-} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { CompanyService } from '../../services/company';
 import { Company } from '../../models/company.model';
@@ -15,97 +8,55 @@ import { Company } from '../../models/company.model';
 @Component({
   selector: 'app-company-list',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterLink,
-  ],
+  imports: [CommonModule, RouterLink],
   templateUrl: './company-list.html',
   styleUrl: './company-list.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CompanyListComponent {
+export class CompanyListComponent implements OnInit {
 
-  private readonly companyService = inject(CompanyService);
-  private readonly router = inject(Router);
-  private readonly destroyRef = inject(DestroyRef);
+  private companyService = inject(CompanyService);
+  private router = inject(Router);
 
-  readonly companies = signal<Company[]>([]);
-  readonly loading = signal<boolean>(false);
+  companies: Company[] = [];
 
-  constructor() {
+  ngOnInit(): void {
     this.loadCompanies();
   }
 
   loadCompanies(): void {
-
-    this.loading.set(true);
-
-    this.companyService
-      .getCompanies()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-
-        next: (companies) => {
-
-          this.companies.set(companies);
-
-          this.loading.set(false);
-
-        },
-
-        error: (error) => {
-
-          console.error('Failed to load companies:', error);
-
-          this.loading.set(false);
-
-        },
-
-      });
-
+    this.companyService.getCompanies().subscribe({
+      next: (response) => {
+        this.companies = response;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
   }
 
   deleteCompany(id: string): void {
 
-    const confirmed = confirm(
-      'Are you sure you want to delete this company?'
-    );
-
-    if (!confirmed) {
+    if (!confirm('Delete this company?')) {
       return;
     }
 
-    this.companyService
-      .deleteCompany(id)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-
-        next: () => {
-
-          this.loadCompanies();
-
-        },
-
-        error: (error) => {
-
-          console.error('Failed to delete company:', error);
-
-        },
-
-      });
+    this.companyService.deleteCompany(id).subscribe({
+      next: () => {
+        this.loadCompanies();
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
 
   }
 
   viewCompany(id: string): void {
-
     this.router.navigate(['/company/details', id]);
-
   }
 
   editCompany(id: string): void {
-
     this.router.navigate(['/company/edit', id]);
-
   }
 
 }

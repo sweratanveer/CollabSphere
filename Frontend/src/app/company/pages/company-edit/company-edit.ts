@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -20,83 +20,130 @@ import { Company } from '../../models/company.model';
     RouterModule,
   ],
   templateUrl: './company-edit.html',
-  styleUrl: './company-edit.scss',
+  styleUrls: ['./company-edit.scss'],
 })
-export class CompanyEditComponent {
+export class CompanyEditComponent implements OnInit {
 
-  private readonly fb = inject(FormBuilder);
-  private readonly companyService = inject(CompanyService);
-  private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
+  companyForm!: FormGroup;
 
-  readonly loading = signal(false);
-  readonly submitting = signal(false);
+  companyId!: string;
 
-  readonly companyId = this.route.snapshot.paramMap.get('id') ?? '';
+  loading = false;
 
-  readonly companyForm: FormGroup = this.fb.group({
-    companyName: ['', Validators.required],
-    companyCode: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
-    phone: ['', Validators.required],
-    website: [''],
-    industry: [''],
-    address: ['', Validators.required],
-    city: ['', Validators.required],
-    country: ['', Validators.required],
-    description: [''],
-    logo: [''],
-    isActive: [true],
-  });
+  submitting = false;
 
-  constructor() {
-    if (this.companyId) {
-      this.loadCompany();
-    }
+  constructor(
+    private fb: FormBuilder,
+    private companyService: CompanyService,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {}
+
+  ngOnInit(): void {
+
+    this.companyId = this.route.snapshot.paramMap.get('id')!;
+
+    this.initializeForm();
+
+    this.loadCompany();
+
+  }
+
+  initializeForm(): void {
+
+    this.companyForm = this.fb.group({
+
+      name: ['', Validators.required],
+
+      email: ['', [Validators.required, Validators.email]],
+
+      phone: ['', Validators.required],
+
+      website: [''],
+
+      industry: ['', Validators.required],
+
+      address: ['', Validators.required],
+
+      city: ['', Validators.required],
+
+      country: ['', Validators.required],
+
+      description: [''],
+
+    });
+
   }
 
   loadCompany(): void {
-    this.loading.set(true);
+
+    this.loading = true;
 
     this.companyService.getCompany(this.companyId).subscribe({
+
       next: (company: Company) => {
-        this.companyForm.patchValue(company);
-        this.loading.set(false);
+
+        this.companyForm.patchValue({
+          ...company,
+          name: company.name ?? company.companyName,
+        });
+
+        this.loading = false;
+
       },
-      error: (error) => {
+
+      error: (error: unknown) => {
+
         console.error(error);
-        this.loading.set(false);
+
+        this.loading = false;
+
       },
+
     });
+
   }
 
   updateCompany(): void {
+
     if (this.companyForm.invalid) {
+
       this.companyForm.markAllAsTouched();
+
       return;
+
     }
 
-    this.submitting.set(true);
+    this.submitting = true;
 
     this.companyService
-      .updateCompany(
-        this.companyId,
-        this.companyForm.getRawValue()
-      )
+      .updateCompany(this.companyId, this.companyForm.value)
       .subscribe({
+
         next: () => {
-          this.submitting.set(false);
+
+          this.submitting = false;
+
           this.router.navigate(['/company']);
+
         },
+
         error: (error) => {
+
           console.error(error);
-          this.submitting.set(false);
+
+          this.submitting = false;
+
         },
+
       });
+
   }
 
   cancel(): void {
+
     this.router.navigate(['/company']);
+
   }
 
 }

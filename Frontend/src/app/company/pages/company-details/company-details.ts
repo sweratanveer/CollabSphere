@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
@@ -10,66 +10,72 @@ import { Company } from '../../models/company.model';
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule,
+    RouterModule
   ],
   templateUrl: './company-details.html',
-  styleUrl: './company-details.scss',
+  styleUrls: ['./company-details.scss']
 })
-export class CompanyDetailsComponent {
+export class CompanyDetailsComponent implements OnInit {
 
-  private readonly companyService = inject(CompanyService);
-  private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
+  company!: Company;
 
-  readonly company = signal<Company | null>(null);
-  readonly loading = signal(true);
+  loading = true;
 
-  constructor() {
+  constructor(
+    private companyService: CompanyService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+
     const id = this.route.snapshot.paramMap.get('id');
 
     if (id) {
       this.getCompany(id);
-    } else {
-      this.loading.set(false);
     }
+
   }
 
-  getCompany(id: string): void {
+  getCompany(id: string) {
+
     this.companyService.getCompany(id).subscribe({
 
       next: (response: Company) => {
 
-        this.company.set({
+        this.company = {
           ...response,
+          name: response.name ?? response.companyName,
           industry: response.industry ?? '',
           description: response.description ?? '',
-        });
+        };
 
-        this.loading.set(false);
-
-      },
-
-      error: (error: unknown) => {
-
-        console.error(error);
-
-        this.loading.set(false);
+        this.loading = false;
 
       },
+
+      error: (err: unknown) => {
+
+        console.error(err);
+
+        this.loading = false;
+
+      }
 
     });
+
   }
 
-  editCompany(): void {
-    const company = this.company();
+  editCompany() {
 
-    if (company?.id) {
-      this.router.navigate(['/company/edit', company.id]);
-    }
+    this.router.navigate(['/company/edit', this.company.id]);
+
   }
 
-  back(): void {
+  back() {
+
     this.router.navigate(['/company']);
+
   }
 
 }
