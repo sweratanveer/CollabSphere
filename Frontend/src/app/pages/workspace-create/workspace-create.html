@@ -1,0 +1,83 @@
+<div class="workspace-form-page">
+  <h2>Create Workspace</h2>
+
+  @if (error()) {
+    <div class="alert alert-danger">{{ error() }}</div>
+  }
+
+  <div class="workspace-form">
+    <label class="field-label" for="workspaceName">Workspace Name</label>
+    <input
+      id="workspaceName"
+      type="text"
+      [ngModel]="workspaceName()"
+      (ngModelChange)="workspaceName.set($event)"
+      class="form-control"
+      placeholder="e.g. Acme Team Workspace"
+    />
+
+    <label class="field-label" for="companyId">Company</label>
+    <select
+      id="companyId"
+      [ngModel]="companyId()"
+      (ngModelChange)="companyId.set($event)"
+      class="form-control"
+      aria-label="Company"
+    >
+      <option value="" disabled selected>Select a company</option>
+      @for (company of companies(); track company.id) {
+        <option [value]="company.id">{{ company.companyName }}</option>
+      }
+    </select>
+
+    <label class="field-label" for="slug">Slug (optional)</label>
+    <input
+      id="slug"
+      type="text"
+      [ngModel]="slug()"
+      (ngModelChange)="slug.set($event)"
+      class="form-control"
+      placeholder="auto-generated if left blank"
+    />
+
+    <label class="field-label" for="timezone">Timezone</label>
+    <input
+      id="timezone"
+      type="text"
+      [ngModel]="timezone()"
+      (ngModelChange)="timezone.set($event)"
+      class="form-control"
+      placeholder="e.g. Asia/Karachi"
+    />
+
+    <label class="field-label" for="subscriptionPlan">Subscription Plan</label>
+    <select
+      id="subscriptionPlan"
+      [ngModel]="subscriptionPlan()"
+      (ngModelChange)="subscriptionPlan.set($event)"
+      class="form-control"
+      aria-label="Subscription Plan"
+    >
+      <option value="FREE">Free</option>
+      <option value="PROFESSIONAL">Professional</option>
+      <option value="ENTERPRISE">Enterprise</option>
+    </select>
+
+    <label class="field-label" for="maxUsers">Max Users</label>
+    <input
+      id="maxUsers"
+      type="number"
+      [ngModel]="maxUsers()"
+      (ngModelChange)="maxUsers.set($event)"
+      class="form-control"
+      min="1"
+    />
+
+    <div class="form-actions">
+      <button type="button" class="action-button" (click)="create()" [disabled]="loading()">
+        {{ loading() ? 'Creating...' : 'Create Workspace' }}
+      </button>
+      <a routerLink="/workspace" class="cancel-link">Cancel</a>
+    </div>
+  </div>
+</div>

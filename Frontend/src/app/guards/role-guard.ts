@@ -9,13 +9,16 @@ export const roleGuard: CanActivateFn = (route) => {
   const requiredRole = route.data['requiredRole'] as string | undefined;
 
   if (!requiredRole) {
+    alert(2)
     return true;
   }
 
   if (auth.hasRole(requiredRole)) {
+    console.log(auth)
+    alert(3)
     return true;
   }
-
+alert(4)
   auth.logout();
   router.navigate(['/login']);
   return false;

@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 import { CompanyService } from '../../services/company';
@@ -8,74 +7,52 @@ import { Company } from '../../models/company.model';
 @Component({
   selector: 'app-company-details',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule
-  ],
+  imports: [RouterModule],
   templateUrl: './company-details.html',
-  styleUrls: ['./company-details.scss']
+  styleUrls: ['./company-details.scss'],
 })
 export class CompanyDetailsComponent implements OnInit {
+  private companyService = inject(CompanyService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
-  company!: Company;
-
-  loading = true;
-
-  constructor(
-    private companyService: CompanyService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+  company = signal<Company | null>(null);
+  loading = signal(true);
 
   ngOnInit(): void {
-
     const id = this.route.snapshot.paramMap.get('id');
 
     if (id) {
       this.getCompany(id);
     }
-
   }
 
   getCompany(id: string) {
-
     this.companyService.getCompany(id).subscribe({
-
       next: (response: Company) => {
-
-        this.company = {
+        this.company.set({
           ...response,
           name: response.name ?? response.companyName,
           industry: response.industry ?? '',
           description: response.description ?? '',
-        };
-
-        this.loading = false;
-
+        });
+        this.loading.set(false);
       },
-
       error: (err: unknown) => {
-
         console.error(err);
-
-        this.loading = false;
-
-      }
-
+        this.loading.set(false);
+      },
     });
-
   }
 
   editCompany() {
-
-    this.router.navigate(['/company/edit', this.company.id]);
-
+    const c = this.company();
+    if (c) {
+      this.router.navigate(['/company/edit', c.id]);
+    }
   }
 
   back() {
-
     this.router.navigate(['/company']);
-
   }
-
 }
