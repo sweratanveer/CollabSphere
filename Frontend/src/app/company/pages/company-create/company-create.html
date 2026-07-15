@@ -1,133 +1,248 @@
 <div class="company-page">
+
   <div class="company-card">
+
     <div class="company-tabs">
       <a class="active">Create Company</a>
       <a routerLink="/company">Company List</a>
     </div>
 
-    <form [formGroup]="companyForm" (ngSubmit)="createCompany()" class="company-form">
-      <label class="field-label" for="companyName">Company Name</label>
+    <form
+      [formGroup]="companyForm"
+      (ngSubmit)="createCompany()"
+      class="company-form">
+
+      <!-- Company Name -->
+
+      <label class="field-label">
+        Company Name
+      </label>
+
       <input
-        id="companyName"
         type="text"
         class="form-control"
         placeholder="Enter company name"
-        formControlName="companyName"
-      />
-      @if (submitted() && f['companyName'].errors) {
-        <small class="text-danger">Company Name is required.</small>
-      }
+        formControlName="companyName">
 
-      <label class="field-label" for="companyCode">Company Code</label>
+      <small
+        class="text-danger"
+        *ngIf="submitted && f['companyName'].errors">
+
+        Company Name is required.
+
+      </small>
+
+      <!-- Company Code -->
+
+      <label class="field-label">
+        Company Code
+      </label>
+
       <input
-        id="companyCode"
         type="text"
         class="form-control"
         placeholder="Enter company code"
-        formControlName="companyCode"
-      />
-      @if (submitted() && f['companyCode'].errors) {
-        <small class="text-danger">Company Code is required.</small>
-      }
+        formControlName="companyCode">
 
-      <label class="field-label" for="email">Company Email</label>
+      <small
+        class="text-danger"
+        *ngIf="submitted && f['companyCode'].errors">
+
+        Company Code is required.
+
+      </small>
+
+      <!-- Email -->
+
+      <label class="field-label">
+        Company Email
+      </label>
+
       <input
-        id="email"
         type="email"
         class="form-control"
         placeholder="Enter email"
-        formControlName="email"
-      />
-      @if (submitted() && f['email'].errors) {
-        <small class="text-danger">Valid Email is required.</small>
-      }
+        formControlName="email">
 
-      <label class="field-label" for="phone">Phone</label>
+      <small
+        class="text-danger"
+        *ngIf="submitted && f['email'].errors">
+
+        Valid Email is required.
+
+      </small>
+
+      <!-- Phone -->
+
+      <label class="field-label">
+        Phone
+      </label>
+
       <input
-        id="phone"
         type="text"
         class="form-control"
         placeholder="Enter phone number"
-        formControlName="phone"
-      />
-      @if (submitted() && f['phone'].errors) {
-        <small class="text-danger">Phone Number is required.</small>
-      }
+        formControlName="phone">
 
-      <label class="field-label" for="website">Website</label>
+      <small
+        class="text-danger"
+        *ngIf="submitted && f['phone'].errors">
+
+        Phone Number is required.
+
+      </small>
+
+      <!-- Website -->
+
+      <label class="field-label">
+        Website
+      </label>
+
       <input
-        id="website"
         type="text"
         class="form-control"
         placeholder="https://example.com"
-        formControlName="website"
-      />
+        formControlName="website">
 
-      <label class="field-label" for="address">Address</label>
+      <!-- Address -->
+
+      <label class="field-label">
+        Address
+      </label>
+
       <input
-        id="address"
         type="text"
         class="form-control"
         placeholder="Enter Address"
-        formControlName="address"
-      />
-      @if (submitted() && f['address'].errors) {
-        <small class="text-danger">Address is required.</small>
-      }
+        formControlName="address">
 
-      <label class="field-label" for="city">City</label>
+      <small
+        class="text-danger"
+        *ngIf="submitted && f['address'].errors">
+
+        Address is required.
+
+      </small>
+
+      <!-- City -->
+
+      <label class="field-label">
+        City
+      </label>
+
       <input
-        id="city"
         type="text"
         class="form-control"
         placeholder="Enter city"
-        formControlName="city"
-      />
-      @if (submitted() && f['city'].errors) {
-        <small class="text-danger">City is required.</small>
-      }
+        formControlName="city">
 
-      <label class="field-label" for="country">Country</label>
+      <small
+        class="text-danger"
+        *ngIf="submitted && f['city'].errors">
+
+        City is required.
+
+      </small>
+
+      <!-- Country -->
+
+      <label class="field-label">
+        Country
+      </label>
+
       <input
-        id="country"
         type="text"
         class="form-control"
         placeholder="Enter country"
-        formControlName="country"
-      />
-      @if (submitted() && f['country'].errors) {
-        <small class="text-danger">Country is required.</small>
-      }
+        formControlName="country">
 
-      <label class="field-label" for="logo">Logo URL</label>
+      <small
+        class="text-danger"
+        *ngIf="submitted && f['country'].errors">
+
+        Country is required.
+
+      </small>
+
+      <!-- Logo -->
+
+      <label class="field-label">
+        Logo URL
+      </label>
+
       <input
-        id="logo"
         type="text"
         class="form-control"
         placeholder="Paste logo URL"
-        formControlName="logo"
-      />
+        formControlName="logo">
 
-      <label class="field-label" for="isActive">Status</label>
-      <select id="isActive" class="form-select" formControlName="isActive" aria-label="Status">
-        <option [ngValue]="true">Active</option>
-        <option [ngValue]="false">Inactive</option>
+      <!-- Status -->
+
+      <label class="field-label">
+        Status
+      </label>
+
+      <select
+        class="form-select"
+        formControlName="isActive"
+        title="Status"
+        aria-label="Status">
+
+        <option [ngValue]="true">
+          Active
+        </option>
+
+        <option [ngValue]="false">
+          Inactive
+        </option>
+
       </select>
 
-      @if (successMessage()) {
-        <div class="alert alert-success mt-3">{{ successMessage() }}</div>
-      }
+      <!-- Success -->
 
-      @if (errorMessage()) {
-        <div class="alert alert-danger mt-3">{{ errorMessage() }}</div>
-      }
+      <div
+        class="alert alert-success mt-3"
+        *ngIf="successMessage">
+
+        {{ successMessage }}
+
+      </div>
+
+      <!-- Error -->
+
+      <div
+        class="alert alert-danger mt-3"
+        *ngIf="errorMessage">
+
+        {{ errorMessage }}
+
+      </div>
+
+      <!-- Buttons -->
 
       <div class="button-row">
-        <button type="submit" class="action-button">
-          {{ isLoading() ? 'Creating...' : 'Create Company' }}
+
+        <button
+          type="submit"
+          class="action-button">
+
+          {{ isLoading ? 'Creating...' : 'Create Company' }}
+
         </button>
-        <button type="button" class="action-button" (click)="resetForm()">Reset</button>
+
+        <button
+          type="button"
+          class="action-button"
+          (click)="resetForm()">
+
+          Reset
+
+        </button>
+
       </div>
+
     </form>
+
   </div>
+
 </div>
