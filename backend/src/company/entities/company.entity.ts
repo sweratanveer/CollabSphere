@@ -13,19 +13,15 @@ import {
 
 import { User } from '../../users/entities/user.entity';
 
-
 @Entity('companies')
 export class Company {
-
   // Unique company identifier
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-
   // Company name
   @Column()
   companyName!: string;
-
 
   // Unique company code
   @Column({
@@ -33,18 +29,15 @@ export class Company {
   })
   companyCode!: string;
 
-
   // Company email
   @Column({
     unique: true,
   })
   email!: string;
 
-
   // Company contact number
   @Column()
   phone!: string;
-
 
   // Company website
   @Column({
@@ -52,21 +45,17 @@ export class Company {
   })
   website?: string;
 
-
   // Company address
   @Column()
   address!: string;
-
 
   // Company city
   @Column()
   city!: string;
 
-
   // Company country
   @Column()
   country!: string;
-
 
   // Company logo URL
   @Column({
@@ -74,20 +63,17 @@ export class Company {
   })
   logo?: string;
 
-
   // Company active status
   @Column({
     default: true,
   })
   isActive!: boolean;
 
-
   // Company industry
   @Column({
     nullable: true,
   })
   industry?: string;
-
 
   // Company description
   @Column({
@@ -96,21 +82,17 @@ export class Company {
   })
   description?: string;
 
-
   // One company can have multiple users
   // Reverse relation of User entity ManyToOne
-
   @OneToMany(
     () => User,
     (user) => user.company,
   )
   users!: User[];
 
-
   // Record creation date
   @CreateDateColumn()
   createdAt!: Date;
-
 
   // Record update date
   @UpdateDateColumn()

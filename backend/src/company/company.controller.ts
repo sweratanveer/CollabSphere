@@ -6,40 +6,51 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 
 import { CompanyService } from './company.service';
-import { Company } from './entities/company.entity';
+import { CreateCompanyDto } from './dto/create-company.dto';
+import { UpdateCompanyDto } from './dto/update-company.dto';
 
-@Controller('company')
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
+import { Roles } from '../common/decorators/roles.decorator';
+import { Role } from '../common/enums/role.enum';
+
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Controller('companies')
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
+  @Roles(Role.SUPER_ADMIN)
+  @Post()
+  create(@Body() createCompanyDto: CreateCompanyDto) {
+    return this.companyService.create(createCompanyDto);
+  }
+
   @Get()
-  findAll(): Promise<Company[]> {
+  findAll() {
     return this.companyService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<Company | null> {
+  findOne(@Param('id') id: string) {
     return this.companyService.findOne(id);
   }
 
-  @Post()
-  create(@Body() body: Partial<Company>): Promise<Company> {
-    return this.companyService.create(body);
-  }
-
+  @Roles(Role.SUPER_ADMIN, Role.COMPANY_ADMIN)
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() body: Partial<Company>,
-  ): Promise<Company | null> {
-    return this.companyService.update(id, body);
+    @Body() updateCompanyDto: UpdateCompanyDto,
+  ) {
+    return this.companyService.update(id, updateCompanyDto);
   }
 
+  @Roles(Role.SUPER_ADMIN)
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<void> {
+  remove(@Param('id') id: string) {
     return this.companyService.remove(id);
   }
 }

@@ -1,0 +1,64 @@
+<div class="workspace-page">
+  <div class="workspace-header">
+    <h2>Workspaces</h2>
+    <a class="action-button" routerLink="/workspace/create">+ New Workspace</a>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="loading">Loading workspaces...</div>
+  }
+
+  @if (!loading() && workspaces().length) {
+    <table class="workspace-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Slug</th>
+          <th>Company</th>
+          <th>Plan</th>
+          <th>Max Users</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (workspace of workspaces(); track workspace.id) {
+          <tr>
+            <td>{{ workspace.workspaceName }}</td>
+            <td>{{ workspace.slug }}</td>
+            <td>{{ workspace.company?.companyName }}</td>
+            <td>{{ workspace.subscriptionPlan }}</td>
+            <td>{{ workspace.maxUsers }}</td>
+            <td>
+              <span
+                class="status-badge"
+                [class.active]="workspace.isActive"
+                [class.inactive]="!workspace.isActive"
+              >
+                {{ workspace.isActive ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
+            <td class="actions-cell">
+              <a [routerLink]="['/workspace/details', workspace.id]">View</a>
+              <a [routerLink]="['/workspace/edit', workspace.id]">Edit</a>
+              <button type="button" (click)="toggleStatus(workspace)">
+                {{ workspace.isActive ? 'Deactivate' : 'Activate' }}
+              </button>
+              <button type="button" class="danger" (click)="deleteWorkspace(workspace)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  @if (!loading() && !workspaces().length) {
+    <p>No workspaces found.</p>
+  }
+</div>

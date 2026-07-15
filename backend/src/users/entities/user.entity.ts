@@ -15,19 +15,15 @@ import {
 import { Role } from '../../common/enums/role.enum';
 import { Company } from '../../company/entities/company.entity';
 
-
 @Entity('users')
 export class User {
-
   // Unique user identifier
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-
   // User full name
   @Column()
   fullName!: string;
-
 
   // Unique email used for login
   @Column({
@@ -35,11 +31,9 @@ export class User {
   })
   email!: string;
 
-
   // Encrypted password
   @Column()
   password!: string;
-
 
   // User role for RBAC authorization
   @Column({
@@ -49,18 +43,15 @@ export class User {
   })
   role!: Role;
 
-
   // Account status
   @Column({
     default: true,
   })
   isActive!: boolean;
 
-
   // Company relation
   // One company can have many users
   // One user belongs to one company
-
   @ManyToOne(
     () => Company,
     (company) => company.users,
@@ -74,11 +65,9 @@ export class User {
   })
   company?: Company | null;
 
-
   // Record creation time
   @CreateDateColumn()
   createdAt!: Date;
-
 
   // Record update time
   @UpdateDateColumn()
