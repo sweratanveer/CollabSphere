@@ -1,55 +1,17 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container">
+    <a class="navbar-brand fw-bold" routerLink="/dashboard">🚀 CollabSphere</a>
 
-    <div class="container">
-
-        <a
-            class="navbar-brand fw-bold"
-            routerLink="/dashboard">
-
-            🚀 CollabSphere
-
-        </a>
-
-        <div class="navbar-nav ms-auto">
-
-            <a class="nav-link" routerLink="/dashboard">
-                Dashboard
-            </a>
-
-            <a class="nav-link" routerLink="/projects">
-                Projects
-            </a>
-
-            <a class="nav-link" routerLink="/teams">
-                Teams
-            </a>
-
-            <a class="nav-link" routerLink="/tasks">
-                Tasks
-            </a>
-
-            <a class="nav-link" routerLink="/company">
-                Company
-            </a>
-
-            <a class="nav-link" routerLink="/profile">
-                Profile
-            </a>
-
-            <a class="nav-link" routerLink="/settings">
-                Settings
-            </a>
-
-            <button
-                class="logout-button ms-3"
-                (click)="logout()">
-
-                Logout
-
-            </button>
-
-        </div>
-
+    <div class="navbar-nav ms-auto">
+      <a class="nav-link" routerLink="/dashboard">Dashboard</a>
+      <a class="nav-link" routerLink="/projects">Projects</a>
+      <a class="nav-link" routerLink="/teams">Teams</a>
+      <a class="nav-link" routerLink="/tasks">Tasks</a>
+      <a class="nav-link" routerLink="/company">Company</a>
+      <a class="nav-link" routerLink="/workspace">Workspace</a>
+      <a class="nav-link" routerLink="/profile">Profile</a>
+      <a class="nav-link" routerLink="/settings">Settings</a>
+      <button class="logout-button ms-3" (click)="logout()">Logout</button>
     </div>
-
+  </div>
 </nav>
