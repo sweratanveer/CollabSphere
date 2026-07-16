@@ -9,7 +9,8 @@
     "declaration": true,
     "removeComments": true,
 
-    "incremental": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
 
     "strict": true,
     "strictNullChecks": true,
@@ -17,16 +18,15 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
 
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
 
-    "resolvePackageJsonExports": true,
     "isolatedModules": true,
+    "resolvePackageJsonExports": true,
+
+    "incremental": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
 
     "baseUrl": "./"
   }

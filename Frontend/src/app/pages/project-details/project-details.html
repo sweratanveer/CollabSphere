@@ -1,0 +1,28 @@
+<div class="project-details-page">
+  @if (error()) {
+    <div class="alert alert-danger">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="loading">Loading...</div>
+  }
+
+  @if (project(); as p) {
+    <div class="details-card">
+      <div class="details-row"><span class="label">Name</span><span>{{ p.projectName }}</span></div>
+      <div class="details-row"><span class="label">Description</span><span>{{ p.description ?? '—' }}</span></div>
+      <div class="details-row"><span class="label">Workspace</span><span>{{ p.workspace?.workspaceName }}</span></div>
+      <div class="details-row"><span class="label">Manager</span><span>{{ p.projectManager?.fullName ?? '—' }}</span></div>
+      <div class="details-row"><span class="label">Status</span><span>{{ p.status }}</span></div>
+      <div class="details-row"><span class="label">Start Date</span><span>{{ p.startDate ?? '—' }}</span></div>
+      <div class="details-row"><span class="label">End Date</span><span>{{ p.endDate ?? '—' }}</span></div>
+      <div class="details-row"><span class="label">Active</span><span>{{ p.isActive ? 'Yes' : 'No' }}</span></div>
+      <div class="details-row"><span class="label">Created</span><span>{{ p.createdAt | date: 'medium' }}</span></div>
+
+      <div class="details-actions">
+        <a [routerLink]="['/projects/edit', p.id]" class="action-button">Edit</a>
+        <a routerLink="/projects" class="cancel-link">Back to list</a>
+      </div>
+    </div>
+  }
+</div>

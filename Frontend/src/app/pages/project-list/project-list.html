@@ -1,0 +1,62 @@
+<div class="project-page">
+  <div class="project-header">
+    <h2>Projects</h2>
+    <a class="action-button" routerLink="/projects/create">+ New Project</a>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="loading">Loading projects...</div>
+  }
+
+  @if (!loading() && projects().length) {
+    <table class="project-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Workspace</th>
+          <th>Manager</th>
+          <th>Status</th>
+          <th>End Date</th>
+          <th>Active</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (project of projects(); track project.id) {
+          <tr>
+            <td>{{ project.projectName }}</td>
+            <td>{{ project.workspace?.workspaceName }}</td>
+            <td>{{ project.projectManager?.fullName ?? '—' }}</td>
+            <td><span class="status-pill">{{ project.status }}</span></td>
+            <td>{{ project.endDate ?? '—' }}</td>
+            <td>
+              <span
+                class="status-badge"
+                [class.active]="project.isActive"
+                [class.inactive]="!project.isActive"
+              >
+                {{ project.isActive ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
+            <td class="actions-cell">
+              <a [routerLink]="['/projects/details', project.id]">View</a>
+              <a [routerLink]="['/projects/edit', project.id]">Edit</a>
+              <button type="button" (click)="toggleStatus(project)">
+                {{ project.isActive ? 'Deactivate' : 'Activate' }}
+              </button>
+              <button type="button" class="danger" (click)="deleteProject(project)">Delete</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  @if (!loading() && !projects().length) {
+    <p>No projects found.</p>
+  }
+</div>
