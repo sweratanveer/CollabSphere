@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-<<<<<<< HEAD
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "target": "ES2022",
@@ -9,23 +8,9 @@
     "sourceMap": true,
     "declaration": true,
     "removeComments": true,
-=======
-    
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "resolvePackageJsonExports": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "declaration": true,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
+
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "target": "ES2022",
-    "sourceMap": true,
-    "outDir": "./dist",
->>>>>>> feature/register
-    "incremental": true,
+    "emitDecoratorMetadata": true,
 
     "strict": true,
     "strictNullChecks": true,
@@ -33,15 +18,16 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
 
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+
+    "isolatedModules": true,
+    "resolvePackageJsonExports": true,
+
+    "incremental": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
 
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-
-    "resolvePackageJsonExports": true,
     "baseUrl": "./"
   }
 }

@@ -8,7 +8,6 @@ import { Company } from '../models/company.model';
   providedIn: 'root',
 })
 export class CompanyService {
-
   private http = inject(HttpClient);
 
   private api = 'http://localhost:3000/companies';
@@ -25,19 +24,11 @@ export class CompanyService {
     return this.http.post<Company>(this.api, company);
   }
 
-  updateCompany(
-    id: string,
-    company: Company,
-  ): Observable<Company> {
-    return this.http.patch<Company>(
-      `${this.api}/${id}`,
-      company,
-    );
+  updateCompany(id: string, company: Company): Observable<Company> {
+    return this.http.patch<Company>(`${this.api}/${id}`, company);
   }
 
   deleteCompany(id: string): Observable<any> {
-    return this.http.delete(
-      `${this.api}/${id}`,
-    );
+    return this.http.delete(`${this.api}/${id}`);
   }
 }
