@@ -1,0 +1,76 @@
+<div class="user-form-page">
+  <div class="user-form">
+    <div class="form-tabs">
+      <a class="active">Edit User</a>
+      <a routerLink="/users">User List</a>
+    </div>
+
+    @if (error()) {
+      <div class="alert alert-danger">{{ error() }}</div>
+    }
+
+    @if (loading()) {
+      <div class="loading">Loading user...</div>
+    }
+
+    @if (!loading()) {
+      <label class="field-label" for="editFullName">Full Name</label>
+      <input
+        id="editFullName"
+        type="text"
+        [ngModel]="fullName()"
+        (ngModelChange)="fullName.set($event)"
+        class="form-control"
+      />
+
+      <label class="field-label" for="editRole">Role</label>
+      <select
+        id="editRole"
+        [ngModel]="role()"
+        (ngModelChange)="role.set($event)"
+        class="form-control"
+        aria-label="Role"
+      >
+        <option value="EMPLOYEE">Employee</option>
+        <option value="TEAM_LEADER">Team Leader</option>
+        <option value="PROJECT_MANAGER">Project Manager</option>
+        <option value="COMPANY_ADMIN">Company Admin</option>
+        <option value="CLIENT">Client</option>
+        <option value="SUPER_ADMIN">Super Admin</option>
+      </select>
+
+      <label class="field-label" for="editCompanyId">Company</label>
+      <select
+        id="editCompanyId"
+        [ngModel]="companyId()"
+        (ngModelChange)="companyId.set($event)"
+        class="form-control"
+        aria-label="Company"
+      >
+        <option value="">No company</option>
+        @for (company of companies(); track company.id) {
+          <option [value]="company.id">{{ company.companyName }}</option>
+        }
+      </select>
+
+      <label class="field-label" for="editIsActive">Status</label>
+      <select
+        id="editIsActive"
+        [ngModel]="isActive()"
+        (ngModelChange)="isActive.set($event)"
+        class="form-control"
+        aria-label="Status"
+      >
+        <option [ngValue]="true">Active</option>
+        <option [ngValue]="false">Inactive</option>
+      </select>
+
+      <div class="form-actions">
+        <button type="button" class="action-button" (click)="save()" [disabled]="saving()">
+          {{ saving() ? 'Saving...' : 'Save Changes' }}
+        </button>
+        <a routerLink="/users" class="cancel-link">Cancel</a>
+      </div>
+    }
+  </div>
+</div>
