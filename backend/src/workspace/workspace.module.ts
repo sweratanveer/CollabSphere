@@ -1,4 +1,5 @@
 // This file wires up the Workspace module: entity registration, controller, and service.
+
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
