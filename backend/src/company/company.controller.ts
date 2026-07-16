@@ -50,7 +50,7 @@ export class CompanyController {
     return this.companyService.update(id, updateCompanyDto);
   }
 
-  @Roles(Role.SUPER_ADMIN, Role.COMPANY_ADMIN)
+  @Roles(Role.SUPER_ADMIN)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.companyService.remove(id);
