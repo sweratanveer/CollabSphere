@@ -1,5 +1,4 @@
 // This file contains the business logic for user profile management and admin-level user CRUD operations.
-
 import {
   Injectable,
   NotFoundException,
@@ -63,27 +62,19 @@ export class UsersService {
     return this.findOne(id);
   }
 
-  // --- New methods for the User Management module (Admin CRUD) ---
+  // --- New methods for the User Management module (admin CRUD) ---
 
   async findAllUsers(): Promise<User[]> {
     return await this.userRepository.find({
-      relations: {
-        company: true,
-      },
-      order: {
-        createdAt: 'DESC',
-      },
+      relations: { company: true },
+      order: { createdAt: 'DESC' },
     });
   }
 
   async findUserById(id: string): Promise<User> {
     const user = await this.userRepository.findOne({
-      where: {
-        id,
-      },
-      relations: {
-        company: true,
-      },
+      where: { id },
+      relations: { company: true },
     });
 
     if (!user) {
@@ -95,9 +86,7 @@ export class UsersService {
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
     const existing = await this.userRepository.findOne({
-      where: {
-        email: createUserDto.email,
-      },
+      where: { email: createUserDto.email },
     });
 
     if (existing) {
@@ -108,9 +97,7 @@ export class UsersService {
 
     if (createUserDto.companyId) {
       company = await this.companyRepository.findOne({
-        where: {
-          id: createUserDto.companyId,
-        },
+        where: { id: createUserDto.companyId },
       });
 
       if (!company) {
@@ -132,17 +119,12 @@ export class UsersService {
     return await this.userRepository.save(user);
   }
 
-  async updateUser(
-    id: string,
-    updateUserDto: UpdateUserDto,
-  ): Promise<User> {
+  async updateUser(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.findUserById(id);
 
     if (updateUserDto.companyId !== undefined) {
       const company = await this.companyRepository.findOne({
-        where: {
-          id: updateUserDto.companyId,
-        },
+        where: { id: updateUserDto.companyId },
       });
 
       if (!company) {

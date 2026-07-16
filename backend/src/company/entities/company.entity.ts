@@ -20,7 +20,9 @@ export class Company {
   id!: string;
 
   // Company name
-  @Column()
+  @Column({
+    unique: true,
+  })
   companyName!: string;
 
   // Unique company code
@@ -83,11 +85,7 @@ export class Company {
   description?: string;
 
   // One company can have multiple users
-  // Reverse relation of User entity ManyToOne
-  @OneToMany(
-    () => User,
-    (user) => user.company,
-  )
+  @OneToMany(() => User, (user) => user.company)
   users!: User[];
 
   // Record creation date
