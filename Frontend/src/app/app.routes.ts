@@ -20,6 +20,11 @@ import { WorkspaceListComponent } from './pages/workspace-list/workspace-list';
 import { WorkspaceCreateComponent } from './pages/workspace-create/workspace-create';
 import { WorkspaceEditComponent } from './pages/workspace-edit/workspace-edit';
 import { WorkspaceDetailsComponent } from './pages/workspace-details/workspace-details';
+import { UserListComponent } from './pages/user-list/user-list';
+import { UserCreateComponent } from './pages/user-create/user-create';
+import { UserEditComponent } from './pages/user-edit/user-edit';
+import { UserDetailsComponent } from './pages/user-details/user-details';
+
 
 export const routes: Routes = [
   {
@@ -120,6 +125,31 @@ export const routes: Routes = [
   {
     path: 'workspace/edit/:id',
     component: WorkspaceEditComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'COMPANY_ADMIN' },
+  },
+  
+  {
+    path: 'users',
+    component: UserListComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'COMPANY_ADMIN' },
+  },
+  {
+    path: 'users/create',
+    component: UserCreateComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'COMPANY_ADMIN' },
+  },
+  {
+    path: 'users/details/:id',
+    component: UserDetailsComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'COMPANY_ADMIN' },
+  },
+  {
+    path: 'users/edit/:id',
+    component: UserEditComponent,
     canActivate: [authGuard, roleGuard],
     data: { requiredRole: 'COMPANY_ADMIN' },
   },
