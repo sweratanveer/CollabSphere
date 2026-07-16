@@ -1,6 +1,12 @@
-import { Component, inject, signal } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { CompanyService } from '../../services/company';
 import { Company } from '../../models/company.model';
@@ -8,7 +14,10 @@ import { Company } from '../../models/company.model';
 @Component({
   selector: 'app-company-create',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+  ],
   templateUrl: './company-create.html',
   styleUrl: './company-create.scss',
 })

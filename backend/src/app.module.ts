@@ -10,6 +10,8 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { CompanyModule } from './company/company.module';
 import { WorkspaceModule } from './workspace/workspace.module';
+import { ProjectModule } from './project/project.module';
+
 
 @Module({
   imports: [
@@ -37,6 +39,7 @@ import { WorkspaceModule } from './workspace/workspace.module';
     UsersModule,
     CompanyModule,
     WorkspaceModule,
+    ProjectModule,
   ],
 
   controllers: [AppController],

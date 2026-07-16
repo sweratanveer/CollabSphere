@@ -12,10 +12,7 @@ import { Company } from '../company/entities/company.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
-      User,
-      Company,
-    ]),
+    TypeOrmModule.forFeature([User, Company]),
   ],
 
   controllers: [UsersController],
