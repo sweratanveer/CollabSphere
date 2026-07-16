@@ -1,0 +1,100 @@
+<div class="project-form-page">
+  <div class="project-form">
+    <div class="form-tabs">
+      <a class="active">Create Project</a>
+      <a routerLink="/projects">Project List</a>
+    </div>
+
+    @if (error()) {
+      <div class="alert alert-danger">{{ error() }}</div>
+    }
+
+    <label class="field-label" for="projectName">Project Name</label>
+    <input
+      id="projectName"
+      type="text"
+      [ngModel]="projectName()"
+      (ngModelChange)="projectName.set($event)"
+      class="form-control"
+      placeholder="e.g. Website Redesign"
+    />
+
+    <label class="field-label" for="description">Description</label>
+    <textarea
+      id="description"
+      rows="3"
+      [ngModel]="description()"
+      (ngModelChange)="description.set($event)"
+      class="form-control"
+      placeholder="Short project description"
+    ></textarea>
+
+    <label class="field-label" for="workspaceId">Workspace</label>
+    <select
+      id="workspaceId"
+      [ngModel]="workspaceId()"
+      (ngModelChange)="workspaceId.set($event)"
+      class="form-control"
+      aria-label="Workspace"
+    >
+      <option value="" disabled selected>Select a workspace</option>
+      @for (workspace of workspaces(); track workspace.id) {
+        <option [value]="workspace.id">{{ workspace.workspaceName }}</option>
+      }
+    </select>
+
+    <label class="field-label" for="projectManagerId">Project Manager (optional)</label>
+    <select
+      id="projectManagerId"
+      [ngModel]="projectManagerId()"
+      (ngModelChange)="projectManagerId.set($event)"
+      class="form-control"
+      aria-label="Project Manager"
+    >
+      <option value="">No manager assigned</option>
+      @for (user of users(); track user.id) {
+        <option [value]="user.id">{{ user.fullName }}</option>
+      }
+    </select>
+
+    <label class="field-label" for="status">Status</label>
+    <select
+      id="status"
+      [ngModel]="status()"
+      (ngModelChange)="status.set($event)"
+      class="form-control"
+      aria-label="Status"
+    >
+      <option value="PLANNING">Planning</option>
+      <option value="IN_PROGRESS">In Progress</option>
+      <option value="ON_HOLD">On Hold</option>
+      <option value="COMPLETED">Completed</option>
+      <option value="CANCELLED">Cancelled</option>
+    </select>
+
+    <label class="field-label" for="startDate">Start Date</label>
+    <input
+      id="startDate"
+      type="date"
+      [ngModel]="startDate()"
+      (ngModelChange)="startDate.set($event)"
+      class="form-control"
+    />
+
+    <label class="field-label" for="endDate">End Date</label>
+    <input
+      id="endDate"
+      type="date"
+      [ngModel]="endDate()"
+      (ngModelChange)="endDate.set($event)"
+      class="form-control"
+    />
+
+    <div class="form-actions">
+      <button type="button" class="action-button" (click)="create()" [disabled]="loading()">
+        {{ loading() ? 'Creating...' : 'Create Project' }}
+      </button>
+      <a routerLink="/projects" class="cancel-link">Cancel</a>
+    </div>
+  </div>
+</div>

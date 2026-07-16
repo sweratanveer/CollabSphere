@@ -1,12 +1,10 @@
+// This file defines all application routes, mapping URL paths to their standalone components and route guards.
 import { Routes } from '@angular/router';
+
 import { Login } from './pages/login/login';
 import { Register } from './pages/register/register';
 import { Dashboard } from './pages/dashboard/dashboard';
-import { authGuard } from './guards/auth-guard';
-import { roleGuard } from './guards/role-guard';
-
 import { Profile } from './pages/profile/profile';
-import { Projects } from './pages/projects/projects';
 import { Teams } from './pages/teams/teams';
 import { Tasks } from './pages/tasks/tasks';
 import { Settings } from './pages/settings/settings';
@@ -25,6 +23,10 @@ import { UserCreateComponent } from './pages/user-create/user-create';
 import { UserEditComponent } from './pages/user-edit/user-edit';
 import { UserDetailsComponent } from './pages/user-details/user-details';
 
+import { ProjectListComponent } from './pages/project-list/project-list';
+import { ProjectCreateComponent } from './pages/project-create/project-create';
+import { ProjectEditComponent } from './pages/project-edit/project-edit';
+import { ProjectDetailsComponent } from './pages/project-details/project-details';
 
 export const routes: Routes = [
   {
@@ -49,12 +51,6 @@ export const routes: Routes = [
   {
     path: 'profile',
     component: Profile,
-    canActivate: [authGuard, roleGuard],
-    data: { requiredRole: 'EMPLOYEE' },
-  },
-  {
-    path: 'projects',
-    component: Projects,
     canActivate: [authGuard, roleGuard],
     data: { requiredRole: 'EMPLOYEE' },
   },
@@ -153,4 +149,31 @@ export const routes: Routes = [
     canActivate: [authGuard, roleGuard],
     data: { requiredRole: 'COMPANY_ADMIN' },
   },
-];
+
+  // --- Project Management ---
+  {
+    path: 'projects',
+    component: ProjectListComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
+  },
+  {
+    path: 'projects/create',
+    component: ProjectCreateComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'PROJECT_MANAGER' },
+  },
+  {
+    path: 'projects/details/:id',
+    component: ProjectDetailsComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
+  },
+  {
+    path: 'projects/edit/:id',
+    component: ProjectEditComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'PROJECT_MANAGER' },
+  },
+]
+
