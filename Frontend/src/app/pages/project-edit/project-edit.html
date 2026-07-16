@@ -1,0 +1,102 @@
+<div class="project-form-page">
+  <div class="project-form">
+    <div class="form-tabs">
+      <a class="active">Edit Project</a>
+      <a routerLink="/projects">Project List</a>
+    </div>
+
+    @if (error()) {
+      <div class="alert alert-danger">{{ error() }}</div>
+    }
+
+    @if (loading()) {
+      <div class="loading">Loading project...</div>
+    }
+
+    @if (!loading()) {
+      <label class="field-label" for="editProjectName">Project Name</label>
+      <input
+        id="editProjectName"
+        type="text"
+        [ngModel]="projectName()"
+        (ngModelChange)="projectName.set($event)"
+        class="form-control"
+      />
+
+      <label class="field-label" for="editDescription">Description</label>
+      <textarea
+        id="editDescription"
+        rows="3"
+        [ngModel]="description()"
+        (ngModelChange)="description.set($event)"
+        class="form-control"
+      ></textarea>
+
+      <label class="field-label" for="editProjectManagerId">Project Manager</label>
+      <select
+        id="editProjectManagerId"
+        [ngModel]="projectManagerId()"
+        (ngModelChange)="projectManagerId.set($event)"
+        class="form-control"
+        aria-label="Project Manager"
+      >
+        <option value="">No manager assigned</option>
+        @for (user of users(); track user.id) {
+          <option [value]="user.id">{{ user.fullName }}</option>
+        }
+      </select>
+
+      <label class="field-label" for="editStatus">Status</label>
+      <select
+        id="editStatus"
+        [ngModel]="status()"
+        (ngModelChange)="status.set($event)"
+        class="form-control"
+        aria-label="Status"
+      >
+        <option value="PLANNING">Planning</option>
+        <option value="IN_PROGRESS">In Progress</option>
+        <option value="ON_HOLD">On Hold</option>
+        <option value="COMPLETED">Completed</option>
+        <option value="CANCELLED">Cancelled</option>
+      </select>
+
+      <label class="field-label" for="editStartDate">Start Date</label>
+      <input
+        id="editStartDate"
+        type="date"
+        [ngModel]="startDate()"
+        (ngModelChange)="startDate.set($event)"
+        class="form-control"
+      />
+
+      <label class="field-label" for="editEndDate">End Date</label>
+      <input
+        id="editEndDate"
+        type="date"
+        [ngModel]="endDate()"
+        (ngModelChange)="endDate.set($event)"
+        class="form-control"
+      />
+
+      <label class="field-label" for="editIsActive">Active</label>
+      <select
+        id="editIsActive"
+        [ngModel]="isActive()"
+        (ngModelChange)="isActive.set($event)"
+        class="form-control"
+        aria-label="Active"
+      >
+        <option [ngValue]="true">Active</option>
+        <option [ngValue]="false">Inactive</option>
+      </select>
+
+      <div class="form-actions">
+        <button type="button" class="action-button" (click)="save()" [disabled]="saving()">
+          {{ saving() ? 'Saving...' : 'Save Changes' }}
+        </button>
+        <a routerLink="/projects" class="cancel-link">Cancel</a>
+      </div>
+    }
+  </div>
+</div>

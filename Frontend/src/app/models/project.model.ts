@@ -1,3 +1,5 @@
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import { Routes } from '@angular/router';
 import { Login } from './pages/login/login';
 import { Register } from './pages/register/register';
@@ -13,11 +15,14 @@ import { CompanyListComponent } from './company/pages/company-list/company-list'
 import { CompanyCreateComponent } from './company/pages/company-create/company-create';
 import { CompanyDetailsComponent } from './company/pages/company-details/company-details';
 import { CompanyEditComponent } from './company/pages/company-edit/company-edit';
-
-import { ProjectListComponent } from './pages/project-list/project-list';
-import { ProjectCreateComponent } from './pages/project-create/project-create';
-import { ProjectEditComponent } from './pages/project-edit/project-edit';
-import { ProjectDetailsComponent } from './pages/project-details/project-details';
+import { WorkspaceListComponent } from './pages/workspace-list/workspace-list';
+import { WorkspaceCreateComponent } from './pages/workspace-create/workspace-create';
+import { WorkspaceEditComponent } from './pages/workspace-edit/workspace-edit';
+import { WorkspaceDetailsComponent } from './pages/workspace-details/workspace-details';
+import { UserListComponent } from './pages/user-list/user-list';
+import { UserCreateComponent } from './pages/user-create/user-create';
+import { UserEditComponent } from './pages/user-edit/user-edit';
+import { UserDetailsComponent } from './pages/user-details/user-details';
 
 
 import { ProjectListComponent } from './pages/project-list/project-list';
@@ -100,8 +105,6 @@ export const routes: Routes = [
     canActivate: [authGuard, roleGuard],
     data: { requiredRole: 'EMPLOYEE' },
   },
-<<<<<<< Updated upstream
-=======
   {
   path: 'workspace',
   component: WorkspaceListComponent,
@@ -176,8 +179,63 @@ export const routes: Routes = [
     canActivate: [authGuard, roleGuard],
     data: { requiredRole: 'PROJECT_MANAGER' },
   },
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
+];
+=======
 =======
 >>>>>>> Stashed changes
-];
+// This file defines the TypeScript interfaces for project data used across the app.
+export type ProjectStatus = 'PLANNING' | 'IN_PROGRESS' | 'ON_HOLD' | 'COMPLETED' | 'CANCELLED';
+
+export interface ProjectWorkspace {
+  id: string;
+  workspaceName: string;
+}
+
+export interface ProjectManagerOption {
+  id: string;
+  fullName: string;
+}
+
+export interface Project {
+  id: string;
+  projectName: string;
+  description?: string;
+  status: ProjectStatus;
+  startDate?: string;
+  endDate?: string;
+  isActive: boolean;
+  workspace: ProjectWorkspace;
+  projectManager?: ProjectManagerOption | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateProjectRequest {
+  projectName: string;
+  description?: string;
+  workspaceId: string;
+  projectManagerId?: string;
+  status?: ProjectStatus;
+  startDate?: string;
+  endDate?: string;
+}
+
+export interface UpdateProjectRequest {
+  projectName?: string;
+  description?: string;
+  projectManagerId?: string;
+  status?: ProjectStatus;
+  startDate?: string;
+  endDate?: string;
+  isActive?: boolean;
+}
+
+export interface ProjectOption {
+  id: string;
+  projectName: string;
+<<<<<<< Updated upstream
+}
+>>>>>>> Stashed changes
+=======
+}
+>>>>>>> Stashed changes
