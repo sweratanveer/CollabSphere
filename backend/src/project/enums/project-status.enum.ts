@@ -1,8 +1,0 @@
-// This file defines the workflow status stages a project can be in.
-export enum ProjectStatus {
-  PLANNING = 'PLANNING',
-  IN_PROGRESS = 'IN_PROGRESS',
-  ON_HOLD = 'ON_HOLD',
-  COMPLETED = 'COMPLETED',
-  CANCELLED = 'CANCELLED',
-}
