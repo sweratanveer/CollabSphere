@@ -1,0 +1,79 @@
+<div class="user-form-page">
+  <div class="user-form">
+    <div class="form-tabs">
+      <a class="active">Create User</a>
+      <a routerLink="/users">User List</a>
+    </div>
+
+    @if (error()) {
+      <div class="alert alert-danger">{{ error() }}</div>
+    }
+
+    <label class="field-label" for="fullName">Full Name</label>
+    <input
+      id="fullName"
+      type="text"
+      [ngModel]="fullName()"
+      (ngModelChange)="fullName.set($event)"
+      class="form-control"
+      placeholder="Enter full name"
+    />
+
+    <label class="field-label" for="email">Email</label>
+    <input
+      id="email"
+      type="email"
+      [ngModel]="email()"
+      (ngModelChange)="email.set($event)"
+      class="form-control"
+      placeholder="Enter email"
+    />
+
+    <label class="field-label" for="password">Password</label>
+    <input
+      id="password"
+      type="password"
+      [ngModel]="password()"
+      (ngModelChange)="password.set($event)"
+      class="form-control"
+      placeholder="Enter password"
+    />
+
+    <label class="field-label" for="role">Role</label>
+    <select
+      id="role"
+      [ngModel]="role()"
+      (ngModelChange)="role.set($event)"
+      class="form-control"
+      aria-label="Role"
+    >
+      <option value="EMPLOYEE">Employee</option>
+      <option value="TEAM_LEADER">Team Leader</option>
+      <option value="PROJECT_MANAGER">Project Manager</option>
+      <option value="COMPANY_ADMIN">Company Admin</option>
+      <option value="CLIENT">Client</option>
+      <option value="SUPER_ADMIN">Super Admin</option>
+    </select>
+
+    <label class="field-label" for="companyId">Company (optional)</label>
+    <select
+      id="companyId"
+      [ngModel]="companyId()"
+      (ngModelChange)="companyId.set($event)"
+      class="form-control"
+      aria-label="Company"
+    >
+      <option value="">No company</option>
+      @for (company of companies(); track company.id) {
+        <option [value]="company.id">{{ company.companyName }}</option>
+      }
+    </select>
+
+    <div class="form-actions">
+      <button type="button" class="action-button" (click)="create()" [disabled]="loading()">
+        {{ loading() ? 'Creating...' : 'Create User' }}
+      </button>
+      <a routerLink="/users" class="cancel-link">Cancel</a>
+    </div>
+  </div>
+</div>

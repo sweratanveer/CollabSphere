@@ -1,0 +1,25 @@
+<div class="user-details-page">
+  @if (error()) {
+    <div class="alert alert-danger">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="loading">Loading...</div>
+  }
+
+  @if (user(); as u) {
+    <div class="details-card">
+      <div class="details-row"><span class="label">Full Name</span><span>{{ u.fullName }}</span></div>
+      <div class="details-row"><span class="label">Email</span><span>{{ u.email }}</span></div>
+      <div class="details-row"><span class="label">Role</span><span>{{ u.role }}</span></div>
+      <div class="details-row"><span class="label">Company</span><span>{{ u.company?.companyName ?? '—' }}</span></div>
+      <div class="details-row"><span class="label">Status</span><span>{{ u.isActive ? 'Active' : 'Inactive' }}</span></div>
+      <div class="details-row"><span class="label">Created</span><span>{{ u.createdAt | date: 'medium' }}</span></div>
+
+      <div class="details-actions">
+        <a [routerLink]="['/users/edit', u.id]" class="action-button">Edit</a>
+        <a routerLink="/users" class="cancel-link">Back to list</a>
+      </div>
+    </div>
+  }
+</div>

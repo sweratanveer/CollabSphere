@@ -1,3 +1,6 @@
+// This file wires up the Users module: entity registration for User and Company,
+// controller, and service.
+
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -9,13 +12,13 @@ import { Company } from '../company/entities/company.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
-      User,
-      Company,
-    ]),
+    TypeOrmModule.forFeature([User, Company]),
   ],
+
   controllers: [UsersController],
+
   providers: [UsersService],
+
   exports: [
     UsersService,
     TypeOrmModule,

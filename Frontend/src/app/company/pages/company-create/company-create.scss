@@ -66,6 +66,29 @@
   margin-bottom: 8px;
 }
 
+.company-card .text-danger {
+  color: #ffffff !important;
+  margin-top: -10px;
+  margin-bottom: 14px;
+  display: block;
+}
+
+.company-card .alert-danger {
+  border-radius: 14px;
+  margin-top: 18px;
+  background: rgba(255, 79, 79, 0.14);
+  color: #ffd7d7;
+  border: 1px solid rgba(255, 79, 79, 0.22);
+}
+
+.company-card .alert-success {
+  border-radius: 14px;
+  margin-top: 18px;
+  background: rgba(79, 255, 168, 0.12);
+  color: #d8ffe8;
+  border: 1px solid rgba(79, 255, 168, 0.22);
+}
+
 .action-button {
   height: 54px;
   width: 100%;
