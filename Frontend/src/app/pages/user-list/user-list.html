@@ -1,0 +1,60 @@
+<div class="user-page">
+  <div class="user-header">
+    <h2>Users</h2>
+    <a class="action-button" routerLink="/users/create">+ New User</a>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="loading">Loading users...</div>
+  }
+
+  @if (!loading() && users().length) {
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Company</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (user of users(); track user.id) {
+          <tr>
+            <td>{{ user.fullName }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td>{{ user.company?.companyName ?? '—' }}</td>
+            <td>
+              <span
+                class="status-badge"
+                [class.active]="user.isActive"
+                [class.inactive]="!user.isActive"
+              >
+                {{ user.isActive ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
+            <td class="actions-cell">
+              <a [routerLink]="['/users/details', user.id]">View</a>
+              <a [routerLink]="['/users/edit', user.id]">Edit</a>
+              <button type="button" (click)="toggleStatus(user)">
+                {{ user.isActive ? 'Deactivate' : 'Activate' }}
+              </button>
+              <button type="button" class="danger" (click)="deleteUser(user)">Delete</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  @if (!loading() && !users().length) {
+    <p>No users found.</p>
+  }
+</div>

@@ -1,7 +1,11 @@
+// This file exposes REST endpoints for user profile access and admin-level user management, protected by JWT auth and RBAC.
 import {
   Controller,
   Get,
+  Post,
   Patch,
+  Delete,
+  Param,
   Body,
   Req,
   UseGuards,
@@ -9,6 +13,8 @@ import {
 } from '@nestjs/common';
 
 import { UsersService } from './users.service';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
@@ -21,6 +27,8 @@ export class UsersController {
   constructor(
     private readonly usersService: UsersService,
   ) {}
+
+  // --- Existing endpoints — unchanged ---
 
   @Get('profile')
   @UseGuards(JwtAuthGuard)
@@ -59,5 +67,52 @@ export class UsersController {
     return {
       message: 'Welcome Super Admin',
     };
+  }
+
+  // --- New endpoints for the User Management module ---
+
+  @Get()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.SUPER_ADMIN, Role.COMPANY_ADMIN)
+  findAll() {
+    return this.usersService.findAllUsers();
+  }
+
+  @Get(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.SUPER_ADMIN, Role.COMPANY_ADMIN)
+  findOne(@Param('id') id: string) {
+    return this.usersService.findUserById(id);
+  }
+
+  @Post()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.SUPER_ADMIN, Role.COMPANY_ADMIN)
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.createUser(createUserDto);
+  }
+
+  @Patch(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.SUPER_ADMIN, Role.COMPANY_ADMIN)
+  update(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    return this.usersService.updateUser(id, updateUserDto);
+  }
+
+  @Patch(':id/status')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.SUPER_ADMIN, Role.COMPANY_ADMIN)
+  toggleStatus(@Param('id') id: string) {
+    return this.usersService.toggleUserStatus(id);
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.SUPER_ADMIN)
+  remove(@Param('id') id: string) {
+    return this.usersService.removeUser(id);
   }
 }
