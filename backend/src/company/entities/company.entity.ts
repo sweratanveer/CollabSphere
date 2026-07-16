@@ -4,26 +4,37 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+
+import { User } from '../../users/entities/user.entity';
 
 @Entity('companies')
 export class Company {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Column()
+  @Column({
+    unique: true,
+  })
   companyName!: string;
 
-  @Column()
+  @Column({
+    unique: true,
+  })
   companyCode!: string;
 
-  @Column()
+  @Column({
+    unique: true,
+  })
   email!: string;
 
   @Column()
   phone!: string;
 
-  @Column({ nullable: true })
+  @Column({
+    nullable: true,
+  })
   website?: string;
 
   @Column()
@@ -35,17 +46,29 @@ export class Company {
   @Column()
   country!: string;
 
-  @Column({ nullable: true })
+  @Column({
+    nullable: true,
+  })
   logo?: string;
 
-  @Column({ default: true })
+  @Column({
+    default: true,
+  })
   isActive!: boolean;
 
-  @Column({ nullable: true })
+  @Column({
+    nullable: true,
+  })
   industry?: string;
 
-  @Column({ type: 'text', nullable: true })
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
   description?: string;
+
+  @OneToMany(() => User, (user) => user.company)
+  users!: User[];
 
   @CreateDateColumn()
   createdAt!: Date;
