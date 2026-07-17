@@ -42,6 +42,10 @@ import { TeamDetailsComponent } from './pages/team-details/team-details';
 
 import { ChatComponent } from './pages/chat/chat';
 
+import { MeetingListComponent } from './pages/meeting-list/meeting-list';
+import { MeetingCreateComponent } from './pages/meeting-create/meeting-create';
+import { MeetingRoomComponent } from './pages/meeting-room/meeting-room';
+
 export const routes: Routes = [
   {
     path: '',
@@ -233,6 +237,25 @@ export const routes: Routes = [
   {
     path: 'chat',
     component: ChatComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
+  },
+  // --- Audio & Video Meetings ---
+  {
+    path: 'meetings',
+    component: MeetingListComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
+  },
+  {
+    path: 'meetings/create',
+    component: MeetingCreateComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'TEAM_LEADER' },
+  },
+  {
+    path: 'meetings/room/:roomId',
+    component: MeetingRoomComponent,
     canActivate: [authGuard, roleGuard],
     data: { requiredRole: 'EMPLOYEE' },
   },

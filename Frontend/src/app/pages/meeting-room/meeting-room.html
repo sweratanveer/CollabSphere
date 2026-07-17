@@ -1,0 +1,43 @@
+<div class="room-page">
+  @if (error()) {
+    <div class="alert alert-danger">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="loading">Setting up your camera and microphone...</div>
+  }
+
+  @if (!loading()) {
+    <div class="room-header">
+      <h2>{{ meeting()?.title ?? 'Meeting Room' }}</h2>
+    </div>
+
+    <div class="video-grid">
+      <div class="video-tile local">
+        <video #localVideo autoplay playsinline muted></video>
+        <span class="tile-label">You</span>
+      </div>
+
+      @for (peer of remotePeers(); track peer.socketId) {
+        <div class="video-tile">
+          <video
+            autoplay
+            playsinline
+            [srcObject]="peer.stream"
+          ></video>
+          <span class="tile-label">{{ peer.fullName }}</span>
+        </div>
+      }
+    </div>
+
+    <div class="controls-bar">
+      <button type="button" class="control-btn" [class.off]="!micOn()" (click)="toggleMic()">
+        {{ micOn() ? '🎤 Mute' : '🔇 Unmute' }}
+      </button>
+      <button type="button" class="control-btn" [class.off]="!cameraOn()" (click)="toggleCamera()">
+        {{ cameraOn() ? '📷 Stop Video' : '📷 Start Video' }}
+      </button>
+      <button type="button" class="control-btn leave" (click)="leaveMeeting()">Leave</button>
+    </div>
+  }
+</div>

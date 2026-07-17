@@ -1,0 +1,72 @@
+<div class="meeting-form-page">
+  <div class="meeting-form">
+    <div class="form-tabs">
+      <a class="active">Schedule Meeting</a>
+      <a routerLink="/meetings">Meeting List</a>
+    </div>
+
+    @if (error()) {
+      <div class="alert alert-danger">{{ error() }}</div>
+    }
+
+    <label class="field-label" for="title">Title</label>
+    <input
+      id="title"
+      type="text"
+      [ngModel]="title()"
+      (ngModelChange)="title.set($event)"
+      class="form-control"
+      placeholder="e.g. Sprint Planning"
+    />
+
+    <label class="field-label" for="description">Description</label>
+    <textarea
+      id="description"
+      rows="3"
+      [ngModel]="description()"
+      (ngModelChange)="description.set($event)"
+      class="form-control"
+      placeholder="Meeting agenda"
+    ></textarea>
+
+    <label class="field-label" for="teamId">Team</label>
+    <select
+      id="teamId"
+      [ngModel]="teamId()"
+      (ngModelChange)="teamId.set($event)"
+      class="form-control"
+      aria-label="Team"
+    >
+      <option value="" disabled selected>Select a team</option>
+      @for (team of teams(); track team.id) {
+        <option [value]="team.id">{{ team.teamName }}</option>
+      }
+    </select>
+
+    <label class="field-label" for="scheduledAt">Scheduled Date & Time</label>
+    <input
+      id="scheduledAt"
+      type="datetime-local"
+      [ngModel]="scheduledAt()"
+      (ngModelChange)="scheduledAt.set($event)"
+      class="form-control"
+    />
+
+    <label class="field-label" for="durationMinutes">Duration (minutes)</label>
+    <input
+      id="durationMinutes"
+      type="number"
+      [ngModel]="durationMinutes()"
+      (ngModelChange)="durationMinutes.set($event)"
+      class="form-control"
+      min="5"
+    />
+
+    <div class="form-actions">
+      <button type="button" class="action-button" (click)="create()" [disabled]="loading()">
+        {{ loading() ? 'Scheduling...' : 'Schedule Meeting' }}
+      </button>
+      <a routerLink="/meetings" class="cancel-link">Cancel</a>
+    </div>
+  </div>
+</div>
