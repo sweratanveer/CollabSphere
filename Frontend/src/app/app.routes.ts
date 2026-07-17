@@ -50,6 +50,9 @@ import { MeetingRoomComponent } from './pages/meeting-room/meeting-room';
 import { CalendarViewComponent } from './pages/calendar-view/calendar-view';
 import { EventCreateComponent } from './pages/event-create/event-create';
 import { EventEditComponent } from './pages/event-edit/event-edit';
+
+import { FileManagerComponent } from './pages/file-manager/file-manager';
+
 export const routes: Routes = [
   {
     path: '',
@@ -279,6 +282,12 @@ export const routes: Routes = [
   {
     path: 'calendar/edit/:id',
     component: EventEditComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
+  },
+  {
+    path: 'files',
+    component: FileManagerComponent,
     canActivate: [authGuard, roleGuard],
     data: { requiredRole: 'EMPLOYEE' },
   },
