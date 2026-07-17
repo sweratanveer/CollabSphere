@@ -1,0 +1,148 @@
+.calendar-page {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #1e3440 0%, #0b141a 40%, #071018 100%);
+  padding: 32px 24px;
+  color: #f8fafc;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto 24px;
+}
+
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav-controls h2 {
+  margin: 0;
+  min-width: 200px;
+  text-align: center;
+}
+
+.nav-controls button {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(248, 250, 252, 0.18);
+  color: #f8fafc;
+  border-radius: 999px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.today-btn {
+  width: auto !important;
+  padding: 0 16px;
+  font-size: 0.85rem !important;
+}
+
+.action-button {
+  height: 44px;
+  padding: 0 24px;
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, #73c8a9 0%, #4c8d7c 100%);
+  border: none;
+  color: #071014;
+  font-weight: 700;
+  border-radius: 999px;
+  text-decoration: none;
+}
+
+.calendar-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: rgba(17, 26, 36, 0.94);
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.weekday-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-bottom: 1px solid rgba(248, 250, 252, 0.08);
+}
+
+.weekday-row span {
+  padding: 12px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: rgba(248, 250, 252, 0.56);
+  text-transform: uppercase;
+}
+
+.week-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.day-cell {
+  min-height: 110px;
+  padding: 8px;
+  border-right: 1px solid rgba(248, 250, 252, 0.05);
+  border-bottom: 1px solid rgba(248, 250, 252, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.day-cell.outside {
+  opacity: 0.35;
+}
+
+.day-number {
+  font-size: 0.82rem;
+  color: rgba(248, 250, 252, 0.7);
+}
+
+.event-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #f8fafc;
+  background: rgba(115, 200, 169, 0.18);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.event-chip.meeting { background: rgba(115, 179, 200, 0.2); }
+.event-chip.task_deadline { background: rgba(255, 149, 79, 0.2); }
+.event-chip.reminder { background: rgba(255, 200, 87, 0.2); }
+.event-chip.other { background: rgba(200, 115, 200, 0.2); }
+
+.chip-delete {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0 0 0 4px;
+}
+
+.alert-danger {
+  max-width: 1200px;
+  margin: 0 auto 20px;
+  border-radius: 14px;
+  padding: 12px 16px;
+  background: rgba(255, 79, 79, 0.14);
+  color: #ffd7d7;
+  border: 1px solid rgba(255, 79, 79, 0.22);
+}
+
+.loading {
+  text-align: center;
+  color: rgba(248, 250, 252, 0.64);
+  padding: 40px;
+}

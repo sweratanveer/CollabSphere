@@ -46,6 +46,10 @@ import { MeetingListComponent } from './pages/meeting-list/meeting-list';
 import { MeetingCreateComponent } from './pages/meeting-create/meeting-create';
 import { MeetingRoomComponent } from './pages/meeting-room/meeting-room';
 
+
+import { CalendarViewComponent } from './pages/calendar-view/calendar-view';
+import { EventCreateComponent } from './pages/event-create/event-create';
+import { EventEditComponent } from './pages/event-edit/event-edit';
 export const routes: Routes = [
   {
     path: '',
@@ -256,6 +260,25 @@ export const routes: Routes = [
   {
     path: 'meetings/room/:roomId',
     component: MeetingRoomComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
+  },
+  // --- Scheduling & Calendar ---
+  {
+    path: 'calendar',
+    component: CalendarViewComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
+  },
+  {
+    path: 'calendar/create',
+    component: EventCreateComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
+  },
+  {
+    path: 'calendar/edit/:id',
+    component: EventEditComponent,
     canActivate: [authGuard, roleGuard],
     data: { requiredRole: 'EMPLOYEE' },
   },
