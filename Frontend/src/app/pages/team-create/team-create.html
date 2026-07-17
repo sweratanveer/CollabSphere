@@ -1,0 +1,67 @@
+<div class="team-form-page">
+  <div class="team-form">
+    <div class="form-tabs">
+      <a class="active">Create Team</a>
+      <a routerLink="/teams">Team List</a>
+    </div>
+
+    @if (error()) {
+      <div class="alert alert-danger">{{ error() }}</div>
+    }
+
+    <label class="field-label" for="teamName">Team Name</label>
+    <input
+      id="teamName"
+      type="text"
+      [ngModel]="teamName()"
+      (ngModelChange)="teamName.set($event)"
+      class="form-control"
+      placeholder="e.g. Backend Squad"
+    />
+
+    <label class="field-label" for="description">Description</label>
+    <textarea
+      id="description"
+      rows="3"
+      [ngModel]="description()"
+      (ngModelChange)="description.set($event)"
+      class="form-control"
+      placeholder="Short team description"
+    ></textarea>
+
+    <label class="field-label" for="workspaceId">Workspace</label>
+    <select
+      id="workspaceId"
+      [ngModel]="workspaceId()"
+      (ngModelChange)="workspaceId.set($event)"
+      class="form-control"
+      aria-label="Workspace"
+    >
+      <option value="" disabled selected>Select a workspace</option>
+      @for (workspace of workspaces(); track workspace.id) {
+        <option [value]="workspace.id">{{ workspace.workspaceName }}</option>
+      }
+    </select>
+
+    <label class="field-label" for="teamLeaderId">Team Leader (optional)</label>
+    <select
+      id="teamLeaderId"
+      [ngModel]="teamLeaderId()"
+      (ngModelChange)="teamLeaderId.set($event)"
+      class="form-control"
+      aria-label="Team Leader"
+    >
+      <option value="">No leader assigned</option>
+      @for (user of users(); track user.id) {
+        <option [value]="user.id">{{ user.fullName }}</option>
+      }
+    </select>
+
+    <div class="form-actions">
+      <button type="button" class="action-button" (click)="create()" [disabled]="loading()">
+        {{ loading() ? 'Creating...' : 'Create Team' }}
+      </button>
+      <a routerLink="/teams" class="cancel-link">Cancel</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+<div class="team-details-page">
+  @if (error()) {
+    <div class="alert alert-danger">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="loading">Loading...</div>
+  }
+
+  @if (team(); as t) {
+    <div class="details-card">
+      <div class="details-row"><span class="label">Name</span><span>{{ t.teamName }}</span></div>
+      <div class="details-row"><span class="label">Description</span><span>{{ t.description ?? '—' }}</span></div>
+      <div class="details-row"><span class="label">Workspace</span><span>{{ t.workspace?.workspaceName }}</span></div>
+      <div class="details-row"><span class="label">Leader</span><span>{{ t.teamLeader?.fullName ?? '—' }}</span></div>
+      <div class="details-row"><span class="label">Status</span><span>{{ t.isActive ? 'Active' : 'Inactive' }}</span></div>
+      <div class="details-row"><span class="label">Created</span><span>{{ t.createdAt | date: 'medium' }}</span></div>
+
+      <h3 class="section-title">Members</h3>
+
+      <div class="add-member-row">
+        <select
+          [ngModel]="selectedUserId()"
+          (ngModelChange)="selectedUserId.set($event)"
+          class="form-control"
+          aria-label="Add Member"
+        >
+          <option value="" disabled selected>Select a user to add</option>
+          @for (user of users(); track user.id) {
+            <option [value]="user.id">{{ user.fullName }}</option>
+          }
+        </select>
+        <button type="button" class="action-button" (click)="addMember()">Add</button>
+      </div>
+
+      @if (t.members?.length) {
+        <ul class="member-list">
+          @for (member of t.members; track member.id) {
+            <li>
+              <span>{{ member.user.fullName }}</span>
+              <button type="button" class="danger" (click)="removeMember(member.id)">Remove</button>
+            </li>
+          }
+        </ul>
+      } @else {
+        <p class="empty-members">No members yet.</p>
+      }
+
+      <div class="details-actions">
+        <a [routerLink]="['/teams/edit', t.id]" class="action-button">Edit Team</a>
+        <a routerLink="/teams" class="cancel-link">Back to list</a>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,60 @@
+<div class="team-page">
+  <div class="team-header">
+    <h2>Teams</h2>
+    <a class="action-button" routerLink="/teams/create">+ New Team</a>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="loading">Loading teams...</div>
+  }
+
+  @if (!loading() && teams().length) {
+    <table class="team-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Workspace</th>
+          <th>Leader</th>
+          <th>Members</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (team of teams(); track team.id) {
+          <tr>
+            <td>{{ team.teamName }}</td>
+            <td>{{ team.workspace?.workspaceName }}</td>
+            <td>{{ team.teamLeader?.fullName ?? '—' }}</td>
+            <td>{{ team.members?.length ?? 0 }}</td>
+            <td>
+              <span
+                class="status-badge"
+                [class.active]="team.isActive"
+                [class.inactive]="!team.isActive"
+              >
+                {{ team.isActive ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
+            <td class="actions-cell">
+              <a [routerLink]="['/teams/details', team.id]">View</a>
+              <a [routerLink]="['/teams/edit', team.id]">Edit</a>
+              <button type="button" (click)="toggleStatus(team)">
+                {{ team.isActive ? 'Deactivate' : 'Activate' }}
+              </button>
+              <button type="button" class="danger" (click)="deleteTeam(team)">Delete</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  @if (!loading() && !teams().length) {
+    <p>No teams found.</p>
+  }
+</div>

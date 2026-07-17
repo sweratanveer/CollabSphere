@@ -1,13 +1,14 @@
 // This file defines all application routes, mapping URL paths to their standalone components and route guards.
 import { Routes } from '@angular/router';
-import { authGuard } from './guards/auth-guard';
-import { roleGuard } from './guards/role-guard';
+
 import { Login } from './pages/login/login';
 import { Register } from './pages/register/register';
 import { Dashboard } from './pages/dashboard/dashboard';
 import { Profile } from './pages/profile/profile';
-import { Teams } from './pages/teams/teams';
 import { Settings } from './pages/settings/settings';
+
+import { authGuard } from './guards/auth-guard';
+import { roleGuard } from './guards/role-guard';
 
 import { CompanyListComponent } from './company/pages/company-list/company-list';
 import { CompanyCreateComponent } from './company/pages/company-create/company-create';
@@ -18,6 +19,7 @@ import { WorkspaceListComponent } from './pages/workspace-list/workspace-list';
 import { WorkspaceCreateComponent } from './pages/workspace-create/workspace-create';
 import { WorkspaceEditComponent } from './pages/workspace-edit/workspace-edit';
 import { WorkspaceDetailsComponent } from './pages/workspace-details/workspace-details';
+
 import { UserListComponent } from './pages/user-list/user-list';
 import { UserCreateComponent } from './pages/user-create/user-create';
 import { UserEditComponent } from './pages/user-edit/user-edit';
@@ -32,6 +34,13 @@ import { TaskListComponent } from './pages/task-list/task-list';
 import { TaskCreateComponent } from './pages/task-create/task-create';
 import { TaskEditComponent } from './pages/task-edit/task-edit';
 import { TaskDetailsComponent } from './pages/task-details/task-details';
+
+import { TeamListComponent } from './pages/team-list/team-list';
+import { TeamCreateComponent } from './pages/team-create/team-create';
+import { TeamEditComponent } from './pages/team-edit/team-edit';
+import { TeamDetailsComponent } from './pages/team-details/team-details';
+
+
 export const routes: Routes = [
   {
     path: '',
@@ -59,25 +68,13 @@ export const routes: Routes = [
     data: { requiredRole: 'EMPLOYEE' },
   },
   {
-    path: 'teams',
-    component: Teams,
-    canActivate: [authGuard, roleGuard],
-    data: { requiredRole: 'EMPLOYEE' },
-  },
-  {
-    path: 'tasks',
-    component: TaskListComponent,
-    canActivate: [authGuard, roleGuard],
-    data: { requiredRole: 'EMPLOYEE' },
-  },
-  {
     path: 'settings',
     component: Settings,
     canActivate: [authGuard, roleGuard],
     data: { requiredRole: 'EMPLOYEE' },
   },
 
-  // Company Routes
+  // --- Company Management ---
   {
     path: 'company',
     component: CompanyListComponent,
@@ -103,7 +100,7 @@ export const routes: Routes = [
     data: { requiredRole: 'EMPLOYEE' },
   },
 
-  // Workspace Routes
+  // --- Workspace Management ---
   {
     path: 'workspace',
     component: WorkspaceListComponent,
@@ -128,7 +125,8 @@ export const routes: Routes = [
     canActivate: [authGuard, roleGuard],
     data: { requiredRole: 'COMPANY_ADMIN' },
   },
-  
+
+  // --- User Management ---
   {
     path: 'users',
     component: UserListComponent,
@@ -179,6 +177,7 @@ export const routes: Routes = [
     canActivate: [authGuard, roleGuard],
     data: { requiredRole: 'PROJECT_MANAGER' },
   },
+
   // --- Task Management ---
   {
     path: 'tasks',
@@ -204,5 +203,30 @@ export const routes: Routes = [
     canActivate: [authGuard, roleGuard],
     data: { requiredRole: 'TEAM_LEADER' },
   },
-]
 
+  // --- Team Collaboration ---
+  {
+    path: 'teams',
+    component: TeamListComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
+  },
+  {
+    path: 'teams/create',
+    component: TeamCreateComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'PROJECT_MANAGER' },
+  },
+  {
+    path: 'teams/details/:id',
+    component: TeamDetailsComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
+  },
+  {
+    path: 'teams/edit/:id',
+    component: TeamEditComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'PROJECT_MANAGER' },
+  },
+];
