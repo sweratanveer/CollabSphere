@@ -1,0 +1,63 @@
+<div class="task-page">
+  <div class="task-header">
+    <h2>Tasks</h2>
+    <a class="action-button" routerLink="/tasks/create">+ New Task</a>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="loading">Loading tasks...</div>
+  }
+
+  @if (!loading() && tasks().length) {
+    <table class="task-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Project</th>
+          <th>Assigned To</th>
+          <th>Priority</th>
+          <th>Due Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (task of tasks(); track task.id) {
+          <tr>
+            <td>{{ task.title }}</td>
+            <td>{{ task.project?.projectName }}</td>
+            <td>{{ task.assignedTo?.fullName ?? '—' }}</td>
+            <td><span class="priority-pill" [class]="task.priority.toLowerCase()">{{ task.priority }}</span></td>
+            <td>{{ task.dueDate ?? '—' }}</td>
+            <td>
+              <select
+                class="status-select"
+                [value]="task.status"
+                (change)="changeStatus(task, $any($event.target).value)"
+                aria-label="Task Status"
+              >
+                <option value="TODO">To Do</option>
+                <option value="IN_PROGRESS">In Progress</option>
+                <option value="IN_REVIEW">In Review</option>
+                <option value="DONE">Done</option>
+              </select>
+            </td>
+            <td class="actions-cell">
+              <a [routerLink]="['/tasks/details', task.id]">View</a>
+              <a [routerLink]="['/tasks/edit', task.id]">Edit</a>
+              <button type="button" class="danger" (click)="deleteTask(task)">Delete</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  @if (!loading() && !tasks().length) {
+    <p>No tasks found.</p>
+  }
+</div>

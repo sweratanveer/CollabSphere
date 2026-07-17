@@ -1,12 +1,12 @@
 // This file defines all application routes, mapping URL paths to their standalone components and route guards.
 import { Routes } from '@angular/router';
-
+import { authGuard } from './guards/auth-guard';
+import { roleGuard } from './guards/role-guard';
 import { Login } from './pages/login/login';
 import { Register } from './pages/register/register';
 import { Dashboard } from './pages/dashboard/dashboard';
 import { Profile } from './pages/profile/profile';
 import { Teams } from './pages/teams/teams';
-import { Tasks } from './pages/tasks/tasks';
 import { Settings } from './pages/settings/settings';
 
 import { CompanyListComponent } from './company/pages/company-list/company-list';
@@ -28,6 +28,10 @@ import { ProjectCreateComponent } from './pages/project-create/project-create';
 import { ProjectEditComponent } from './pages/project-edit/project-edit';
 import { ProjectDetailsComponent } from './pages/project-details/project-details';
 
+import { TaskListComponent } from './pages/task-list/task-list';
+import { TaskCreateComponent } from './pages/task-create/task-create';
+import { TaskEditComponent } from './pages/task-edit/task-edit';
+import { TaskDetailsComponent } from './pages/task-details/task-details';
 export const routes: Routes = [
   {
     path: '',
@@ -62,7 +66,7 @@ export const routes: Routes = [
   },
   {
     path: 'tasks',
-    component: Tasks,
+    component: TaskListComponent,
     canActivate: [authGuard, roleGuard],
     data: { requiredRole: 'EMPLOYEE' },
   },
@@ -174,6 +178,31 @@ export const routes: Routes = [
     component: ProjectEditComponent,
     canActivate: [authGuard, roleGuard],
     data: { requiredRole: 'PROJECT_MANAGER' },
+  },
+  // --- Task Management ---
+  {
+    path: 'tasks',
+    component: TaskListComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
+  },
+  {
+    path: 'tasks/create',
+    component: TaskCreateComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'TEAM_LEADER' },
+  },
+  {
+    path: 'tasks/details/:id',
+    component: TaskDetailsComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
+  },
+  {
+    path: 'tasks/edit/:id',
+    component: TaskEditComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'TEAM_LEADER' },
   },
 ]
 

@@ -1,0 +1,27 @@
+<div class="task-details-page">
+  @if (error()) {
+    <div class="alert alert-danger">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="loading">Loading...</div>
+  }
+
+  @if (task(); as t) {
+    <div class="details-card">
+      <div class="details-row"><span class="label">Title</span><span>{{ t.title }}</span></div>
+      <div class="details-row"><span class="label">Description</span><span>{{ t.description ?? '—' }}</span></div>
+      <div class="details-row"><span class="label">Project</span><span>{{ t.project?.projectName }}</span></div>
+      <div class="details-row"><span class="label">Assigned To</span><span>{{ t.assignedTo?.fullName ?? '—' }}</span></div>
+      <div class="details-row"><span class="label">Status</span><span>{{ t.status }}</span></div>
+      <div class="details-row"><span class="label">Priority</span><span>{{ t.priority }}</span></div>
+      <div class="details-row"><span class="label">Due Date</span><span>{{ t.dueDate ?? '—' }}</span></div>
+      <div class="details-row"><span class="label">Created</span><span>{{ t.createdAt | date: 'medium' }}</span></div>
+
+      <div class="details-actions">
+        <a [routerLink]="['/tasks/edit', t.id]" class="action-button">Edit</a>
+        <a routerLink="/tasks" class="cancel-link">Back to list</a>
+      </div>
+    </div>
+  }
+</div>
