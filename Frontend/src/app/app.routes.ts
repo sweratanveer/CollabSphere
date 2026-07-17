@@ -40,6 +40,7 @@ import { TeamCreateComponent } from './pages/team-create/team-create';
 import { TeamEditComponent } from './pages/team-edit/team-edit';
 import { TeamDetailsComponent } from './pages/team-details/team-details';
 
+import { ChatComponent } from './pages/chat/chat';
 
 export const routes: Routes = [
   {
@@ -228,5 +229,11 @@ export const routes: Routes = [
     component: TeamEditComponent,
     canActivate: [authGuard, roleGuard],
     data: { requiredRole: 'PROJECT_MANAGER' },
+  },
+  {
+    path: 'chat',
+    component: ChatComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
   },
 ];
