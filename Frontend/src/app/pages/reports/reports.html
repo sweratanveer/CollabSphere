@@ -1,0 +1,106 @@
+<div class="reports-page">
+  <h2>Reports & Analytics</h2>
+
+  @if (error()) {
+    <div class="alert alert-danger">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="loading">Loading analytics...</div>
+  }
+
+  @if (summary(); as s) {
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <span class="kpi-value">{{ s.totalProjects }}</span>
+        <span class="kpi-label">Total Projects</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-value">{{ s.activeProjects }}</span>
+        <span class="kpi-label">Active Projects</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-value">{{ s.totalTasks }}</span>
+        <span class="kpi-label">Total Tasks</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-value">{{ s.completionRate }}%</span>
+        <span class="kpi-label">Completion Rate</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-value">{{ s.totalUsers }}</span>
+        <span class="kpi-label">Total Users</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-value">{{ s.totalTeams }}</span>
+        <span class="kpi-label">Total Teams</span>
+      </div>
+    </div>
+  }
+
+  <div class="charts-grid">
+    <div class="chart-card">
+      <h3>Tasks by Status</h3>
+      <canvas #statusChartRef></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Tasks by Priority</h3>
+      <canvas #priorityChartRef></canvas>
+    </div>
+  </div>
+
+  <div class="table-section">
+    <h3>Project Progress</h3>
+    <table class="report-table">
+      <thead>
+        <tr>
+          <th>Project</th>
+          <th>Status</th>
+          <th>Tasks Completed</th>
+          <th>Progress</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (project of projectProgress(); track project.projectId) {
+          <tr>
+            <td>{{ project.projectName }}</td>
+            <td><span class="status-pill">{{ project.status }}</span></td>
+            <td>{{ project.completedTasks }} / {{ project.totalTasks }}</td>
+            <td>
+              <div class="progress-bar">
+                <div class="progress-fill" [style.width.%]="project.progress"></div>
+              </div>
+              <span class="progress-text">{{ project.progress }}%</span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table-section">
+    <h3>Employee Performance</h3>
+    <table class="report-table">
+      <thead>
+        <tr>
+          <th>Employee</th>
+          <th>Role</th>
+          <th>Assigned Tasks</th>
+          <th>Completed</th>
+          <th>Completion Rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (emp of employeePerformance(); track emp.userId) {
+          <tr>
+            <td>{{ emp.fullName }}</td>
+            <td>{{ emp.role }}</td>
+            <td>{{ emp.assignedTasks }}</td>
+            <td>{{ emp.completedTasks }}</td>
+            <td>{{ emp.completionRate }}%</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
