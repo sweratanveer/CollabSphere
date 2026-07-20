@@ -1,45 +1,88 @@
-<app-navbar></app-navbar>
+<div class="settings-page">
+  <div class="settings-card">
+    <h2>Settings</h2>
 
-<div class="container mt-5">
-
-    <div class="card shadow">
-
-        <div class="card-header bg-dark text-white">
-
-            <h3>Settings</h3>
-
-        </div>
-
-        <div class="card-body">
-
-            <button
-
-                class="btn btn-primary w-100 mb-3">
-
-                Account
-
-            </button>
-
-            <button
-
-                class="btn btn-warning w-100 mb-3">
-
-                Security
-
-            </button>
-
-            <button
-
-                class="btn btn-danger w-100"
-
-                (click)="logout()">
-
-                Logout
-
-            </button>
-
-        </div>
-
+    <div class="tabs">
+      <button
+        type="button"
+        class="tab-button"
+        [class.active]="activeTab() === 'account'"
+        (click)="setTab('account')"
+      >
+        Account
+      </button>
+      <button
+        type="button"
+        class="tab-button"
+        [class.active]="activeTab() === 'security'"
+        (click)="setTab('security')"
+      >
+        Security
+      </button>
+      <button type="button" class="tab-button logout-tab" (click)="logout()">
+        Logout
+      </button>
     </div>
 
+    @if (error()) {
+      <div class="alert alert-danger">{{ error() }}</div>
+    }
+
+    @if (successMessage()) {
+      <div class="alert alert-success">{{ successMessage() }}</div>
+    }
+
+    @if (loading()) {
+      <div class="loading">Loading...</div>
+    }
+
+    @if (!loading() && activeTab() === 'account') {
+      <div class="tab-content">
+        <div class="info-row">
+          <span class="label">Email</span>
+          <span class="value">{{ email() }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Role</span>
+          <span class="value">{{ role() }}</span>
+        </div>
+        <p class="hint">To update your name, visit your Profile page.</p>
+      </div>
+    }
+
+    @if (!loading() && activeTab() === 'security') {
+      <div class="tab-content">
+        <label class="field-label" for="currentPassword">Current Password</label>
+        <input
+          id="currentPassword"
+          type="password"
+          [ngModel]="currentPassword()"
+          (ngModelChange)="currentPassword.set($event)"
+          class="form-control"
+        />
+
+        <label class="field-label" for="newPassword">New Password</label>
+        <input
+          id="newPassword"
+          type="password"
+          [ngModel]="newPassword()"
+          (ngModelChange)="newPassword.set($event)"
+          class="form-control"
+        />
+
+        <label class="field-label" for="confirmPassword">Confirm New Password</label>
+        <input
+          id="confirmPassword"
+          type="password"
+          [ngModel]="confirmPassword()"
+          (ngModelChange)="confirmPassword.set($event)"
+          class="form-control"
+        />
+
+        <button type="button" class="action-button" (click)="changePassword()" [disabled]="saving()">
+          {{ saving() ? 'Updating...' : 'Update Password' }}
+        </button>
+      </div>
+    }
+  </div>
 </div>
