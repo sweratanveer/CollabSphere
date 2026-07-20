@@ -56,8 +56,8 @@ import { FileManagerComponent } from './pages/file-manager/file-manager';
 import { ReportsComponent } from './pages/reports/reports';
 
 import { SubscriptionPlansComponent } from './pages/subscription-plans/subscription-plans';
-
-import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard';
+import { InvoicesComponent } from './pages/invoices/invoices';
+import { CheckoutResultComponent } from './pages/checkout-result/checkout-result';
 export const routes: Routes = [
   {
     path: '',
@@ -309,10 +309,16 @@ export const routes: Routes = [
   canActivate: [authGuard, roleGuard],
   data: { requiredRole: 'COMPANY_ADMIN' },
 },
-{
-    path: 'admin',
-    component: AdminDashboardComponent,
+ {
+    path: 'invoices',
+    component: InvoicesComponent,
     canActivate: [authGuard, roleGuard],
-    data: { requiredRole: 'SUPER_ADMIN' },
+    data: { requiredRole: 'COMPANY_ADMIN' },
+  },
+  {
+    path: 'checkout/result',
+    component: CheckoutResultComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
   },
 ];

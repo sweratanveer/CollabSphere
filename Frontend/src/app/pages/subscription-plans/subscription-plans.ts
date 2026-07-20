@@ -1,9 +1,10 @@
-// This file provides the subscription plans page: view plan catalog, create plans (Super Admin), and subscribe a company, using signals.
+// This file provides the subscription plans page: view plan catalog, create plans (Super Admin), and start Stripe checkout for a company, using signals.
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { SubscriptionService } from '../../services/subscription';
+import { BillingService } from '../../services/billing';
 import { CompanyService } from '../../company/services/company';
 import { CreatePlanRequest } from '../../models/subscription.model';
 
@@ -21,6 +22,7 @@ interface CompanyOption {
 })
 export class SubscriptionPlansComponent implements OnInit {
   private subscriptionService = inject(SubscriptionService);
+  private billingService = inject(BillingService);
   private companyService = inject(CompanyService);
 
   plans = this.subscriptionService.plans;
@@ -31,6 +33,7 @@ export class SubscriptionPlansComponent implements OnInit {
   selectedCompanyId = signal('');
   selectedPlanId = signal('');
   subscribeMessage = signal('');
+  checkoutLoading = signal(false);
 
   showCreateForm = signal(false);
   planName = signal('');
@@ -61,16 +64,20 @@ export class SubscriptionPlansComponent implements OnInit {
     const planId = this.selectedPlanId();
 
     if (!companyId || !planId) {
+      this.subscribeMessage.set('Please select both a company and a plan');
       return;
     }
 
-    this.subscriptionService.subscribe(companyId, planId).subscribe({
-      next: () => {
-        this.subscribeMessage.set('Company subscribed successfully.');
-        setTimeout(() => this.subscribeMessage.set(''), 3000);
+    this.checkoutLoading.set(true);
+    this.subscribeMessage.set('');
+
+    this.billingService.startCheckout(companyId, planId).subscribe({
+      next: (response) => {
+        window.location.href = response.checkoutUrl;
       },
       error: (err: HttpErrorResponse) => {
-        this.subscribeMessage.set(err?.error?.message || 'Failed to subscribe company');
+        this.checkoutLoading.set(false);
+        this.subscribeMessage.set(err?.error?.message || 'Failed to start checkout');
       },
     });
   }

@@ -1,0 +1,55 @@
+<div class="invoices-page">
+  <h2>Billing & Invoices</h2>
+
+  <div class="company-select-row">
+    <label class="field-label" for="companySelect">Company</label>
+    <select
+      id="companySelect"
+      (change)="selectCompany($any($event.target).value)"
+      class="form-control"
+      aria-label="Company"
+    >
+      <option value="" disabled selected>Select a company</option>
+      @for (company of companies(); track company.id) {
+        <option [value]="company.id">{{ company.companyName }}</option>
+      }
+    </select>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="loading">Loading invoices...</div>
+  }
+
+  @if (selectedCompanyId() && !loading()) {
+    @if (invoices().length) {
+      <table class="invoice-table">
+        <thead>
+          <tr>
+            <th>Plan</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (invoice of invoices(); track invoice.id) {
+            <tr>
+              <td>{{ invoice.plan?.name }}</td>
+              <td>{{ invoice.amount | number: '1.2-2' }} {{ invoice.currency | uppercase }}</td>
+              <td>
+                <span class="status-pill" [class]="invoice.status.toLowerCase()">{{ invoice.status }}</span>
+              </td>
+              <td>{{ invoice.createdAt | date: 'medium' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <p>No invoices found for this company.</p>
+    }
+  }
+</div>
