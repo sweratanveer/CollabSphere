@@ -1,0 +1,101 @@
+<div class="subscription-page">
+  <div class="subscription-header">
+    <h2>Subscription Plans</h2>
+    <button type="button" class="action-button" (click)="toggleCreateForm()">
+      {{ showCreateForm() ? 'Cancel' : '+ New Plan' }}
+    </button>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger">{{ error() }}</div>
+  }
+
+  @if (showCreateForm()) {
+    <div class="create-card">
+      @if (createError()) {
+        <div class="alert alert-danger">{{ createError() }}</div>
+      }
+
+      <div class="form-row">
+        <div>
+          <label class="field-label" for="planName">Plan Name</label>
+          <input id="planName" type="text" [ngModel]="planName()" (ngModelChange)="planName.set($event)" class="form-control" placeholder="e.g. Professional" />
+        </div>
+        <div>
+          <label class="field-label" for="planPrice">Monthly Price ($)</label>
+          <input id="planPrice" type="number" [ngModel]="planPrice()" (ngModelChange)="planPrice.set($event)" class="form-control" min="0" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label class="field-label" for="planMaxUsers">Max Users</label>
+          <input id="planMaxUsers" type="number" [ngModel]="planMaxUsers()" (ngModelChange)="planMaxUsers.set($event)" class="form-control" min="1" />
+        </div>
+        <div>
+          <label class="field-label" for="planMaxWorkspaces">Max Workspaces</label>
+          <input id="planMaxWorkspaces" type="number" [ngModel]="planMaxWorkspaces()" (ngModelChange)="planMaxWorkspaces.set($event)" class="form-control" min="1" />
+        </div>
+      </div>
+
+      <label class="field-label" for="planFeatures">Features (comma-separated)</label>
+      <input id="planFeatures" type="text" [ngModel]="planFeatures()" (ngModelChange)="planFeatures.set($event)" class="form-control" placeholder="e.g. Priority support, Custom branding" />
+
+      <button type="button" class="action-button" (click)="createPlan()" [disabled]="creating()">
+        {{ creating() ? 'Creating...' : 'Create Plan' }}
+      </button>
+    </div>
+  }
+
+  @if (loading()) {
+    <div class="loading">Loading plans...</div>
+  }
+
+  <div class="plans-grid">
+    @for (plan of plans(); track plan.id) {
+      <div class="plan-card">
+        <h3>{{ plan.name }}</h3>
+        <div class="plan-price">${{ plan.monthlyPrice }}<span>/mo</span></div>
+        <ul class="plan-limits">
+          <li>Up to {{ plan.maxUsers }} users</li>
+          <li>Up to {{ plan.maxWorkspaces }} workspaces</li>
+          @for (feature of plan.features; track feature) {
+            <li>{{ feature }}</li>
+          }
+        </ul>
+        <button type="button" class="delete-plan-btn" (click)="deletePlan(plan.id)">Delete Plan</button>
+      </div>
+    }
+  </div>
+
+  <div class="subscribe-card">
+    <h3>Subscribe a Company</h3>
+
+    @if (subscribeMessage()) {
+      <div class="subscribe-message">{{ subscribeMessage() }}</div>
+    }
+
+    <div class="form-row">
+      <div>
+        <label class="field-label" for="companySelect">Company</label>
+        <select id="companySelect" [ngModel]="selectedCompanyId()" (ngModelChange)="selectedCompanyId.set($event)" class="form-control" aria-label="Company">
+          <option value="" disabled selected>Select a company</option>
+          @for (company of companies(); track company.id) {
+            <option [value]="company.id">{{ company.companyName }}</option>
+          }
+        </select>
+      </div>
+      <div>
+        <label class="field-label" for="planSelect">Plan</label>
+        <select id="planSelect" [ngModel]="selectedPlanId()" (ngModelChange)="selectedPlanId.set($event)" class="form-control" aria-label="Plan">
+          <option value="" disabled selected>Select a plan</option>
+          @for (plan of plans(); track plan.id) {
+            <option [value]="plan.id">{{ plan.name }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <button type="button" class="action-button" (click)="subscribeCompany()">Subscribe</button>
+  </div>
+</div>

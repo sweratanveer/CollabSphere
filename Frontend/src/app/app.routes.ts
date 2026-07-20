@@ -54,6 +54,9 @@ import { EventEditComponent } from './pages/event-edit/event-edit';
 import { FileManagerComponent } from './pages/file-manager/file-manager';
 
 import { ReportsComponent } from './pages/reports/reports';
+
+import { SubscriptionPlansComponent } from './pages/subscription-plans/subscription-plans';
+
 export const routes: Routes = [
   {
     path: '',
@@ -298,4 +301,11 @@ export const routes: Routes = [
     canActivate: [authGuard, roleGuard],
     data: { requiredRole: 'TEAM_LEADER' },
   },
+
+  {
+  path: 'subscriptions',
+  component: SubscriptionPlansComponent,
+  canActivate: [authGuard, roleGuard],
+  data: { requiredRole: 'COMPANY_ADMIN' },
+},
 ];
