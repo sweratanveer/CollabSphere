@@ -40,7 +40,16 @@ import { TeamCreateComponent } from './pages/team-create/team-create';
 import { TeamEditComponent } from './pages/team-edit/team-edit';
 import { TeamDetailsComponent } from './pages/team-details/team-details';
 
+import { ChatComponent } from './pages/chat/chat';
 
+import { MeetingListComponent } from './pages/meeting-list/meeting-list';
+import { MeetingCreateComponent } from './pages/meeting-create/meeting-create';
+import { MeetingRoomComponent } from './pages/meeting-room/meeting-room';
+
+
+import { CalendarViewComponent } from './pages/calendar-view/calendar-view';
+import { EventCreateComponent } from './pages/event-create/event-create';
+import { EventEditComponent } from './pages/event-edit/event-edit';
 export const routes: Routes = [
   {
     path: '',
@@ -228,5 +237,49 @@ export const routes: Routes = [
     component: TeamEditComponent,
     canActivate: [authGuard, roleGuard],
     data: { requiredRole: 'PROJECT_MANAGER' },
+  },
+  {
+    path: 'chat',
+    component: ChatComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
+  },
+  // --- Audio & Video Meetings ---
+  {
+    path: 'meetings',
+    component: MeetingListComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
+  },
+  {
+    path: 'meetings/create',
+    component: MeetingCreateComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'TEAM_LEADER' },
+  },
+  {
+    path: 'meetings/room/:roomId',
+    component: MeetingRoomComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
+  },
+  // --- Scheduling & Calendar ---
+  {
+    path: 'calendar',
+    component: CalendarViewComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
+  },
+  {
+    path: 'calendar/create',
+    component: EventCreateComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
+  },
+  {
+    path: 'calendar/edit/:id',
+    component: EventEditComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
   },
 ];

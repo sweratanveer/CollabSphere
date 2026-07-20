@@ -1,0 +1,50 @@
+<div class="meeting-page">
+  <div class="meeting-header">
+    <h2>Meetings</h2>
+    <a class="action-button" routerLink="/meetings/create">+ Schedule Meeting</a>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="loading">Loading meetings...</div>
+  }
+
+  @if (!loading() && meetings().length) {
+    <table class="meeting-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Team</th>
+          <th>Host</th>
+          <th>Scheduled</th>
+          <th>Duration</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (meeting of meetings(); track meeting.id) {
+          <tr>
+            <td>{{ meeting.title }}</td>
+            <td>{{ meeting.team?.teamName }}</td>
+            <td>{{ meeting.host?.fullName }}</td>
+            <td>{{ meeting.scheduledAt | date: 'medium' }}</td>
+            <td>{{ meeting.durationMinutes }} min</td>
+            <td><span class="status-pill">{{ meeting.status }}</span></td>
+            <td class="actions-cell">
+              <button type="button" class="join-button" (click)="join(meeting)">Join</button>
+              <button type="button" class="danger" (click)="cancel(meeting)">Cancel</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  @if (!loading() && !meetings().length) {
+    <p>No meetings scheduled.</p>
+  }
+</div>

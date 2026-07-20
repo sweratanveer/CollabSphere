@@ -1,0 +1,97 @@
+<div class="event-form-page">
+  <div class="event-form">
+    <div class="form-tabs">
+      <a class="active">Create Event</a>
+      <a routerLink="/calendar">Calendar</a>
+    </div>
+
+    @if (error()) {
+      <div class="alert alert-danger">{{ error() }}</div>
+    }
+
+    <label class="field-label" for="title">Title</label>
+    <input
+      id="title"
+      type="text"
+      [ngModel]="title()"
+      (ngModelChange)="title.set($event)"
+      class="form-control"
+      placeholder="e.g. Client Review Call"
+    />
+
+    <label class="field-label" for="description">Description</label>
+    <textarea
+      id="description"
+      rows="3"
+      [ngModel]="description()"
+      (ngModelChange)="description.set($event)"
+      class="form-control"
+      placeholder="Event details"
+    ></textarea>
+
+    <label class="field-label" for="type">Type</label>
+    <select
+      id="type"
+      [ngModel]="type()"
+      (ngModelChange)="type.set($event)"
+      class="form-control"
+      aria-label="Type"
+    >
+      <option value="MEETING">Meeting</option>
+      <option value="TASK_DEADLINE">Task Deadline</option>
+      <option value="REMINDER">Reminder</option>
+      <option value="OTHER">Other</option>
+    </select>
+
+    <label class="field-label" for="workspaceId">Workspace</label>
+    <select
+      id="workspaceId"
+      [ngModel]="workspaceId()"
+      (ngModelChange)="workspaceId.set($event)"
+      class="form-control"
+      aria-label="Workspace"
+    >
+      <option value="" disabled selected>Select a workspace</option>
+      @for (workspace of workspaces(); track workspace.id) {
+        <option [value]="workspace.id">{{ workspace.workspaceName }}</option>
+      }
+    </select>
+
+    <label class="field-label" for="startTime">Start</label>
+    <input
+      id="startTime"
+      type="datetime-local"
+      [ngModel]="startTime()"
+      (ngModelChange)="startTime.set($event)"
+      class="form-control"
+    />
+
+    <label class="field-label" for="endTime">End</label>
+    <input
+      id="endTime"
+      type="datetime-local"
+      [ngModel]="endTime()"
+      (ngModelChange)="endTime.set($event)"
+      class="form-control"
+    />
+
+    <label class="field-label" for="allDay">All Day</label>
+    <select
+      id="allDay"
+      [ngModel]="allDay()"
+      (ngModelChange)="allDay.set($event)"
+      class="form-control"
+      aria-label="All Day"
+    >
+      <option [ngValue]="false">No</option>
+      <option [ngValue]="true">Yes</option>
+    </select>
+
+    <div class="form-actions">
+      <button type="button" class="action-button" (click)="create()" [disabled]="loading()">
+        {{ loading() ? 'Creating...' : 'Create Event' }}
+      </button>
+      <a routerLink="/calendar" class="cancel-link">Cancel</a>
+    </div>
+  </div>
+</div>

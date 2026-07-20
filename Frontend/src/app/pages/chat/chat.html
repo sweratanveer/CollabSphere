@@ -1,0 +1,54 @@
+<div class="chat-page">
+  <div class="chat-shell">
+    <aside class="team-sidebar">
+      <h3>Teams</h3>
+      <ul>
+        @for (team of teams(); track team.id) {
+          <li
+            [class.active]="selectedTeamId() === team.id"
+            (click)="selectTeam(team.id)"
+          >
+            {{ team.teamName }}
+          </li>
+        }
+      </ul>
+      <div class="connection-status">
+        <span class="dot" [class.online]="connected()"></span>
+        {{ connected() ? 'Connected to Firebase' : 'Connecting...' }}
+      </div>
+    </aside>
+
+    <section class="chat-window">
+      @if (error()) {
+        <div class="alert alert-danger">{{ error() }}</div>
+      }
+
+      @if (!selectedTeamId()) {
+        <div class="empty-state">Select a team to start chatting.</div>
+      }
+
+      @if (selectedTeamId()) {
+        <div class="messages-area">
+          @for (message of messages(); track message.id) {
+            <div class="message-bubble" [class.mine]="isMine(message.senderId)">
+              <div class="message-sender">{{ message.senderName }}</div>
+              <div class="message-content">{{ message.content }}</div>
+            </div>
+          }
+        </div>
+
+        <div class="message-input-row">
+          <input
+            type="text"
+            [ngModel]="newMessage()"
+            (ngModelChange)="newMessage.set($event)"
+            (keyup.enter)="send()"
+            class="message-input"
+            placeholder="Type a message..."
+          />
+          <button type="button" class="send-button" (click)="send()">Send</button>
+        </div>
+      }
+    </section>
+  </div>
+</div>
