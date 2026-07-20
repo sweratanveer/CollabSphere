@@ -1,55 +1,61 @@
-<app-navbar></app-navbar>
+<div class="profile-page">
+  <div class="profile-card">
+    <h2>User Profile</h2>
 
-<div class="container mt-5">
+    @if (error()) {
+      <div class="alert alert-danger">{{ error() }}</div>
+    }
 
-    <div class="card shadow">
+    @if (successMessage()) {
+      <div class="alert alert-success">{{ successMessage() }}</div>
+    }
 
-        <div class="card-header bg-primary text-white">
+    @if (loading()) {
+      <div class="loading">Loading profile...</div>
+    }
 
-            <h3>User Profile</h3>
+    @if (!loading() && user(); as u) {
+      <div class="profile-avatar">
+        {{ u.fullName ? u.fullName.charAt(0).toUpperCase() : '?' }}
+      </div>
 
+      <div class="profile-info">
+        <div class="info-row">
+          <span class="label">ID</span>
+          <span class="value">{{ u.id }}</span>
         </div>
-
-        <div class="card-body">
-
-            <div class="text-center mb-4">
-
-                <img
-                    src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-                    width="120">
-
-            </div>
-
-            <table class="table table-bordered">
-
-                <tr>
-
-                    <th>ID</th>
-
-                    <td>{{user?.id}}</td>
-
-                </tr>
-
-                <tr>
-
-                    <th>Email</th>
-
-                    <td>{{user?.email}}</td>
-
-                </tr>
-
-                <tr>
-
-                    <th>Role</th>
-
-                    <td>{{user?.role}}</td>
-
-                </tr>
-
-            </table>
-
+        <div class="info-row">
+          <span class="label">Email</span>
+          <span class="value">{{ u.email }}</span>
         </div>
+        <div class="info-row">
+          <span class="label">Role</span>
+          <span class="value">{{ u.role }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Company</span>
+          <span class="value">{{ u.company?.companyName ?? '—' }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Status</span>
+          <span class="value">{{ u.isActive ? 'Active' : 'Inactive' }}</span>
+        </div>
+      </div>
 
-    </div>
+      <div class="edit-section">
+        <label class="field-label" for="fullName">Full Name</label>
+        <input
+          id="fullName"
+          type="text"
+          [ngModel]="fullName()"
+          (ngModelChange)="fullName.set($event)"
+          class="form-control"
+        />
 
+        <button type="button" class="action-button" (click)="save()" [disabled]="saving()">
+          {{ saving() ? 'Saving...' : 'Save Changes' }}
+        </button>
+      </div>
+    }
+  </div>
 </div>
