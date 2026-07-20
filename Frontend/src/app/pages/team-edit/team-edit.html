@@ -1,0 +1,69 @@
+<div class="team-form-page">
+  <div class="team-form">
+    <div class="form-tabs">
+      <a class="active">Edit Team</a>
+      <a routerLink="/teams">Team List</a>
+    </div>
+
+    @if (error()) {
+      <div class="alert alert-danger">{{ error() }}</div>
+    }
+
+    @if (loading()) {
+      <div class="loading">Loading team...</div>
+    }
+
+    @if (!loading()) {
+      <label class="field-label" for="editTeamName">Team Name</label>
+      <input
+        id="editTeamName"
+        type="text"
+        [ngModel]="teamName()"
+        (ngModelChange)="teamName.set($event)"
+        class="form-control"
+      />
+
+      <label class="field-label" for="editDescription">Description</label>
+      <textarea
+        id="editDescription"
+        rows="3"
+        [ngModel]="description()"
+        (ngModelChange)="description.set($event)"
+        class="form-control"
+      ></textarea>
+
+      <label class="field-label" for="editTeamLeaderId">Team Leader</label>
+      <select
+        id="editTeamLeaderId"
+        [ngModel]="teamLeaderId()"
+        (ngModelChange)="teamLeaderId.set($event)"
+        class="form-control"
+        aria-label="Team Leader"
+      >
+        <option value="">No leader assigned</option>
+        @for (user of users(); track user.id) {
+          <option [value]="user.id">{{ user.fullName }}</option>
+        }
+      </select>
+
+      <label class="field-label" for="editIsActive">Status</label>
+      <select
+        id="editIsActive"
+        [ngModel]="isActive()"
+        (ngModelChange)="isActive.set($event)"
+        class="form-control"
+        aria-label="Status"
+      >
+        <option [ngValue]="true">Active</option>
+        <option [ngValue]="false">Inactive</option>
+      </select>
+
+      <div class="form-actions">
+        <button type="button" class="action-button" (click)="save()" [disabled]="saving()">
+          {{ saving() ? 'Saving...' : 'Save Changes' }}
+        </button>
+        <a routerLink="/teams" class="cancel-link">Cancel</a>
+      </div>
+    }
+  </div>
+</div>
