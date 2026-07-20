@@ -1,0 +1,82 @@
+<div class="admin-page">
+  <h2>System Administration</h2>
+
+  @if (error()) {
+    <div class="alert alert-danger">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="loading">Loading system data...</div>
+  }
+
+  @if (overview(); as o) {
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <span class="kpi-value">{{ o.totalCompanies }}</span>
+        <span class="kpi-label">Companies ({{ o.activeCompanies }} active)</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-value">{{ o.totalWorkspaces }}</span>
+        <span class="kpi-label">Workspaces ({{ o.activeWorkspaces }} active)</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-value">{{ o.totalUsers }}</span>
+        <span class="kpi-label">Users ({{ o.activeUsers }} active)</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-value">{{ o.totalProjects }}</span>
+        <span class="kpi-label">Projects</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-value">{{ o.totalTasks }}</span>
+        <span class="kpi-label">Tasks</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-value">{{ o.activeSubscriptions }}</span>
+        <span class="kpi-label">Active Subscriptions</span>
+      </div>
+    </div>
+  }
+
+  <div class="charts-grid">
+    <div class="chart-card">
+      <h3>Users by Role</h3>
+      <canvas #roleChartRef></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Company Growth</h3>
+      <canvas #growthChartRef></canvas>
+    </div>
+  </div>
+
+  <div class="table-section">
+    <div class="table-header">
+      <h3>Recent Companies</h3>
+      <a routerLink="/company" class="view-all-link">View all</a>
+    </div>
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Code</th>
+          <th>Status</th>
+          <th>Registered</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (company of recentCompanies(); track company.id) {
+          <tr>
+            <td>{{ company.companyName }}</td>
+            <td>{{ company.companyCode }}</td>
+            <td>
+              <span class="status-badge" [class.active]="company.isActive" [class.inactive]="!company.isActive">
+                {{ company.isActive ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
+            <td>{{ company.createdAt | date: 'medium' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
