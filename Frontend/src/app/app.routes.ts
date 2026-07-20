@@ -58,6 +58,7 @@ import { ReportsComponent } from './pages/reports/reports';
 import { SubscriptionPlansComponent } from './pages/subscription-plans/subscription-plans';
 import { InvoicesComponent } from './pages/invoices/invoices';
 import { CheckoutResultComponent } from './pages/checkout-result/checkout-result';
+import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard';
 export const routes: Routes = [
   {
     path: '',
@@ -321,4 +322,11 @@ export const routes: Routes = [
     canActivate: [authGuard, roleGuard],
     data: { requiredRole: 'EMPLOYEE' },
   },
+  {
+    path: 'admin',
+    component: AdminDashboardComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'SUPER_ADMIN' },
+  },
+
 ];
