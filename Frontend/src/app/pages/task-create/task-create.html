@@ -1,0 +1,104 @@
+<div class="task-form-page">
+  <div class="task-form">
+    <div class="form-tabs">
+      <a class="active">Create Task</a>
+      <a routerLink="/tasks">Task List</a>
+    </div>
+
+    @if (error()) {
+      <div class="alert alert-danger">{{ error() }}</div>
+    }
+
+    <label class="field-label" for="title">Title</label>
+    <input
+      id="title"
+      type="text"
+      [ngModel]="title()"
+      (ngModelChange)="title.set($event)"
+      class="form-control"
+      placeholder="e.g. Design homepage wireframe"
+    />
+
+    <label class="field-label" for="description">Description</label>
+    <textarea
+      id="description"
+      rows="3"
+      [ngModel]="description()"
+      (ngModelChange)="description.set($event)"
+      class="form-control"
+      placeholder="Task details"
+    ></textarea>
+
+    <label class="field-label" for="projectId">Project</label>
+    <select
+      id="projectId"
+      [ngModel]="projectId()"
+      (ngModelChange)="projectId.set($event)"
+      class="form-control"
+      aria-label="Project"
+    >
+      <option value="" disabled selected>Select a project</option>
+      @for (project of projects(); track project.id) {
+        <option [value]="project.id">{{ project.projectName }}</option>
+      }
+    </select>
+
+    <label class="field-label" for="assignedToId">Assign To (optional)</label>
+    <select
+      id="assignedToId"
+      [ngModel]="assignedToId()"
+      (ngModelChange)="assignedToId.set($event)"
+      class="form-control"
+      aria-label="Assign To"
+    >
+      <option value="">Unassigned</option>
+      @for (user of users(); track user.id) {
+        <option [value]="user.id">{{ user.fullName }}</option>
+      }
+    </select>
+
+    <label class="field-label" for="status">Status</label>
+    <select
+      id="status"
+      [ngModel]="status()"
+      (ngModelChange)="status.set($event)"
+      class="form-control"
+      aria-label="Status"
+    >
+      <option value="TODO">To Do</option>
+      <option value="IN_PROGRESS">In Progress</option>
+      <option value="IN_REVIEW">In Review</option>
+      <option value="DONE">Done</option>
+    </select>
+
+    <label class="field-label" for="priority">Priority</label>
+    <select
+      id="priority"
+      [ngModel]="priority()"
+      (ngModelChange)="priority.set($event)"
+      class="form-control"
+      aria-label="Priority"
+    >
+      <option value="LOW">Low</option>
+      <option value="MEDIUM">Medium</option>
+      <option value="HIGH">High</option>
+      <option value="URGENT">Urgent</option>
+    </select>
+
+    <label class="field-label" for="dueDate">Due Date</label>
+    <input
+      id="dueDate"
+      type="date"
+      [ngModel]="dueDate()"
+      (ngModelChange)="dueDate.set($event)"
+      class="form-control"
+    />
+
+    <div class="form-actions">
+      <button type="button" class="action-button" (click)="create()" [disabled]="loading()">
+        {{ loading() ? 'Creating...' : 'Create Task' }}
+      </button>
+      <a routerLink="/tasks" class="cancel-link">Cancel</a>
+    </div>
+  </div>
+</div>
