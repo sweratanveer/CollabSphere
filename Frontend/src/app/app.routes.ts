@@ -50,6 +50,10 @@ import { MeetingRoomComponent } from './pages/meeting-room/meeting-room';
 import { CalendarViewComponent } from './pages/calendar-view/calendar-view';
 import { EventCreateComponent } from './pages/event-create/event-create';
 import { EventEditComponent } from './pages/event-edit/event-edit';
+
+import { FileManagerComponent } from './pages/file-manager/file-manager';
+
+import { ReportsComponent } from './pages/reports/reports';
 export const routes: Routes = [
   {
     path: '',
@@ -281,5 +285,17 @@ export const routes: Routes = [
     component: EventEditComponent,
     canActivate: [authGuard, roleGuard],
     data: { requiredRole: 'EMPLOYEE' },
+  },
+  {
+    path: 'files',
+    component: FileManagerComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'EMPLOYEE' },
+  },
+  {
+    path: 'reports',
+    component: ReportsComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { requiredRole: 'TEAM_LEADER' },
   },
 ];
