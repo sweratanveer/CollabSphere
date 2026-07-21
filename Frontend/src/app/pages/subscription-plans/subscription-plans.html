@@ -96,6 +96,8 @@
       </div>
     </div>
 
-    <button type="button" class="action-button" (click)="subscribeCompany()">Subscribe</button>
+    <button type="button" class="action-button" (click)="subscribeCompany()" [disabled]="checkoutLoading()">
+      {{ checkoutLoading() ? 'Redirecting to payment...' : 'Subscribe (Pay with Stripe)' }}
+    </button>
   </div>
 </div>

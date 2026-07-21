@@ -38,13 +38,6 @@ export class SubscriptionService {
     });
   }
 
-  loadAllSubscriptions(): void {
-    this.http.get<CompanySubscription[]>(this.apiUrl).subscribe({
-      next: (data) => this.subscriptions.set(data),
-      error: () => this.error.set('Failed to load subscriptions'),
-    });
-  }
-
   createPlan(payload: CreatePlanRequest): Observable<SubscriptionPlan> {
     return this.http.post<SubscriptionPlan>(`${this.apiUrl}/plans`, payload);
   }
@@ -58,16 +51,5 @@ export class SubscriptionService {
         this.error.set('Failed to delete plan');
       },
     });
-  }
-
-  subscribe(companyId: string, planId: string): Observable<CompanySubscription> {
-    return this.http.post<CompanySubscription>(`${this.apiUrl}/subscribe`, {
-      companyId,
-      planId,
-    });
-  }
-
-  findActiveByCompany(companyId: string): Observable<CompanySubscription> {
-    return this.http.get<CompanySubscription>(`${this.apiUrl}/company/${companyId}`);
   }
 }

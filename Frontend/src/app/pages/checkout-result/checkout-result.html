@@ -1,0 +1,21 @@
+<div class="result-page">
+  <div class="result-card">
+    @if (status() === 'success') {
+      <div class="icon success">✓</div>
+      <h2>Payment Successful</h2>
+      <p>Your subscription has been activated. It may take a few seconds to reflect.</p>
+    }
+
+    @if (status() === 'cancelled') {
+      <div class="icon cancelled">×</div>
+      <h2>Payment Cancelled</h2>
+      <p>Your checkout was cancelled. No charges were made.</p>
+    }
+
+    @if (status() === 'unknown') {
+      <h2>Checking Payment Status...</h2>
+    }
+
+    <a routerLink="/subscriptions" class="action-button">Back to Subscriptions</a>
+  </div>
+</div>
