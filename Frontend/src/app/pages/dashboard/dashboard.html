@@ -1,42 +1,66 @@
-<app-navbar></app-navbar>
-
 <div class="dashboard-page">
   <div class="dashboard-container">
-    <section class="dashboard-hero">
-      <div>
-        <p class="dashboard-badge">Live workspace</p>
-        <h1>Welcome back, {{ user?.email }} 👋</h1>
-        <p>Quickly navigate your projects, teams, and tasks from a clean productivity hub.</p>
-      </div>
 
-      <div class="dashboard-stats">
-        <div class="stat-card">
-          <span>Role</span>
-          <strong>{{ user?.role }}</strong>
+    @if (user(); as currentUser) {
+
+      <section class="dashboard-hero">
+        <div>
+          <p class="dashboard-badge">Live Workspace</p>
+          <h1>Welcome back, {{ currentUser.email }} 👋</h1>
+          <p>
+            Quickly navigate your projects, teams, and tasks from a clean
+            productivity hub.
+          </p>
         </div>
-        <div class="stat-card">
-          <span>User ID</span>
-          <strong>{{ user?.id }}</strong>
+
+        <div class="dashboard-stats">
+          <div class="stat-card">
+            <span>Role</span>
+            <strong>{{ currentUser.role }}</strong>
+          </div>
+
+          <div class="stat-card">
+            <span>User ID</span>
+            <strong>{{ currentUser.id }}</strong>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="dashboard-grid">
-      <div class="panel-card">
-        <h3>Account overview</h3>
-        <p>Details from your current profile are loaded securely from the backend.</p>
-        <ul>
-          <li><strong>Email:</strong> {{ user?.email }}</li>
-          <li><strong>Role:</strong> {{ user?.role }}</li>
-          <li><strong>User ID:</strong> {{ user?.id }}</li>
-        </ul>
-      </div>
+      <section class="dashboard-grid">
+        <div class="panel-card">
+          <h3>Account Overview</h3>
+          <p>
+            Details from your current profile are loaded securely from the
+            backend.
+          </p>
 
-      <div class="panel-card panel-highlight">
-        <h3>Status</h3>
-        <p>Authentication passed successfully, and your session is active.</p>
-        <div class="status-chip">Authentication Successful ✅</div>
-      </div>
-    </section>
+          <ul>
+            <li><strong>Email:</strong> {{ currentUser.email }}</li>
+            <li><strong>Role:</strong> {{ currentUser.role }}</li>
+            <li><strong>User ID:</strong> {{ currentUser.id }}</li>
+          </ul>
+        </div>
+
+        <div class="panel-card panel-highlight">
+          <h3>Status</h3>
+          <p>
+            Authentication passed successfully, and your session is active.
+          </p>
+
+          <div class="status-chip">
+            Authentication Successful ✅
+          </div>
+        </div>
+      </section>
+
+    } @else {
+
+      <section class="panel-card">
+        <h3>Loading...</h3>
+        <p>Fetching your profile...</p>
+      </section>
+
+    }
+
   </div>
 </div>
