@@ -1,8 +1,8 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 
 import { CompanyService } from '../../services/company';
-import { Company } from '../../models/company.model';
 
 @Component({
   selector: 'app-company-list',
@@ -11,32 +11,35 @@ import { Company } from '../../models/company.model';
   templateUrl: './company-list.html',
   styleUrl: './company-list.scss',
 })
-export class CompanyListComponent implements OnInit {
-  private companyService = inject(CompanyService);
-  private router = inject(Router);
+export class CompanyListComponent {
+  private readonly companyService = inject(CompanyService);
+  private readonly router = inject(Router);
 
-  companies = signal<Company[]>([]);
+  // Service signal
+  readonly companies = this.companyService.companies;
 
-  ngOnInit(): void {
+  constructor() {
     this.loadCompanies();
   }
 
-  loadCompanies(): void {
-    this.companyService.getCompanies().subscribe({
-      next: (response) => this.companies.set(response),
-      error: (error) => console.error(error),
-    });
+  async loadCompanies(): Promise<void> {
+    try {
+      await firstValueFrom(this.companyService.fetchCompanies());
+    } catch (error) {
+      console.error('Failed to load companies:', error);
+    }
   }
 
-  deleteCompany(id: string): void {
+  async deleteCompany(id: string): Promise<void> {
     if (!confirm('Delete this company?')) {
       return;
     }
 
-    this.companyService.deleteCompany(id).subscribe({
-      next: () => this.loadCompanies(),
-      error: (error) => console.error(error),
-    });
+    try {
+      await firstValueFrom(this.companyService.deleteCompany(id));
+    } catch (error) {
+      console.error('Failed to delete company:', error);
+    }
   }
 
   viewCompany(id: string): void {

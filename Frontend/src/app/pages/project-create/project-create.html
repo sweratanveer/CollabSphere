@@ -29,6 +29,20 @@
       placeholder="Short project description"
     ></textarea>
 
+    <label class="field-label" for="companyId">Company</label>
+    <select
+      id="companyId"
+      [ngModel]="companyId()"
+      (ngModelChange)="onCompanyChange($event)"
+      class="form-control"
+      aria-label="Company"
+    >
+      <option value="" disabled selected>Select a company</option>
+      @for (company of companies(); track company.id) {
+        <option [value]="company.id">{{ company.companyName }}</option>
+      }
+    </select>
+
     <label class="field-label" for="workspaceId">Workspace</label>
     <select
       id="workspaceId"
@@ -36,10 +50,19 @@
       (ngModelChange)="workspaceId.set($event)"
       class="form-control"
       aria-label="Workspace"
+      [disabled]="!companyId() || loadingWorkspaces()"
     >
-      <option value="" disabled selected>Select a workspace</option>
-      @for (workspace of workspaces(); track workspace.id) {
-        <option [value]="workspace.id">{{ workspace.workspaceName }}</option>
+      @if (!companyId()) {
+        <option value="" disabled selected>Select a company first</option>
+      } @else if (loadingWorkspaces()) {
+        <option value="" disabled selected>Loading workspaces...</option>
+      } @else if (!workspacesForCompany().length) {
+        <option value="" disabled selected>No workspaces for this company</option>
+      } @else {
+        <option value="" disabled selected>Select a workspace</option>
+        @for (workspace of workspacesForCompany(); track workspace.id) {
+          <option [value]="workspace.id">{{ workspace.workspaceName }}</option>
+        }
       }
     </select>
 

@@ -1,4 +1,4 @@
-import { Component, inject, signal} from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import {
@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { CompanyService } from '../../services/company';
 import { Company } from '../../models/company.model';
@@ -18,6 +18,7 @@ import { Company } from '../../models/company.model';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    RouterLink,
   ],
   templateUrl: './company-create.html',
   styleUrl: './company-create.scss',

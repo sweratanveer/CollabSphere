@@ -8,11 +8,6 @@ import { BillingService } from '../../services/billing';
 import { CompanyService } from '../../company/services/company';
 import { CreatePlanRequest } from '../../models/subscription.model';
 
-interface CompanyOption {
-  id: string;
-  companyName: string;
-}
-
 @Component({
   selector: 'app-subscription-plans',
   standalone: true,
@@ -29,7 +24,8 @@ export class SubscriptionPlansComponent implements OnInit {
   loading = this.subscriptionService.loading;
   error = this.subscriptionService.error;
 
-  companies = signal<CompanyOption[]>([]);
+  companies = this.companyService.companies;
+
   selectedCompanyId = signal('');
   selectedPlanId = signal('');
   subscribeMessage = signal('');
@@ -47,14 +43,7 @@ export class SubscriptionPlansComponent implements OnInit {
   ngOnInit(): void {
     this.subscriptionService.loadPlans();
 
-    this.companyService.getCompanies().subscribe({
-      next: (companies) => {
-        const validCompanies: CompanyOption[] = companies
-          .filter((c) => !!c.id)
-          .map((c) => ({ id: c.id!, companyName: c.companyName }));
-
-        this.companies.set(validCompanies);
-      },
+    this.companyService.fetchCompanies().subscribe({
       error: () => {},
     });
   }

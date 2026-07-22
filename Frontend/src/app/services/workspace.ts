@@ -73,10 +73,9 @@ export class WorkspaceService {
     return this.http.get<Workspace>(`${this.apiUrl}/${id}`);
   }
 
-  findByCompany(companyId: string): Observable<Workspace> {
-    return this.http.get<Workspace>(`${this.apiUrl}/company/${companyId}`);
-  }
-
+ findByCompany(companyId: string): Observable<Workspace[]> {
+  return this.http.get<Workspace[]>(`${this.apiUrl}/company/${companyId}`);
+}
   update(id: string, payload: UpdateWorkspaceRequest): Observable<Workspace> {
     return this.http.patch<Workspace>(`${this.apiUrl}/${id}`, payload);
   }

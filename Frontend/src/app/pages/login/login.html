@@ -1,43 +1,92 @@
 <div class="login-page">
   <div class="login-card">
+
     <div class="login-tabs">
       <a class="active">Login</a>
       <a routerLink="/register">Sign Up</a>
     </div>
 
-    <div class="login-form">
+    <form class="login-form" (ngSubmit)="login()">
+
       <label class="field-label">Email or Username</label>
+
       <input
         type="email"
+        name="email"
         [(ngModel)]="email"
         class="form-control"
         placeholder="Enter Email"
       />
 
       <label class="field-label">Password</label>
-      <input
-        type="password"
-        [(ngModel)]="password"
-        class="form-control"
-        placeholder="Enter Password"
-      />
+
+      <div class="password-field">
+
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          name="password"
+          [(ngModel)]="password"
+          class="form-control"
+          placeholder="Enter Password"
+        />
+
+        <button
+          type="button"
+          class="eye-btn"
+          (click)="togglePassword()">
+
+          <i
+            class="bi"
+            [class.bi-eye]="!showPassword"
+            [class.bi-eye-slash]="showPassword">
+          </i>
+
+        </button>
+
+      </div>
 
       <div class="login-actions">
+
         <label class="remember-me">
-          <input type="checkbox" />
+
+          <input
+            type="checkbox"
+            name="rememberMe"
+            [(ngModel)]="rememberMe"
+          />
+
           Remember me
+
         </label>
+
       </div>
 
-      <button class="action-button" (click)="login()" [disabled]="loading">
+      <button
+        type="submit"
+        class="action-button"
+        [disabled]="loading">
+
         {{ loading ? 'Please Wait...' : 'Login' }}
+
       </button>
 
-      <a class="forgot-link" routerLink="/register">Don't have an account?</a>
+      <a
+        class="forgot-link"
+        routerLink="/register">
 
-      <div class="alert alert-danger" *ngIf="error">
+        Don't have an account?
+
+      </a>
+
+      <div
+        class="alert alert-danger"
+        *ngIf="error">
+
         {{ error }}
+
       </div>
-    </div>
+
+    </form>
+
   </div>
 </div>

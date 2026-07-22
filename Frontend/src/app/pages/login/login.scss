@@ -6,6 +6,7 @@
   background: radial-gradient(circle at top, #1e3440 0%, #0b141a 40%, #071018 100%);
   padding: 24px;
 }
+
 .login-card {
   width: 100%;
   max-width: 850px;
@@ -48,8 +49,7 @@
   margin-bottom: 8px;
 }
 
-.login-card .form-control,
-.login-card .form-select {
+.login-card .form-control {
   width: 100%;
   border: none;
   border-bottom: 1px solid rgba(248, 250, 252, 0.18);
@@ -66,10 +66,41 @@
   color: rgba(248, 250, 252, 0.4);
 }
 
-.login-card .form-control:focus,
-.login-card .form-select:focus {
+.login-card .form-control:focus {
   outline: none;
   border-bottom-color: #7F8C8D;
+}
+
+/* Password */
+
+.password-field {
+  position: relative;
+}
+
+.password-field .form-control {
+  padding-right: 45px;
+}
+
+.eye-btn {
+  position: absolute;
+  top: 40%;
+  right: 8px;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  color: rgba(248, 250, 252, 0.6);
+  cursor: pointer;
+  font-size: 18px;
+  padding: 0;
+}
+
+.eye-btn:hover {
+  color: #ffffff;
+}
+
+.eye-btn:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 .login-actions {
@@ -103,10 +134,9 @@
   box-shadow: 0 12px 28px rgba(63, 79, 96, 0.28);
 }
 
-.action-button:hover {
+.action-button:hover:not(:disabled) {
   transform: translateY(-2px);
   filter: brightness(1.05);
-  box-shadow: 0 14px 32px rgba(63, 79, 96, 0.34);
 }
 
 .forgot-link {
@@ -129,3 +159,29 @@
   border: 1px solid rgba(255, 79, 79, 0.22);
 }
 
+@media (max-width: 768px) {
+  .login-card {
+    padding: 40px 25px;
+    border-radius: 20px;
+  }
+
+  .login-tabs {
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 30px 20px;
+  }
+
+  .action-button {
+    height: 48px;
+  }
+
+  .field-label {
+    font-size: 0.85rem;
+  }
+}

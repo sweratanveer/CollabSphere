@@ -1,5 +1,5 @@
 // This file displays the invoice/payment history for a selected company, using signals.
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { DatePipe, DecimalPipe, UpperCasePipe } from '@angular/common';
 
 import { BillingService } from '../../services/billing';
@@ -25,18 +25,19 @@ export class InvoicesComponent implements OnInit {
   loading = this.billingService.loading;
   error = this.billingService.error;
 
-  companies = signal<CompanyOption[]>([]);
   selectedCompanyId = signal('');
 
-  ngOnInit(): void {
-    this.companyService.getCompanies().subscribe({
-      next: (companies) => {
-        const valid = companies
-          .filter((c) => !!c.id)
-          .map((c) => ({ id: c.id!, companyName: c.companyName }));
+  // Company list ab seedha CompanyService ke shared signal se derive hoti hai —
+  // yani jahan bhi company create/delete/update ho, ye khud-ba-khud update hogi.
+  companies = computed<CompanyOption[]>(() =>
+    this.companyService
+      .companies()
+      .filter((c) => !!c.id)
+      .map((c) => ({ id: c.id!, companyName: c.companyName })),
+  );
 
-        this.companies.set(valid);
-      },
+  ngOnInit(): void {
+    this.companyService.fetchCompanies().subscribe({
       error: () => {},
     });
   }

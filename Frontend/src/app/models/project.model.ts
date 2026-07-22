@@ -28,6 +28,7 @@ export interface Project {
 export interface CreateProjectRequest {
   projectName: string;
   description?: string;
+  companyId: string;
   workspaceId: string;
   projectManagerId?: string;
   status?: ProjectStatus;
